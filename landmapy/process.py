@@ -132,9 +132,6 @@ def process_bands(city_gdf, raster_df):
     Returns:
         city_das (da): DataArray with image data
     """
-    import re # Use regular expressions to extract metadata
-    import pandas as pd # Group and aggregate
-    import rioxarray as rxr # Work with raster data
     from rioxarray.merge import merge_arrays # Merge rasters
 
     # Labels for each band to process
@@ -216,7 +213,6 @@ def da2gdf(data_array):
     """
     import geopandas as gpd
     from rasterio.features import shapes
-    import numpy as np
 
     # Ensure the DataArray has spatial information.
     data_array = data_array.rio.write_crs("EPSG:4326")

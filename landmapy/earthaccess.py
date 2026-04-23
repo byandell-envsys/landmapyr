@@ -45,11 +45,9 @@ def get_earthaccess_links(results):
 
     # Loop through each granule
     link_rows = []
-    url_dfs = []
     for granule in tqdm(results):
         # Get granule information
         info_dict = granule['umm']
-        granule_id = info_dict['GranuleUR']
         datetime = pd.to_datetime(
             info_dict
             ['TemporalExtent']['RangeDateTime']['BeginningDateTime'])

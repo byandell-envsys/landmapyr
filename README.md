@@ -20,7 +20,7 @@ Additional links:
 
 ## Introduction
 
-The `landmapy` package is being built as a complement to the 2024-25
+The `landmapy` package was built as a complement to the 2024-25
 [Earth Data Analytics](https://github.com/byandell-envsys/EarthDataAnalytics)
 course taught through the
 [Earth Lab](https://earthlab.colorado.edu/).
@@ -45,7 +45,7 @@ Still there are some interesting and subtle ideas here that are worth exploring.
 
 This is somewhat a companion to my R package
 [landmapr](https://github.com/byandell-envsys/landmapr).
-They are being developed in parallel, with somewhat different goals.
+They were developed in parallel, with somewhat different goals.
 Right now, focus is on the python package to keep up with the
 [Earth Data Analytics](https://github.com/byandell-envsys/EarthDataAnalytics)
 course.
@@ -69,6 +69,31 @@ I for now use my local machine cloned copy of the package in
 ```
 pip install ~/Documents/GitHub/landmapy
 ```
+
+### Development and Testing
+
+The `landmapy` package enforces modern Python development standards.
+To install the package for development (including `pytest`, `ruff`, and `mypy`):
+
+```bash
+pip install -e ".[dev]"
+```
+
+We use GitHub Actions for Continuous Integration (CI) to automatically run linters and tests on all pull requests. Ensure your code passes the following before submitting:
+
+```bash
+ruff check .      # Linting
+ruff format .     # Formatting
+mypy landmapy/    # Type checking
+pytest tests/     # Unit tests
+```
+
+### Legacy Compatibility
+
+This package was developed alongside the [EarthDataAnalytics](https://github.com/byandell-envsys/EarthDataAnalytics) course.
+To ensure that legacy workspaces and notebooks do not break when functions are refactored, the `landmapy.legacy` module provides a `create_deprecated_alias` decorator.
+
+If a function name is updated, an alias is provided that will still work but will emit a `DeprecationWarning` pointing users to the new function. This guarantees backward compatibility without needing manual CSV lookups.
 
 ### Collaboration
 
@@ -126,13 +151,13 @@ file `project.md` with accompanying `*.png` figures in
 `project_files/figure-markdown/`
 using the shell command
 
-```
+```bash
 quarto render project.qmd -t markdown
 ```
 
 Some of these were derived from Python notebooks using the convert command
 
-```
+```bash
 quarto convert project.ipynb
 ```
 
@@ -155,7 +180,7 @@ In a sense, this package enables me to off-load pages of code, replacing them by
 
 First I visited [USFS Geospatial Data Discovery: National Grassland Units (Feature Layer)](https://data-usfs.hub.arcgis.com/datasets/usfs::national-grassland-units-feature-layer/explore) and manually downloaded the GeoJSON file from DataSet into directory `~/earth-analytics/data/habitat`. Then I did the following steps, shown below in code:
 
-```
+```bash
 # Install `landmapy` package.
 pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
 

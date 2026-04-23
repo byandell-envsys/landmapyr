@@ -57,7 +57,6 @@ def merge_soil(place_gdf, soil_var="sand", soil_sum="mean", soil_depth="100_200"
     Results:
         soil_merged_das (da): soil estimates clipped to bounds of place_gdf 
     """
-    import geopandas as gpd
     import rioxarray as rxr
     from rioxarray.merge import merge_arrays # Merge rasters
     from landmapy.process import clip_gdf_da_bounds

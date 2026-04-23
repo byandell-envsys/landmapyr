@@ -166,7 +166,6 @@ def plot_das(das, titles = None, axes=['latitude', 'longitude'], gdf=None, oneba
         onebar (bool, optional): One bar if True (default).
         cmap (str, optional): Color map. Defaults to 'terrain'.
     """
-    import numpy as np
     import matplotlib.pyplot as plt
     
     # If no titles are provided, use the coordinates of the first DataArray.
@@ -180,7 +179,7 @@ def plot_das(das, titles = None, axes=['latitude', 'longitude'], gdf=None, oneba
     plt.ylabel(axes[1])
 
     # Loop through each da and plot in a subplot
-    if not gdf is None:
+    if gdf is not None:
         edgecolor = 'black'
     cbar = []
     if onebar:
@@ -193,7 +192,7 @@ def plot_das(das, titles = None, axes=['latitude', 'longitude'], gdf=None, oneba
         axes[i].set_title(titles[i]) # Add a title to each subplot
         
         # Overlay gdf on da map if provided.
-        if not gdf is None:
+        if gdf is not None:
             gdf.boundary.plot(ax=axes[i], color="black", linewidth=0.5)
             # Plot place outline
             for idx in range(0, len(gdf)):
@@ -281,7 +280,7 @@ def plot_delta_gdf(delta_gdf):
     import contextily as ctx
 
     fig, ax = plt.subplots(1, 1, figsize=(12, 12))
-    place_plot = delta_gdf.plot(ax=ax, edgecolor="black", color="none")
+    delta_gdf.plot(ax=ax, edgecolor="black", color="none")
     ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik, crs=delta_gdf.crs.to_string())
     
     plt.show()

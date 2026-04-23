@@ -20,10 +20,6 @@ def hvplot_tract_gdf(place_tract_gdf):
     Returns:
         place_hv (hvplot): plot
     """
-    import geopandas as gpd
-    import holoviews as hv
-    import hvplot.pandas
-    import hvplot.xarray
     from cartopy import crs as ccrs
     
     place_hv = (
@@ -47,7 +43,6 @@ def hvplot_matrix(model_df):
     Returns:
         matrix_hv (hvplot): plot
     """
-    import holoviews as hv
     import hvplot.pandas
     import hvplot.xarray
 
@@ -74,8 +69,6 @@ def hvplot_train_test(y_test, index='asthma'):
         index (str, optional): index column name
     """
     import holoviews as hv
-    import hvplot.pandas
-    import hvplot.xarray
 
     # Plot measured vs. predicted index prevalence with a 1-to-1 line
     y_max = y_test[index].max()
@@ -106,7 +99,6 @@ def hvplot_index_grade(redlining_index_gdf, place, index='NDVI'):
     Returns:
         index_hv, grade_hv (hvplot): HV plot objects for mean index and redline grade
     """
-    import hvplot.pandas # Interactive plots with pandas
     
     index_hv = redlining_index_gdf.hvplot(
         c='mean', geo=True,
@@ -135,7 +127,6 @@ def hvplot_index_pred(redlining_index_gdf, tree_classifier, place):
     Returns:
         pred_hv (hvplot): HV plot object for tree classifier
     """
-    import hvplot.pandas # Interactive plots with pandas
     
     # Predict grades for each region
     redlining_index_gdf ['predictions'] = (
@@ -168,8 +159,6 @@ def hvplot_delta_gdf(delta_gdf, width=600, height=300):
         delta_hv (hvplot): HV Plot
     """
     import cartopy.crs as ccrs
-    import hvplot.pandas
-    import hvplot.xarray
 
     delta_hv = (
         delta_gdf.to_crs(ccrs.Mercator())
@@ -192,7 +181,6 @@ def hvplot_cluster(rgb_sat, model_df):
     Returns:
         cluster_hv (hvplot): pair of HV plots
     """
-    import hvplot.xarray
 
     # Plot model_df plus clusters
     # `.sortby()` needed to align spatial relationships.
@@ -222,7 +210,6 @@ def hvplot_occurrence(occurrence_gdf, unit='month'):
     """
     import panel as pn
     import calendar
-    import hvplot.pandas
     # CCRS commented out due to bad behavior.
     # import cartopy
     # import cartopy.crs as ccrs

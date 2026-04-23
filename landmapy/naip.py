@@ -40,6 +40,7 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
     import pandas as pd
     import shapely
     import pystac_client
+    import time
     from tqdm.notebook import tqdm
     
     # Check for existing data - do not access duplicate tracts
@@ -62,7 +63,7 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
         for i, tract_values in tqdm(tract_latlon_gdf.iterrows()):
             tract = tract_values.tract2010
             # Check if statistics are already downloaded for this tract
-            if not (tract in downloaded_tracts):
+            if tract not in downloaded_tracts:
                 # Retry up to 5 times in case of a momentary disruption
                 i = 0
                 retry_limit = 5
@@ -196,7 +197,7 @@ def ndvi_naip_df(naip_index_path, tract_cdc_gdf, naip_scenes_df = None):
     from tqdm.notebook import tqdm
     
     # Skip this step if no `scenes_df` data provided. 
-    if not naip_scenes_df is None:
+    if naip_scenes_df is not None:
         # Loop through the census tracts with URLs
         for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby('tract')):
             # Check each tract to see if it is in `naip_index_path` CSV yet.

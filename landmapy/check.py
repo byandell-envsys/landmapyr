@@ -87,7 +87,7 @@ def check_naip_tracts(naip_index_path, naip_scenes_df):
     """
     from tqdm.notebook import tqdm
     
-    if not naip_scenes_df is None:
+    if naip_scenes_df is not None:
         # Loop through the census tracts with URLs
         for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby('tract')):
             print(tract, check_element_in_csv(naip_index_path, 'tract', tract))

@@ -82,7 +82,7 @@ def read_delta_gdf(huc_level=12, huc_region='08', watershed='080902030506',
         func_key=func_key, override=override)
 
     delta_gdf = wbd_gdf[f'huc{huc_level}']
-    if not watershed is None:
+    if watershed is not None:
         delta_gdf = wbd_gdf[delta_gdf.isin([watershed])]
     if dissolve:
         delta_gdf = delta_gdf.dissolve()
@@ -169,8 +169,6 @@ def compute_reflectance_da(search_results, boundary_gdf,
             cloud_mask = compute_quality_mask(cloud_mask_cropped_da)
 
             # Loop through each spectral band
-            da_list = []
-            df_list = []
             for i, row in granule_df.iterrows():
                 if row.band.startswith('B'):
                     # Open, crop, and mask the band
@@ -211,7 +209,6 @@ def merge_and_composite_arrays(granule_da_df,
         import xarray as xr    
 
         # Merge and composite and image for each band
-        df_list = []
         da_list = []
         for band, band_df in tqdm(granule_da_df.groupby('band')):
             merged_das = []
@@ -243,7 +240,6 @@ def reflectance_kmeans(reflectance_da):
     Returns:
         model_df (df): data frame with band data and clusters
     """
-    import pandas as pd
     from sklearn.cluster import KMeans
 
     # Convert spectral DataArray to a tidy DataFrame

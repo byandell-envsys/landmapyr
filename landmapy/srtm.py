@@ -24,7 +24,6 @@ def srtm_download(place_gdf, elevation_dir, buffer = 0.1):
     import os
     import earthaccess
     from glob import glob
-    import xrspatial
     import rioxarray as rxr
     import rioxarray.merge as rxrmerge
     from landmapy.process import clip_gdf_da_bounds
@@ -72,7 +71,6 @@ def srtm_slope(srtm_da, UTM = 32613):
         slope_da (da): da with slopes (may be slightly different shape from srtm_da)
     """
     import xrspatial
-    import rioxarray as rxr
 
     orig_crs = srtm_da.rio.crs
     srtm_utm_da = srtm_da.rio.reproject(UTM)

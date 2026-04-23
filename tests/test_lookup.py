@@ -1,18 +1,15 @@
 import dataretrieval.nwis as nwis
-import pandas as pd
+import pytest
 
-def test_lookup(name, state=None):
-    print(f"Searching for: {name} in state {state}")
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_lookup():
+    name = "WHITE RIVER"
+    state = "SD"
     try:
-        # Try with siteName and siteNameMatchOperator
-        df, meta = nwis.what_sites(siteName=name, stateCd=state, siteNameMatchOperator='contains')
-        if not df.empty:
-            print("Found:")
-            print(df[['site_no', 'station_nm', 'dec_lat_va', 'dec_long_va']].head())
-        else:
-            print("No sites found.")
+        df, meta = nwis.get_info(stateCd=state)
+        mask = df.station_nm.str.contains(name)
+        assert not df[mask].empty
+        assert 'site_no' in df.columns
     except Exception as e:
-        print(f"Error: {e}")
-
-if __name__ == "__main__":
-    test_lookup("WHITE RIVER%", state="SD")
+        import pytest
+        pytest.fail(f"API call failed: {e}")

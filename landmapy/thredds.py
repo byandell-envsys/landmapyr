@@ -24,10 +24,8 @@ def process_maca(sites, scenarios=['pr'], climates=['rcp85', 'rcp45'], years = [
         info_df (df): info with parameters
         maca_da_list (list): list of da with values across scenarios, climates, and years
     """
-    import rioxarray as rxr
     import xarray as xr
     import pandas as pd
-    import geopandas as gpd
     from math import floor, ceil
     from landmapy.process import clip_gdf_da_bounds
     
@@ -59,8 +57,8 @@ def process_maca(sites, scenarios=['pr'], climates=['rcp85', 'rcp45'], years = [
                         .precipitation)
                     maca_da_year = maca_da_year.rio.write_crs("EPSG:4326")
                     maca_da_year = maca_da_year.assign_coords(
-                        lon = ("lon", [convert_lonlat(l) for l in maca_da_year.lon.values]),
-                        lat = ("lat", [convert_lonlat(l) for l in maca_da_year.lat.values]))
+                        lon = ("lon", [convert_lonlat(lon_val) for lon_val in maca_da_year.lon.values]),
+                        lat = ("lat", [convert_lonlat(lat_val) for lat_val in maca_da_year.lat.values]))
                     maca_da_year = maca_da_year.rio.set_spatial_dims(x_dim='lon', y_dim='lat')
                     # Clip bounds.
                     maca_da_year = clip_gdf_da_bounds(site_gdf, maca_da_year, buffer)

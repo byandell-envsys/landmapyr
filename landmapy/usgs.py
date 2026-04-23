@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import hvplot.pandas  # This activates .hvplot() on DataFrames
 import holoviews as hv
 from IPython.display import display
 import contextily as cx

@@ -36,7 +36,7 @@ def gbif_credentials(reset=False):
         if reset_credentials and (env_variable in os.environ):
             os.environ.pop(env_variable)
         # Ask for credential and save to environment
-        if not env_variable in os.environ:
+        if env_variable not in os.environ:
             os.environ[env_variable] = prompt_func(prompt_text)
 
 # gbif_credentials()
@@ -98,13 +98,13 @@ def download_gbif(gbif_dir, species_key, year = 2023, unzip = False, reset = Fal
         if reset:
             del os.environ['GBIF_DOWNLOAD_KEY']
         # Only submit one request
-        if not 'GBIF_DOWNLOAD_KEY' in os.environ:
+        if 'GBIF_DOWNLOAD_KEY' not in os.environ:
             # Submit query to GBIF
             queries = [
                 f"speciesKey = {species_key}",
                 "hasCoordinate = TRUE"
             ]
-            if not year == None:
+            if year is not None:
                 queries.append(f"year = {year}")
 
             gbif_query = occ.download(queries)
@@ -279,7 +279,7 @@ def count_by_ecoregions(gbif_ecoregions_gdf, region_type,
         occurrence_gdf (gdf): GeoDataFrame with occurrences by region.
     """
 
-    if not period in ['month', 'year']:
+    if period not in ['month', 'year']:
         period = 'month'
         print("Parameter 'period' must be 'month' or 'year'. Using 'month'.")
     occurrence_gdf = (
@@ -333,7 +333,6 @@ def simplify_ecoregions_gdf(ecoregions_gdf):
     Returns:
         ecoregions_gdf (gdf): GeoDataFrame of ecoregions
     """
-    import cartopy
     import cartopy.crs as ccrs
 
     # Speed up processing
