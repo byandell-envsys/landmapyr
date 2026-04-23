@@ -122,6 +122,7 @@ Changes made:
 - Added `pytest`, `ruff`, and `mypy` as optional `dev` dependencies in `pyproject.toml`.
 - Configured `setuptools` to correctly discover the `landmapy` package and ignore non-package directories (like `notes`).
 - Created a GitHub Actions workflow (`.github/workflows/ci.yml`) to automatically lint, type-check, and test the package on pushes and pull requests against the `main` branch.
+See [How to Resolve "Refusing to Allow an OAuth App to Create or Update Workflow" on Git Push: Granting Workflow Scope (TutorialPedia)](https://www.tutorialpedia.org/blog/how-to-resolve-refusing-to-allow-an-oauth-app-to-create-or-update-workflow-on-git-push/#google_vignette).
 
 ### 2. Code Linting and Bug Fixes
 
