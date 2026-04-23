@@ -16,7 +16,7 @@ Additional links:
 
 - [Python References](https://github.com/byandell/Documentation/blob/main/python_references.md)
 - [Python Coding Strategy](https://github.com/byandell/Documentation/blob/main/python_strategy.md)
-- [EDA Notes](notes.md)
+- [EDA Notes](notes/README.md)
 
 ## Introduction
 
@@ -87,7 +87,7 @@ which I adapted and expanded, based on their advice.
 I learned by doing and looking at other tools,
 developing my own
 [Coding Strategy](strategy.md).
-To date, this package has been used in the following 
+To date, this package has been used in the following
 [EDA projects](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/README.md#projects)
 (with modules other than
 [initial](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/initial.py)
@@ -127,13 +127,13 @@ file `project.md` with accompanying `*.png` figures in
 using the shell command
 
 ```
-$ quarto render project.qmd -t markdown
+quarto render project.qmd -t markdown
 ```
 
 Some of these were derived from Python notebooks using the convert command
 
 ```
-$ quarto convert project.ipynb
+quarto convert project.ipynb
 ```
 
 With care (see `Plot Data` section of
@@ -314,11 +314,11 @@ Check module is for checking parts of objects, at this point CSVs.
 | cached | cached | function | decorator | reflect | A decorator to cache function results |
 | check | header_csv | str ||| Header of CSV file |
 | check | get_last_row_csv | str ||| Check Last Row of CSV File |
-| check | check_element_in_csv | bool ||| Check value of element in CSV file | 
+| check | check_element_in_csv | bool ||| Check value of element in CSV file |
 | check | check_naip_tracts | df || NAIP | Check if NAIP tracts stored |
 | process | da_combine | da ||| Create 3-D DA combining two 2-D DAs, with optional contrast |
 | process | da2gdf | gdf ||| Convert a DataArray to a GeoDataFrame using rioxarray and geopandas |
-| process | clip_gdf_da_bounds | da ||| Clip bounds from place_gdf on da extended by buffer | 
+| process | clip_gdf_da_bounds | da ||| Clip bounds from place_gdf on da extended by buffer |
 | process | process_bands | da || process | Process bands from gdf with df metadata |
 | process | process_cloud_mask | array || process | Load an 8-bit Fmask file and create a boolean mask |
 | process | process_image | da || process | Load, crop, and scale a raster image from earthaccess |
