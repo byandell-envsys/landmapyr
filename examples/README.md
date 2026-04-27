@@ -17,18 +17,14 @@ with the output files going into the directory
 `[filename]_files/figure-markdown/`
 as `.png` files.
 
-The Quarto markdown can then be rendered to a
-[blogdown blog](https://bookdown.org/yihui/blogdown/) with
+## Changes to come
 
-```bash
-quarto render [filename].qmd -t blogdown
-```
+- Fix `sandhill_cranes.qmd` to get its input saved in python data
+- see [render.md](../notes/render.md) for post-rendering that moves images to one folder
+`examples/images/[filename]`
+- Upload `examples/images/` to the web site
 
-with the output files going into the directory
-`[filename]_files/figure-blogdown/`
-as:
-
-- `[filename].html`
+## Example EDA Projects Using Landmapy
 
 To date, this package has been used in the following
 [EDA projects](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/README.md#projects)
