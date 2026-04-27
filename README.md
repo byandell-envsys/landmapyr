@@ -4,7 +4,7 @@
   - [Introduction](#introduction)
     - [Install and Import](#install-and-import)
     - [Collaboration](#collaboration)
-  - [Use Cases](#use-cases)
+  - [Examples](#examples)
     - [Example use with Habitat Project](#example-use-with-habitat-project)
   - [Goals](#goals)
     - [Goal of EDA project](#goal-of-eda-project)
@@ -103,63 +103,9 @@ Please contact me and/or create issues.
 If you want to become more involved, contact me, fork the repo,
 modify (in a tame way, please) and submit pull requests.
 
-## Use Cases
+## Examples
 
-This python package was begun in nov-dec 2024 as I found
-the project tools growing.
-EDA staff offered draft code for tools to the class,
-which I adapted and expanded, based on their advice.
-I learned by doing and looking at other tools,
-developing my own
-[Coding Strategy](strategy.md).
-To date, this package has been used in the following
-[EDA projects](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/README.md#projects)
-(with modules other than
-[initial](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/initial.py)
-and plot modules):
-
-- [Habitat2: Buffalo Grasslands Habitat Suitability](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/climate.md)
-  - [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
-[srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
-[thredds](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/thredds.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Clustering: Classify land cover for Mississippi Delta](https://github.com/earthlab-education/clustering-byandell)
-  - [reflect](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflect.py)
-- [Big-Data: Urban Greenspace and Asthma Prevalence](https://github.com/earthlab-education/big-data-byandell/blob/main/big-data.md)
-  - [naip](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/naip.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Habitat: Buffalo Grasslands Habitat Suitability](https://github.com/byandell-envsys/habitatSuitability/blob/main/buffalo.md)
-  - [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
-[srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
-[thredds](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/thredds.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Redlining: Predicting NDVI for Madison](https://github.com/earthlab-education/fundamentals-04-redlining-byandell/blob/main/notebooks/madison.ipynb)
-  - [redline](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/redline.py),
-[process](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/process.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Species: Crane Migration Maps](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
-  - [gbif](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
-
-These are all craft pieces, with increasing use of functions.
-More recent projects shifted from a
-[Jupyter notebook](https://jupyter.org/) (`project.ipynb`)
-to a
-[Quarto](https://quarto.org/)
-document `project.qmd` that is rendered as
-[Markdown](https://quarto.org/docs/authoring/markdown-basics.html)
-file `project.md` with accompanying `*.png` figures in
-`project_files/figure-markdown/`
-using the shell command
-
-```bash
-quarto render project.qmd -t markdown
-```
-
-Some of these were derived from Python notebooks using the convert command
-
-```bash
-quarto convert project.ipynb
-```
+See [examples/README.md](examples/README.md).
 
 With care (see `Plot Data` section of
 [Package Modules and Functions](#package-modules-and-functions) below),

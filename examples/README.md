@@ -1,5 +1,4 @@
-
-## Use Cases
+# Examples Using Landmapy
 
 This python package was begun in nov-dec 2024 as I found
 the project tools growing.
