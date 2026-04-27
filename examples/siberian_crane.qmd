@@ -233,9 +233,6 @@ occurrence_hvplot
 
 ```{python}
 # Save the plot
-occurrence_plot.save('siberian-crane-years.html', embed=True)
-
-# Show the plot
-migration_plot
+occurrence_hvplot.save('siberian-crane-years.html', embed=True)
 ```
 

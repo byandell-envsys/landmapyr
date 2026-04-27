@@ -248,7 +248,7 @@ occurrence_hvplot
 
 ```{python}
 # Save the plot
-occurrence_plot.save('sandhill-crane-migration.html', embed=True)
+occurrence_hvplot.save('sandhill-crane-migration.html', embed=True)
 ```
 
 April Observations
