@@ -1,0 +1,258 @@
+---
+title: Using Earth Access to Build and image
+jupyter: python3
+---
+
+
+The goal is to use Earth Access to 
+
+- load the rasters that cover Madison
+- process them
+- merge (or mosaic) them into one image
+
+This is a reworking of 
+[92-bulk-download](https://github.com/earthlab-education/fundamentals-04-redlining-byandell/blob/main/notebooks/redlining-92-bulk-download.ipynb).
+
+
+```{python}
+city = "Madison"
+```
+
+```{python}
+pip install ~/Documents/GitHub/landmapy
+```
+
+```{python}
+# Define and create the project data directory
+import os # Interoperable file paths
+import pathlib # Find the home folder
+
+data_dir = os.path.join(
+    pathlib.Path.home(),
+    'earth-analytics',
+    'data',
+    'redlining'
+)
+os.makedirs(data_dir, exist_ok=True)
+data_dir
+```
+
+## Site Map
+
+```{python}
+import landmapy
+from landmapy.redline import redline_gdf, plot_redline
+```
+
+```{python}
+redlining_gdf = redline_gdf(data_dir)
+plot_redline(redlining_gdf)
+```
+
+```{python}
+city_redlining_gdf = redlining_gdf[redlining_gdf.city == city]
+city_redlining_gdf.plot()
+```
+
+## Select EarthAccess Images
+
+The goal is to use Earth Access to
+
+1. load the rasters that cover selected `city`,
+2. process them, and 
+3. merge (or mosaic) them into one image
+
+Search for the `city` data and create file connections `city_files`.
+
+```{python}
+%store -r city_files
+try:
+    city_files
+except NameError:
+    import earthaccess # Access NASA data from the cloud
+    
+    # `city_files` does not yet exist
+    earthaccess.login(strategy="interactive", persist=True)
+    # Search earthaccess
+    city_results = earthaccess.search_data(
+        short_name="HLSL30",
+        bounding_box=tuple(city_redlining_gdf.total_bounds),
+        temporal=("2023-07-12", "2023-07-13"),
+        count=1)
+    city_files = earthaccess.open(city_results)
+    %store city_files
+    print("city_files created and stored")
+else:
+    print("city_files already exists")
+```
+
+## Process EarthAccess Images
+
+```{python}
+from landmapy.process import process_image, process_metadata, process_cloud_mask, process_bands
+```
+
+```{python}
+raster_df = process_metadata(city_files)
+
+# Check the results
+raster_df.head()
+```
+
+```{python}
+%store -r city_das
+try:
+    city_das
+except NameError:
+    city_das = process_bands(city_redlining_gdf, raster_df)
+    %store city_das
+    print("city_das created and stored")
+else:
+    print("city_das already stored")
+```
+
+There are large parts of the area that are missing. I could not find another date with better imaging,
+probably because `city` Madison is so small on image, and it has five lakes.
+A couple things I would like to be able to do:
+
+- Show plot from `raster_df` to show something like image seen on NASA HLS30.
+- Outline the lakes.
+- Convert to CRS `EPSG:4326`
+
+```{python}
+city_das['green'].rio.write_crs("EPSG:4326").plot(cmap='Greens', robust=True)
+```
+
+## NDVI
+
+NDVI compares the amount of NIR reflectance to the amount of Red reflectance, thus accounting for many of the species differences and isolating the health of the plant.
+
+```{python}
+from landmapy.plot import plot_index, plot_gdf_da
+```
+
+```{python}
+city_ndvi_da = (
+    (city_das['nir'] - city_das['red']) / (city_das['nir'] + city_das['red'])
+)
+```
+
+```{python}
+plot_index(city_ndvi_da, city)
+```
+
+Overlay redlining grades on NDVI map.
+
+```{python}
+plot_gdf_da(city_redlining_gdf, city_ndvi_da)
+```
+
+## Zonal Statistics
+
+```{python}
+from landmapy.redline import redline_mask, redline_index_gdf
+from landmapy.hvplot import hvplot_index_grade
+```
+
+```{python}
+redlining_mask = redline_mask(city_redlining_gdf, city_ndvi_da)
+```
+
+```{python}
+# Plot the redlining mask 
+redlining_mask.plot(cbar_kwargs={"label": "Grade"})
+
+import matplotlib.pyplot as plt # Make subplots
+
+plt.gca().set(title = 'Partial ' + city + ' Redlining Mask', 
+    xlabel='', ylabel='', xticks=[], yticks=[])
+plt.show()
+```
+
+```{python}
+from xrspatial import zonal_stats # Calculate zonal statistics
+
+# Calculate NDVI stats for each redlining zone
+ndvi_stats = zonal_stats(redlining_mask, city_ndvi_da)
+
+# Call denver_ndvi_states to see the table
+ndvi_stats.head()
+```
+
+```{python}
+redlining_ndvi_gdf = redline_index_gdf(redlining_gdf, ndvi_stats)
+```
+
+```{python}
+ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
+(ndvi_hv + grade_hv)
+```
+
+## Fitting Tree Model
+
+Somehow I have to go from city_ndvi_da to redlining_ndvi_gdf.
+
+```{python}
+from landmapy.explore import index_tree
+from landmapy.hvplot import hvplot_index_pred
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import train_test_split, cross_val_score
+```
+
+```{python}
+tree_classifier = index_tree(redlining_ndvi_gdf)
+```
+
+```{python}
+tree_classifier = index_tree(redlining_ndvi_gdf)
+
+# Visualize tree
+plot_tree(tree_classifier)
+plt.show()
+```
+
+```{python}
+pred_hv = hvplot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
+pred_hv
+```
+
+```{python}
+# Plot NDVI, predicted and redlining grade in linked subplots
+madison_hv = (ndvi_hv + pred_hv + grade_hv)
+
+# Save the linked plots as a file to put on the web
+import holoviews as hv
+hv.save(madison_hv, 'madison.html')
+
+madison_hv
+```
+
+## Evaluate the Model
+
+```{python}
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import train_test_split, cross_val_score
+```
+
+```{python}
+# Evaluate the model with cross-validation
+cross_val_score(
+    DecisionTreeClassifier(max_depth=2),
+    redlining_ndvi_gdf[['mean']],
+    redlining_ndvi_gdf.grade_codes,
+    cv=3
+)
+```
+
+```{python}
+# Try another model - changing the hyperparameters
+# Evaluate the model with cross-validation
+cross_val_score(
+    DecisionTreeClassifier(max_depth=4),
+    redlining_ndvi_gdf[['mean']],
+    redlining_ndvi_gdf.grade_codes,
+    cv=3
+)
+```
+

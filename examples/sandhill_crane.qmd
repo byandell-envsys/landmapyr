@@ -1,0 +1,276 @@
+---
+title: Access locations and times of Veery encounters
+jupyter: python3
+---
+
+For this challenge, you will use a database called the
+[Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/).
+GBIF is compiled from species observation data all over the world,
+and includes everything from museum specimens to photos taken by citizen
+scientists in their backyards.
+
+**Explore GBIF:**
+Before your get started, go to the 
+[GBIF occurrences search page](https://www.gbif.org/occurrence/search)
+and explore the data.
+
+See also:
+
+- [Crane Maps](https://github.com/byandell-envsys/craneMaps)
+- [Sandhill Crane](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell/blob/main/notebooks/sandhill_crane.qmd)
+
+> **Contribute to open data**
+>
+> You can get your own observations added to GBIF using
+> [iNaturalist](https://www.inaturalist.org/)!
+
+### Set up your code to prepare for download
+
+We will be getting data from a source called
+[GBIF (Global Biodiversity Information Facility)](https://www.gbif.org/).
+We need a package called `pygbif` to access the data,
+which may not be included in your environment.
+Install it by running the cell below:
+
+```{python}
+#| eval: false
+conda list pygbif
+```
+
+```{python}
+#| eval: false
+pip install git+https://github.com/byandell-envsys/landmapy.git
+```
+
+```{python}
+from landmapy.initial import create_data_dir, robust_code
+```
+
+```{python}
+from landmapy.gbif import gbif_credentials, gbif_species_key
+from landmapy.gbif import download_gbif, load_gbif, gbif_monthly
+from landmapy.gbif import ecoregions, join_ecoregions_monthly
+from landmapy.gbif import count_by_ecoregions
+from landmapy.gbif import simplify_ecoregions_gdf, join_occurrence
+from landmapy.hvplot import hvplot_occurrence
+```
+
+**Import packages:**
+In the imports cell, we’ve included some packages that you will need.
+Add imports for packages that will help you:
+
+- Work with reproducible file paths
+- Work with tabular data
+
+For now, run `gbif.py`.
+Soon, incorporate it into `landmapy` package.
+
+```{python}
+#| highlight: true
+robust_code()
+data_dir = create_data_dir('species')
+gbif_dir = create_data_dir('species/gbif_sandhill')
+gbif_dir
+```
+
+### Register and log in to GBIF
+
+You will need a
+[GBIF account](https://www.gbif.org/)
+to complete this challenge.
+You can use your GitHub account to authenticate with GBIF.
+Then, run the following code to save your credentials on your computer.
+
+> **Warning**
+>
+> Your email address **must** match the email you used to sign up for GBIF!
+
+> **Tip**
+>
+> If you accidentally enter your credentials wrong, you can set
+> `reset_credentials=True` instead of `reset_credentials=False`.
+
+```{python}
+gbif_credentials(False)
+```
+
+### Get the species key
+
+> ** Your task**
+>
+> 1.  Replace the `species_name` with the name of the species you want to look up
+> 2.  Run the code to get the species key
+
+```{python}
+species_name, species_key = gbif_species_key('grus canadensis')
+species_name, species_key
+```
+
+### Download data from GBIF
+
+::: {.callout-task title=“Submit a request to GBIF”
+
+1.  Replace `csv_file_pattern` with a string that will match **any**
+    `.csv` file when used in the `glob` function. HINT: the character
+    `*` represents any number of any values except the file separator
+    (e.g. `/`)
+
+2.  Add parameters to the GBIF download function, `occ.download()` to
+    limit your query to:
+
+    -   observations
+    -   from 2023
+    -   with spatial coordinates.
+
+3.  Then, run the download. **This can take a few minutes**. 
+
+    -   Can check progress at <https://www.gbif.org/user/download>.
+:::
+
+```{python}
+gbif_path = download_gbif(gbif_dir, species_key)
+gbif_path
+```
+
+download key is 0020917-241007104925546
+GBIF.org (17 October 2024) GBIF Occurrence Download https://doi.org/10.15468/dl.4d3k48
+
+### Load the GBIF data into Python
+
+**Load GBIF data:**
+
+- Look at the beginning of the file you downloaded using the code below.
+What do you think the `delimiter` is?
+- Run the following code cell. What happens?
+- Uncomment and modify the parameters of `pd.read_csv()`
+below until your data loads successfully
+and you have only the columns you want.
+
+You can use the following code to look at the beginning of your file:
+
+I copied from 
+[Lauren Alexandra](https://github.com/lauren-alexandra/lauren-alexandra.github.io/blob/main/willow-flycatcher-distribution/willow-flycatcher-distribution.ipynb)
+and Lauren Gleason
+
+```{python}
+gbif_df = load_gbif(gbif_path)
+gbif_df.head()
+```
+
+### Canada Breeding Locations
+
+```{python}
+ac_CA = gbif_df.loc[gbif_df['countryCode'] == 'CA']
+ac_CA.value_counts()
+```
+
+### US Breeding Locations
+
+```{python}
+ac_US = gbif_df.loc[gbif_df['countryCode'] == 'US']
+ac_US.value_counts()
+```
+
+## Convert GBIF data to a GeoDataFrame by Month
+
+```{python}
+monthly_gdf = gbif_monthly(gbif_df)
+monthly_gdf
+```
+
+### Download and save ecoregion boundaries
+
+Ecoregions represent boundaries formed by biotic and abiotic conditions: geology, landforms, soils, vegetation, land use, wildlife, climate, and hydrology.
+
+```{python}
+ecoregions_gdf = ecoregions(data_dir)
+ecoregions_gdf.plot(edgecolor='black', color='skyblue')
+```
+
+```{python}
+%%bash
+find ~/earth-analytics/data/species -name '*.shp'
+```
+
+```{python}
+%store ecoregions_gdf monthly_gdf
+```
+
+Identify the ecoregion for each observation
+
+```{python}
+gbif_ecoregion_gdf = gbif_ecoregion(ecoregions_gdf, monthly_gdf)
+gbif_ecoregion_gdf
+```
+
+Count the observations in each ecoregion each month
+
+```{python}
+occurrence_df = count_by_ecoregions(gbif_ecoregion_gdf, 'ecoregion', 'name', 'month')
+occurrence_df
+```
+
+```{python}
+# plot to check distrubions 
+occurrence_df.reset_index().plot.scatter(
+    x='month', y='norm_occurrences', c='ecoregion',
+    logy=True
+)
+```
+
+Create a simplified GeoDataFrame for plot
+
+```{python}
+ecoregions_gdf = simplify_ecoregions_gdf(ecoregions_gdf)
+ecoregions_gdf
+```
+
+```{python}
+%store gbif_path
+%who
+```
+
+Mapping monthly distribution
+
+```{python}
+occurrence_gdf = join_occurrence(ecoregions_gdf, occurrence_gdf)
+occurrence_gdf
+```
+
+```{python}
+%store occurrence_gdf
+```
+
+```{python}
+occurrence_hvplot = hvplot_occurrence(occurrence_gdf)
+occurrence_hvplot
+```
+
+```{python}
+# Save the plot
+occurrence_plot.save('sandhill-crane-migration.html', embed=True)
+```
+
+April Observations
+
+```{python}
+occurrence_gdf_complete = occurrence_gdf.reset_index()
+
+april_occ = occurrence_gdf_complete.loc[occurrence_gdf_complete['month'] == 4].sort_values(by=['norm_occurrences'], ascending=False)
+
+april_occ_top_5 = april_occ[0:5]
+april_occ_bottom_5 = april_occ[-5:]
+```
+
+```{python}
+# Top Five Ecoregions
+
+april_occ_top_5
+```
+
+```{python}
+# Bottom Five Ecoregions
+
+april_occ_bottom_5
+```
+
