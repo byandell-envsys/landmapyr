@@ -7,6 +7,29 @@ which I adapted and expanded, based on their advice.
 I learned by doing and looking at other tools,
 developing my own
 [Coding Strategy](strategy.md).
+The Quarto files (`*.qmd`) are rendered as markdown with the shell command
+
+```bash
+quarto render [filename].qmd -t markdown
+```
+
+with the output files going into the directory
+`[filename]_files/figure-markdown/`
+as `.png` files.
+
+The Quarto markdown can then be rendered to a
+[blogdown blog](https://bookdown.org/yihui/blogdown/) with
+
+```bash
+quarto render [filename].qmd -t blogdown
+```
+
+with the output files going into the directory
+`[filename]_files/figure-blogdown/`
+as:
+
+- `[filename].html`
+
 To date, this package has been used in the following
 [EDA projects](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/README.md#projects)
 (with modules other than

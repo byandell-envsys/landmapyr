@@ -40,7 +40,7 @@ conda list pygbif
 
 ```{python}
 #| eval: false
-pip install git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
 ```
 
 ```{python}

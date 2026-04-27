@@ -19,7 +19,7 @@ Python code setup:
 
 ```{python}
 #| eval: False
-pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
 ```
 
 ```{python}

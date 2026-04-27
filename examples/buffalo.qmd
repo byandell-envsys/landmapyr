@@ -52,7 +52,7 @@ The `plot_redline()` function is from
 module to visualize.
 
 ```{python}
-#pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
 ```
 
 ```{python}

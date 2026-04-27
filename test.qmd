@@ -1,0 +1,13 @@
+---
+title: Test
+jupyter: python3
+execute:
+  fig-path: "images/test/"
+format:
+  markdown: default
+---
+```{python}
+import matplotlib.pyplot as plt
+plt.plot([1, 2, 3])
+plt.show()
+```

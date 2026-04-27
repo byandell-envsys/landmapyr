@@ -146,6 +146,13 @@ Changes made:
 - Updated `README.md` to include detailed instructions on how to install the `dev` dependencies and run the CI tools locally.
 - Documented the new Legacy Compatibility layer in the README so collaborators understand the standard procedure for renaming functions.
 
+### 6. Examples Refactoring and Environment Fixes
+
+- **Notebook Conversion**: Converted `examples/madison.ipynb` to `examples/madison.qmd`.
+- **Deprecated Functions Resolved**: Updated all `.qmd` notebooks to use modern, refactored package structures (e.g., replaced `plot_redline` with `plot_gdf_state` and updated module references from `landmapy.hvplot` to `landmapy.hv_plots`).
+- **Environment Dependency Fixes**: Resolved an upstream `ImportError` from `xrspatial.zonal_stats` by enforcing a `numpy<2.1` requirement to remain compatible with `numba`. Fixed a missing `hvplot.pandas` import in the package modules.
+- **Dynamic Package Installation**: Updated the `pip install` commands across all example notebooks to dynamically install/upgrade from GitHub via `%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git`, ensuring notebooks always use the latest commit.
+
 ## Validation Results
 
 All tools now run cleanly across the codebase:

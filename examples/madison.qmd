@@ -19,7 +19,7 @@ city = "Madison"
 ```
 
 ```{python}
-pip install ~/Documents/GitHub/landmapy
+%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
 ```
 
 ```{python}
@@ -46,11 +46,13 @@ from landmapy.plot import plot_gdf_state
 ```
 
 ```{python}
+#| label: fig-states-map
 redlining_gdf = redline_gdf(data_dir)
-plot_gdf_state(redlining_gdf)
+# plot_gdf_state(redlining_gdf)
 ```
 
 ```{python}
+#| label: fig-city-map
 city_redlining_gdf = redlining_gdf[redlining_gdf.city == city]
 city_redlining_gdf.plot()
 ```
@@ -121,6 +123,7 @@ A couple things I would like to be able to do:
 - Convert to CRS `EPSG:4326`
 
 ```{python}
+#| label: fig-green-plot
 city_das['green'].rio.write_crs("EPSG:4326").plot(cmap='Greens', robust=True)
 ```
 
@@ -139,12 +142,14 @@ city_ndvi_da = (
 ```
 
 ```{python}
+#| label: fig-ndvi-plot
 plot_index(city_ndvi_da, city)
 ```
 
 Overlay redlining grades on NDVI map.
 
 ```{python}
+#| label: fig-ndvi-grade-plot
 plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 ```
 
@@ -152,6 +157,7 @@ plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 
 ```{python}
 from landmapy.redline import redline_mask, redline_index_gdf
+import hvplot.pandas
 from landmapy.hv_plots import hvplot_index_grade
 ```
 
@@ -160,6 +166,7 @@ redlining_mask = redline_mask(city_redlining_gdf, city_ndvi_da)
 ```
 
 ```{python}
+#| label: fig-mask-plot
 # Plot the redlining mask 
 redlining_mask.plot(cbar_kwargs={"label": "Grade"})
 
@@ -206,6 +213,7 @@ tree_classifier = index_tree(redlining_ndvi_gdf)
 ```
 
 ```{python}
+#| label: fig-tree-plot
 tree_classifier = index_tree(redlining_ndvi_gdf)
 
 # Visualize tree

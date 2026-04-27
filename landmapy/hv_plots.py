@@ -10,6 +10,8 @@ hvplot_delta_gdf: HV Plot Delta GDF
 hvplot_cluster: HV Plot of RGB and Clusters
 hvplot_occurrence: Holoviews map of monthly occurrences
 """
+import hvplot.pandas
+
 def hvplot_tract_gdf(place_tract_gdf):
     """
     HV plot census tracts with satellite imagery background.
