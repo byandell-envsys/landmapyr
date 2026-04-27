@@ -41,12 +41,13 @@ data_dir
 
 ```{python}
 import landmapy
-from landmapy.redline import redline_gdf, plot_redline
+from landmapy.redline import redline_gdf
+from landmapy.plot import plot_gdf_state
 ```
 
 ```{python}
 redlining_gdf = redline_gdf(data_dir)
-plot_redline(redlining_gdf)
+plot_gdf_state(redlining_gdf)
 ```
 
 ```{python}
@@ -151,7 +152,7 @@ plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 
 ```{python}
 from landmapy.redline import redline_mask, redline_index_gdf
-from landmapy.hvplot import hvplot_index_grade
+from landmapy.hv_plots import hvplot_index_grade
 ```
 
 ```{python}
@@ -194,7 +195,7 @@ Somehow I have to go from city_ndvi_da to redlining_ndvi_gdf.
 
 ```{python}
 from landmapy.explore import index_tree
-from landmapy.hvplot import hvplot_index_pred
+from landmapy.hv_plots import hvplot_index_pred
 
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split, cross_val_score
