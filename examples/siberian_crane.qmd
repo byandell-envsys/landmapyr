@@ -1,7 +1,6 @@
 ---
-title: Access locations and times of Veery encounters
+title: Access locations and times of Siberian Crane encounters
 jupyter: python3
-
 ---
 
 For this challenge, you will use a database called the
@@ -169,6 +168,7 @@ monthly_gdf
 Ecoregions represent boundaries formed by biotic and abiotic conditions: geology, landforms, soils, vegetation, land use, wildlife, climate, and hydrology.
 
 ```{python}
+#| label: fig-ecoregions
 ecoregions_gdf = ecoregions(data_dir)
 ecoregions_gdf.plot(edgecolor='black', color='skyblue')
 ```
@@ -205,6 +205,7 @@ occurrence_year_df
 ```
 
 ```{python}
+#| label: fig-occurrences-by-year
 # plot to check distrubions 
 occurrence_year_df.reset_index().plot.scatter(
     x='year', y='occurrences', c='ecoregion',
@@ -227,6 +228,7 @@ occurrence_gdf
 ```
 
 ```{python}
+#| label: fig-occurrence-map-years
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf, 'year')
 occurrence_hvplot
 ```

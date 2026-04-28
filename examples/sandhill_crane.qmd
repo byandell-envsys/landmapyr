@@ -1,5 +1,5 @@
 ---
-title: Access locations and times of Veery encounters
+title: Access locations and times of Sandhill Crane encounters
 jupyter: python3
 ---
 
@@ -91,6 +91,7 @@ Then, run the following code to save your credentials on your computer.
 > `reset_credentials=True` instead of `reset_credentials=False`.
 
 ```{python}
+#| eval: false
 gbif_credentials(False)
 ```
 
@@ -183,11 +184,13 @@ monthly_gdf
 Ecoregions represent boundaries formed by biotic and abiotic conditions: geology, landforms, soils, vegetation, land use, wildlife, climate, and hydrology.
 
 ```{python}
+#| label: fig-ecoregions
 ecoregions_gdf = ecoregions(data_dir)
 ecoregions_gdf.plot(edgecolor='black', color='skyblue')
 ```
 
 ```{python}
+#| eval: false
 %%bash
 find ~/earth-analytics/data/species -name '*.shp'
 ```
@@ -199,7 +202,7 @@ find ~/earth-analytics/data/species -name '*.shp'
 Identify the ecoregion for each observation
 
 ```{python}
-gbif_ecoregion_gdf = gbif_ecoregion(ecoregions_gdf, monthly_gdf)
+gbif_ecoregion_gdf = join_ecoregions_monthly(ecoregions_gdf, monthly_gdf)
 gbif_ecoregion_gdf
 ```
 
@@ -211,6 +214,7 @@ occurrence_df
 ```
 
 ```{python}
+#| label: fig-occurrence-by-month
 # plot to check distrubions 
 occurrence_df.reset_index().plot.scatter(
     x='month', y='norm_occurrences', c='ecoregion',
@@ -233,7 +237,7 @@ ecoregions_gdf
 Mapping monthly distribution
 
 ```{python}
-occurrence_gdf = join_occurrence(ecoregions_gdf, occurrence_gdf)
+occurrence_gdf = join_occurrence(ecoregions_gdf, occurrence_df)
 occurrence_gdf
 ```
 
@@ -242,6 +246,7 @@ occurrence_gdf
 ```
 
 ```{python}
+#| label: fig-monthly-occurrence
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf)
 occurrence_hvplot
 ```
