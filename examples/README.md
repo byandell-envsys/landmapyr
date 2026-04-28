@@ -1,13 +1,15 @@
 # Examples Using Landmapy
 
-- [Example EDA Projects Using Landmapy](#example-eda-projects-using-landmapy)
-- [Genesis of landmapy Package](#genesis-of-landmapy-package)
+- [Example EDA Projects Using `landmapy`](#example-eda-projects-using-landmapy)
+- [Genesis of `landmapy` Package](#genesis-of-landmapy-package)
 - [Technical Notes](#technical-notes)
   - [Python Kernel Selection](#python-kernel-selection)
   - [Python Data Storage](#python-data-storage)
   - [Changes to come](#changes-to-come)
 
-## Example EDA Projects Using Landmapy
+---
+
+## Example EDA Projects Using `landmapy`
 
 To date, this package has been used in the following
 [EDA projects](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/README.md#projects)
