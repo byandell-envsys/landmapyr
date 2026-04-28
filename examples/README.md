@@ -1,45 +1,11 @@
 # Examples Using Landmapy
 
-This python package was begun in nov-dec 2024 as I found
-the project tools growing.
-EDA staff offered draft code for tools to the class,
-which I adapted and expanded, based on their advice.
-I learned by doing and looking at other tools,
-developing my own
-[Coding Strategy](strategy.md).
-The Quarto files (`*.qmd`) are rendered as markdown (`*.md`) files
-with the shell command
-
-```bash
-quarto render [filename].qmd -t markdown
-```
-
-with the output files going into the directory
-`[filename]_files/figure-markdown/`
-as `.png` files.
-
-## Python Kernel Selection
-
-The python kernel used for the EDA examples is
-`earth-analytics-python`,
-which uses Python 3.11.10.
-Instructions on installing this kernel via conda can be found at
-<https://earthdatascience.org/workshops/setup-earth-analytics-python/setup-python-conda-earth-analytics-environment/>,
-which points one to
-[Earth Analytics Python Conda Environment](https://github.com/earthlab/earth-analytics-python-env).
-If you have this kernel installed,
-it is important to ensure that Quarto uses it.
-You can set the python kernel by first using a Jupyter notebook.
-Alternatively, set the default python kernel for Quarto.
-See [Set Default Python Kernel for Quarto](https://github.com/byandell/blob/main/kernel.md)
-for more information.
-
-## Changes to come
-
-- Fix `sandhill_cranes.qmd` to get its input saved in python data
-- see [render.md](../notes/render.md) for post-rendering that moves images to one folder
-`examples/images/[filename]`
-- Upload `examples/images/` to the web site
+- [Example EDA Projects Using Landmapy](#example-eda-projects-using-landmapy)
+- [Genesis of landmapy Package](#genesis-of-landmapy-package)
+- [Technical Notes](#technical-notes)
+  - [Python Kernel Selection](#python-kernel-selection)
+  - [Python Data Storage](#python-data-storage)
+  - [Changes to come](#changes-to-come)
 
 ## Example EDA Projects Using Landmapy
 
@@ -77,3 +43,60 @@ and plot modules):
   - [sandhill_cranes.qmd](sandhill_cranes.qmd)
   - [siberian_cranes.qmd](siberian_cranes.qmd)
   - [gbif](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
+
+## Genesis of `landmapy` Package
+
+This `landmapy`python package was begun in nov-dec 2024 as I found
+the project tools growing.
+EDA staff offered draft code for tools to the class,
+which I adapted and expanded, based on their advice.
+I learned by doing and looking at other tools,
+developing my own
+[Coding Strategy](strategy.md).
+The Quarto files (`*.qmd`) are rendered as markdown (`*.md`) files
+with the shell command
+
+```bash
+quarto render [filename].qmd -t markdown
+```
+
+with the output files going into the directory
+`[filename]_files/figure-markdown/`
+as `.png` files.
+
+## Technical Notes
+
+### Python Kernel Selection
+
+The python kernel used for the EDA examples is
+`earth-analytics-python`,
+which uses Python 3.11.10.
+Instructions on installing this kernel via conda can be found at
+<https://earthdatascience.org/workshops/setup-earth-analytics-python/setup-python-conda-earth-analytics-environment/>,
+which points one to
+[Earth Analytics Python Conda Environment](https://github.com/earthlab/earth-analytics-python-env).
+If you have this kernel installed,
+it is important to ensure that Quarto uses it.
+You can set the python kernel by first using a Jupyter notebook.
+Alternatively, set the default python kernel for Quarto.
+See [Set Default Python Kernel for Quarto](https://github.com/byandell/blob/main/kernel.md)
+for more information.
+
+### Python Data Storage
+
+These examples use ephermeral and permanent remote data storage.
+See [Documentation on Data Storage](https://github.com/byandell/Documentation/blob/main/python_references.md#data)
+for more information.
+Some projects use read/write to files, in particular the folder
+`~/earth-analytics/data`
+is used in the `buffalo.qmd` and the two crane examples.
+Note that the location is hardcoded in the python code.
+Most projects use python's `Store Magic` class and a shared
+`Data` class to provide remote storage and data ingestion.
+
+### Changes to come
+
+- Fix `sandhill_cranes.qmd` to get its input saved in python data
+- see [render.md](../notes/render.md) for post-rendering that moves images to one folder
+`examples/images/[filename]`
+- Upload `examples/images/` to the web site
