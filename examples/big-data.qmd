@@ -152,7 +152,8 @@ chi_tract_gdf = download_census_tract(tract_path, 'Chicago')
 
 Code to save HV plot:
 
-```
+```{python}
+#| eval: false
 import hvplot.pandas
 from landmapy.hv_plots import hvplot_tract_gdf
 
@@ -543,7 +544,8 @@ plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=[
 
 GeoViews code not shown:
 
-```
+```{python}
+#| eval: false
 import holoviews as hv
 from landmapy.gvplot import gvplot_ndvi_index, gvplot_resid
 

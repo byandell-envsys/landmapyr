@@ -52,7 +52,6 @@ from landmapy.gbif import download_gbif, load_gbif, gbif_monthly
 from landmapy.gbif import ecoregions, join_ecoregions_monthly
 from landmapy.gbif import count_by_ecoregions
 from landmapy.gbif import simplify_ecoregions_gdf, join_occurrence
-from landmapy.hv_plots import hvplot_occurrence
 ```
 
 **Import packages:**
@@ -108,25 +107,6 @@ species_name, species_key
 ```
 
 ### Download data from GBIF
-
-::: {.callout-task title=“Submit a request to GBIF”
-
-1.  Replace `csv_file_pattern` with a string that will match **any**
-    `.csv` file when used in the `glob` function. HINT: the character
-    `*` represents any number of any values except the file separator
-    (e.g. `/`)
-
-2.  Add parameters to the GBIF download function, `occ.download()` to
-    limit your query to:
-
-    -   observations
-    -   from 2023
-    -   with spatial coordinates.
-
-3.  Then, run the download. **This can take a few minutes**. 
-
-    -   Can check progress at <https://www.gbif.org/user/download>.
-:::
 
 ```{python}
 gbif_path = download_gbif(gbif_dir, species_key)
@@ -246,14 +226,16 @@ occurrence_gdf
 ```
 
 ```{python}
-#| label: fig-monthly-occurrence
+from landmapy.hv_plots import hvplot_occurrence
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf)
-occurrence_hvplot
+# Save the plot
+occurrence_hvplot.save('sandhill-crane-migration.html', embed=True)
 ```
 
 ```{python}
-# Save the plot
-occurrence_hvplot.save('sandhill-crane-migration.html', embed=True)
+#| eval: false
+#| label: fig-monthly-occurrence
+occurrence_hvplot
 ```
 
 April Observations

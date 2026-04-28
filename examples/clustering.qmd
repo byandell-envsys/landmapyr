@@ -132,7 +132,8 @@ plot_delta_gdf(delta_gdf)
 
 Alternative HV plot:
 
-```
+```{python}
+#| eval: false
 from landmapy.hv_plots import hvplot_delta_gdf
 hvplot_delta_gdf(delta_gdf)
 ```
@@ -307,7 +308,8 @@ plot_cluster(rgb_sat, model_df)
 
 Above is not perfect. Alternative HV plot:
 
-```
+```{python}
+#| eval: false
 from landmapy.hv_plots import hvplot_cluster
 hvplot_cluster(rgb_sat, model_df)
 ```
