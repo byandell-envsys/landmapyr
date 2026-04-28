@@ -7,7 +7,8 @@ which I adapted and expanded, based on their advice.
 I learned by doing and looking at other tools,
 developing my own
 [Coding Strategy](strategy.md).
-The Quarto files (`*.qmd`) are rendered as markdown with the shell command
+The Quarto files (`*.qmd`) are rendered as markdown (`*.md`) files
+with the shell command
 
 ```bash
 quarto render [filename].qmd -t markdown
@@ -16,6 +17,22 @@ quarto render [filename].qmd -t markdown
 with the output files going into the directory
 `[filename]_files/figure-markdown/`
 as `.png` files.
+
+## Python Kernel Selection
+
+The python kernel used for the EDA examples is
+`earth-analytics-python`,
+which uses Python 3.11.10.
+Instructions on installing this kernel via conda can be found at
+<https://earthdatascience.org/workshops/setup-earth-analytics-python/setup-python-conda-earth-analytics-environment/>,
+which points one to
+[Earth Analytics Python Conda Environment](https://github.com/earthlab/earth-analytics-python-env).
+If you have this kernel installed,
+it is important to ensure that Quarto uses it.
+You can set the python kernel by first using a Jupyter notebook.
+Alternatively, set the default python kernel for Quarto.
+See [Set Default Python Kernel for Quarto](https://github.com/byandell/blob/main/kernel.md)
+for more information.
 
 ## Changes to come
 
