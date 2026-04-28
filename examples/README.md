@@ -46,8 +46,13 @@ and plot modules):
 
 ## Genesis of `landmapy` Package
 
-This `landmapy`python package was begun in nov-dec 2024 as I found
-the project tools growing.
+This `landmapy`python package was begun in nov-dec 2024
+when I took the
+[Earth Data Analytics (EDA)](https://github.com/byandell-envsys/EarthDataAnalytics)
+course as I found
+the project tools growing and wanted to find a way
+to help me remember and reuse the code I was developing.
+
 EDA staff offered draft code for tools to the class,
 which I adapted and expanded, based on their advice.
 I learned by doing and looking at other tools,
