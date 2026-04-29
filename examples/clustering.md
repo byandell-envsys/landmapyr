@@ -137,8 +137,12 @@ plot_delta_gdf(delta_gdf)
 
 Alternative HV plot:
 
-    from landmapy.hv_plots import hvplot_delta_gdf
-    hvplot_delta_gdf(delta_gdf)
+::: {.cell execution_count="7"}
+``` {.python .cell-code}
+from landmapy.hv_plots import hvplot_delta_gdf
+hvplot_delta_gdf(delta_gdf)
+```
+:::
 
 We chose this watershed because it covers parts of New Orleans and is
 near the Mississippi Delta. Deltas are boundary areas between the land
@@ -196,7 +200,7 @@ and cropping.
         `GeoDataFrame` column with the `DataArray` in it. Note that you
         will need to remove the rows for unused bands)
 
-::: {.cell execution_count="7"}
+::: {.cell execution_count="8"}
 ``` {.python .cell-code}
 from landmapy.reflect import compute_reflectance_da, merge_and_composite_arrays
 from landmapy.earthaccess import search_earthaccess
@@ -211,7 +215,7 @@ cached. These can be overridden with the `override=True` argument to
 `compute_reflectance_da()` and `merge_and_composite_arrays()` functions,
 respectively.
 
-::: {.cell execution_count="8"}
+::: {.cell execution_count="9"}
 ``` {.python .cell-code}
 results = search_earthaccess(delta_gdf, ("2023-05", "2023-09"))
 reflectance_da_df = compute_reflectance_da(results, delta_gdf)
@@ -238,13 +242,13 @@ You will notice for this watershed that:
     -   Add the band as a dimension, and give the DataArray a name
 -   Concatenate along the band dimension
 
-::: {.cell execution_count="9"}
+::: {.cell execution_count="10"}
 ``` {.python .cell-code}
 reflectance_da = merge_and_composite_arrays(reflectance_da_df)
 ```
 :::
 
-:::: {.cell execution_count="10"}
+:::: {.cell execution_count="11"}
 ``` {.python .cell-code}
 reflectance_da.shape
 ```
@@ -278,19 +282,19 @@ Cluster your data by spectral signature using the k-means algorithm.
 -   Fit a k-means model. You can experiment with the number of groups to
     find what works best.
 
-::: {.cell execution_count="11"}
+::: {.cell execution_count="12"}
 ``` {.python .cell-code}
 from landmapy.reflect import reflectance_kmeans, reflectance_range
 ```
 :::
 
-::: {.cell execution_count="12"}
+::: {.cell execution_count="13"}
 ``` {.python .cell-code}
 model_df = reflectance_kmeans(reflectance_da)
 ```
 :::
 
-:::: {.cell execution_count="13"}
+:::: {.cell execution_count="14"}
 ``` {.python .cell-code}
 # Check ranges.
 reflectance_range(model_df)
@@ -344,7 +348,7 @@ guide for band numbers). Use `.rgb()` method to plot. But numbers are
 0-1 and need to be 8-bit integers; rescale to 0-255. Use `.astype()`
 method to convert type and `.where(rgb!=np.nan)` method to drop NAs
 
-::: {.cell execution_count="14"}
+::: {.cell execution_count="15"}
 ``` {.python .cell-code}
 from landmapy.reflect import reflectance_rgb
 from landmapy.plots import plot_cluster
@@ -353,7 +357,7 @@ rgb_sat = reflectance_rgb(reflectance_da)
 ```
 :::
 
-:::: {.cell execution_count="15"}
+:::: {.cell execution_count="16"}
 ``` {.python .cell-code}
 plot_cluster(rgb_sat, model_df)
 ```
@@ -365,8 +369,12 @@ plot_cluster(rgb_sat, model_df)
 
 Above is not perfect. Alternative HV plot:
 
-    from landmapy.hv_plots import hvplot_cluster
-    hvplot_cluster(rgb_sat, model_df)
+::: {.cell execution_count="17"}
+``` {.python .cell-code}
+from landmapy.hv_plots import hvplot_cluster
+hvplot_cluster(rgb_sat, model_df)
+```
+:::
 
 Interpret your plot.
 

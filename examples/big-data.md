@@ -161,11 +161,15 @@ chi_tract_gdf = download_census_tract(tract_path, 'Chicago')
 
 Code to save HV plot:
 
-    import hvplot.pandas
-    from landmapy.hv_plots import hvplot_tract_gdf
+::: {.cell execution_count="7"}
+``` {.python .cell-code}
+import hvplot.pandas
+from landmapy.hv_plots import hvplot_tract_gdf
 
-    chi_tract_hv = hvplot_tract_gdf(chi_tract_gdf)
-    hvplot.save(chi_tract_hv, "chi_tract.html")
+chi_tract_hv = hvplot_tract_gdf(chi_tract_gdf)
+hvplot.save(chi_tract_hv, "chi_tract.html")
+```
+:::
 
 **NOW NEED TO incorporate this image**
 
@@ -214,7 +218,7 @@ download. Selecting the state and county is one way to do this.
 -   You should also clean up this data by renaming the `'data_value'` to
     something descriptive, and possibly selecting a subset of columns.
 
-::: {.cell execution_count="7"}
+::: {.cell execution_count="8"}
 ``` {.python .cell-code}
 from landmapy.cdcplaces import download_cdc_disease, join_tract_cdc
 from landmapy.plots import plot_gdfs_map
@@ -222,7 +226,7 @@ from landmapy.naip import naip_path, download_naip_scenes, ndvi_naip_df
 ```
 :::
 
-:::: {.cell execution_count="8"}
+:::: {.cell execution_count="9"}
 ``` {.python .cell-code}
 # Preview asthma data
 cdc_df = download_cdc_disease(data_dir, 'asthma')
@@ -276,7 +280,7 @@ cdc_df
     the city missing, it may mean that you need to expand the record
     limit for your download.
 
-:::: {.cell execution_count="9"}
+:::: {.cell execution_count="10"}
 ``` {.python .cell-code}
 tract_cdc_gdf = join_tract_cdc(chi_tract_gdf, cdc_df)
 plot_gdfs_map(tract_cdc_gdf, column='asthma')
@@ -323,7 +327,7 @@ Access Catalog (STAC)](https://stacspec.org/en).
 Download NAIP scenes if not done already. Might want special case if
 some index values already downloaded.
 
-::: {.cell execution_count="10"}
+::: {.cell execution_count="11"}
 ``` {.python .cell-code}
 naip_index_path = naip_path(data_dir, 'chicago')    
 %store -r chi_scenes_df
@@ -421,7 +425,7 @@ density.
     `ndvi_naip_df()` (**need better name**) returns the `DataFrame`
     `ndvi_index_df`.
 
-:::: {.cell execution_count="11"}
+:::: {.cell execution_count="12"}
 ``` {.python .cell-code}
 ndvi_index_df = ndvi_naip_df(naip_index_path, tract_cdc_gdf, chi_scenes_df)
 ```
@@ -445,7 +449,7 @@ Create a plot that contains:
 -   Asthma prevelence on one and mean NDVI on the other
 -   Make sure to include a title and labeled color bars
 
-::: {.cell execution_count="12"}
+::: {.cell execution_count="13"}
 ``` {.python .cell-code}
 from landmapy.naip import merge_ndvi_cdc
 from landmapy.explore import var_trans, train_test
@@ -453,7 +457,7 @@ from landmapy.plots import plot_gdfs_map, plot_matrix, plot_train_test
 ```
 :::
 
-:::: {.cell execution_count="13"}
+:::: {.cell execution_count="14"}
 ``` {.python .cell-code}
 ndvi_cdc_gdf = merge_ndvi_cdc(tract_cdc_gdf, ndvi_index_df)
 plot_gdfs_map(ndvi_cdc_gdf)
@@ -532,7 +536,7 @@ You can transform data:
     `.dropna()` method to drop rows with `NaN` values.
 -   Explain any data transformations or selections you made and why
 
-:::: {.cell execution_count="14"}
+:::: {.cell execution_count="15"}
 ``` {.python .cell-code}
 logndvi_cdc_gdf = var_trans(ndvi_cdc_gdf)
 plot_matrix(logndvi_cdc_gdf)
@@ -562,7 +566,7 @@ statistical significance is harder to derive mathematically.
 -   Plot the predicted values against the measured values. You can use
     the following plotting code as a starting point.
 
-:::: {.cell execution_count="15"}
+:::: {.cell execution_count="16"}
 ``` {.python .cell-code}
 logndvi_cdc_test, reg, logndvi_cdc_gdf = train_test(logndvi_cdc_gdf)
 plot_train_test(logndvi_cdc_test)
@@ -592,7 +596,7 @@ mean) or autocorrelation (as part of the variance-covariance structure).
 -   Looking at both of your error plots, what do you notice? What are
     some possible explanations for any bias you see in your model?
 
-:::: {.cell execution_count="16"}
+:::: {.cell execution_count="17"}
 ``` {.python .cell-code}
 plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=['Blues','RdBu','Greens'])
 ```
@@ -604,13 +608,17 @@ plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=[
 
 GeoViews code not shown:
 
-    import holoviews as hv
-    from landmapy.gvplot import gvplot_ndvi_index, gvplot_resid
+::: {.cell execution_count="18"}
+``` {.python .cell-code}
+import holoviews as hv
+from landmapy.gvplot import gvplot_ndvi_index, gvplot_resid
 
-    model_fit = gvplot_ndvi_index(ndvi_cdc_gdf)
-    resid = gvplot_resid(logndvi_cdc_gdf, reg, yvar='asthma')
-    models_gv = (model_fit[0] + resid + model_fit[1])
-    hv.save(models_gv, 'bigdata_model.html')
+model_fit = gvplot_ndvi_index(ndvi_cdc_gdf)
+resid = gvplot_resid(logndvi_cdc_gdf, reg, yvar='asthma')
+models_gv = (model_fit[0] + resid + model_fit[1])
+hv.save(models_gv, 'bigdata_model.html')
+```
+:::
 
 **Reflect and Respond**
 

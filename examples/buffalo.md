@@ -276,10 +276,10 @@ for dataset in datasets:
     GEDI02_B GEDI L2B Canopy Cover and Vertical Profile Metrics Data Global Footprint Level V002
     SRTMGL1 NASA Shuttle Radar Topography Mission Global 1 arc second V003
     NASADEM_HGT NASADEM Merged DEM Global 1 arc second V001
-    AST14DEM ASTER Digital Elevation Model V004
     GEDI01_B GEDI L1B Geolocated Waveform Data Global Footprint Level V002
+    AST14DEM ASTER Digital Elevation Model V004
     SRTMGL3 NASA Shuttle Radar Topography Mission Global 3 arc second V003
-    SRTMGL1N NASA Shuttle Radar Topography Mission Global 1 arc second number V003
+    NASADEM_NC NASADEM Merged DEM Global 1 arc second nc V001
 :::
 ::::
 

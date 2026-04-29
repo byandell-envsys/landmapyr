@@ -55,7 +55,7 @@ course.
 From within python, you can install this package directly
 from GitHub:
 
-```
+```python
 pip install git+https://github.com/byandell-envsys/landmapy.git
 ```
 
@@ -66,7 +66,7 @@ to import desired functions.
 I for now use my local machine cloned copy of the package in
 `~/Documents/GitHub/landmapy` and the python command
 
-```
+```python
 pip install ~/Documents/GitHub/landmapy
 ```
 
@@ -75,13 +75,13 @@ pip install ~/Documents/GitHub/landmapy
 The `landmapy` package enforces modern Python development standards.
 To install the package for development (including `pytest`, `ruff`, and `mypy`):
 
-```bash
+```python
 pip install -e ".[dev]"
 ```
 
 We use GitHub Actions for Continuous Integration (CI) to automatically run linters and tests on all pull requests. Ensure your code passes the following before submitting:
 
-```bash
+```python
 ruff check .      # Linting
 ruff format .     # Formatting
 mypy landmapy/    # Type checking
