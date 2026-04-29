@@ -96,7 +96,7 @@ we recommend some settings to make sure your code does not get stopped
 by a momentary connection lapse – see the code cell below.
 
 ```{python}
-%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q -e ..
 ```
 
 ```{python}

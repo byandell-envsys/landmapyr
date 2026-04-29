@@ -19,7 +19,7 @@ city = "Madison"
 ```
 
 ```{python}
-%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q -e ..
 ```
 
 ```{python}

@@ -94,7 +94,7 @@ Import necessary packages
 
 :::: {.cell execution_count="2"}
 ``` {.python .cell-code}
-%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q -e ..
 ```
 
 ::: {.cell-output .cell-output-stdout}

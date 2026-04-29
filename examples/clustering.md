@@ -37,7 +37,7 @@ and
 
 ::: {.cell execution_count="1"}
 ``` {.python .cell-code}
-%pip install -q --upgrade git+https://github.com/byandell-envsys/landmapy.git
+%pip install -q -e ..
 ```
 :::
 
