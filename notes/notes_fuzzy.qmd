@@ -41,7 +41,7 @@ My version:
 
 ```python
 from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plot import plot_gdf_state # plot gdf with state overlay
+from landmapy.plots import plot_gdf_state # plot gdf with state overlay
 
 %store -r buffalo_gdf
 try:

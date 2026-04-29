@@ -11,7 +11,7 @@ or Quarto documents and saved as HTML files.
 
 ## Static Plot Functions
 
-The static plots are in [plot.py](plot.py).
+The static plots are in [plots.py](plots.py).
 They rely on [matplotlib](https://matplotlib.org/) and [Geopandas](https://geopandas.org/),
 and sometimes [Seaborn](https://seaborn.pydata.org/).
 Extensions to `matplotlib` enable creation of dynamic plots,
@@ -114,7 +114,7 @@ simpler `qmd` and `md` pages. For instance
 
 ```
 #| label: fig-resid
-from landmapy.plot import plot_gdfs_map
+from landmapy.plots import plot_gdfs_map
 plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=['Blues','RdBu','Greens'])
 ```
 

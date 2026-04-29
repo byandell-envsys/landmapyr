@@ -225,6 +225,18 @@ occurrence_gdf
 %store occurrence_gdf
 ```
 
+### Plot monthly distribution
+
+#### Static Plot
+
+```{python}
+#| label: fig-occurrence-map-months
+from landmapy.plots import plot_occurrence
+plot_occurrence(occurrence_gdf)
+```
+
+
+#### Optional Dynamic Plot
 ```{python}
 from landmapy.hv_plots import hvplot_occurrence
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf)
@@ -238,7 +250,7 @@ occurrence_hvplot.save('sandhill-crane-migration.html', embed=True)
 occurrence_hvplot
 ```
 
-April Observations
+#### April Observations
 
 ```{python}
 occurrence_gdf_complete = occurrence_gdf.reset_index()

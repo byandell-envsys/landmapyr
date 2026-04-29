@@ -101,7 +101,7 @@ This will take similar coding.
 
 ```{python}
 from landmapy.reflect import read_delta_gdf
-from landmapy.plot import plot_delta_gdf
+from landmapy.plots import plot_delta_gdf
 ```
 
 Following is kept here for the moment and will be removed next week.
@@ -296,7 +296,7 @@ Use `.astype()` method to convert type and
 
 ```{python}
 from landmapy.reflect import reflectance_rgb
-from landmapy.plot import plot_cluster
+from landmapy.plots import plot_cluster
 
 rgb_sat = reflectance_rgb(reflectance_da)
 ```

@@ -200,12 +200,22 @@ ecoregions_gdf = simplify_ecoregions_gdf(ecoregions_gdf)
 ecoregions_gdf
 ```
 
-Mapping yearly distribution
+### Mapping yearly distribution
 
 ```{python}
 occurrence_gdf = join_occurrence(ecoregions_gdf, occurrence_year_df)
 occurrence_gdf
 ```
+
+#### Static Plot
+
+```{python}
+#| label: fig-occurrence-map-years
+from landmapy.plots import plot_occurrence
+plot_occurrence(occurrence_gdf, 'year')
+```
+
+#### Optional Dynamic Plot
 
 ```{python}
 from landmapy.hv_plots import hvplot_occurrence

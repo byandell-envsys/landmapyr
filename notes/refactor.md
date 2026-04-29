@@ -126,7 +126,7 @@ Changes made:
 ### 2. Code Linting and Bug Fixes
 
 - Ran `ruff` to automatically and manually fix **49** linting errors and warnings across the codebase.
-- **Removed Unused Variables & Imports**: Cleaned up `earthaccess.py`, `plot.py`, `reflect.py`, and `polaris.py`.
+- **Removed Unused Variables & Imports**: Cleaned up `earthaccess.py`, `plots.py`, `reflect.py`, and `polaris.py`.
 - **Fixed Bugs**: Fixed `if not year == None:` to `if year is not None:` in `gbif.py`, resolved undefined variables in `naip.py`, and fixed ambiguous variable names in `thredds.py`.
 
 ### 3. Testing Enhancements

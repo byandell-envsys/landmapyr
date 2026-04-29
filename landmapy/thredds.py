@@ -105,5 +105,5 @@ def maca_year(maca_da, year=2027):
     return maca_year
     
 # maca_2010 = maca_year(maca_da[0], 2010)
-# from landmapy.plot import plot_gdf_da
+# from landmapy.plots import plot_gdf_da
 # plot_gdf_da(buffalo_gdf, maca_2010, edgecolor="white")

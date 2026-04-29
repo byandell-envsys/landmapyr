@@ -56,7 +56,7 @@ data_dir
 ``` {.python .cell-code}
 import landmapy
 from landmapy.redline import redline_gdf
-from landmapy.plot import plot_gdf_state
+from landmapy.plots import plot_gdf_state
 ```
 :::
 
@@ -209,7 +209,7 @@ isolating the health of the plant.
 
 ::: {.cell execution_count="12"}
 ``` {.python .cell-code}
-from landmapy.plot import plot_index, plot_gdf_da
+from landmapy.plots import plot_index, plot_gdf_da
 ```
 :::
 

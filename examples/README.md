@@ -101,6 +101,16 @@ Note that the location is hardcoded in the python code.
 Most projects use python's `Store Magic` class and a shared
 `Data` class to provide remote storage and data ingestion.
 
+### Static vs Dynamic Plots
+
+Several of the examples include both static and dynamic plots,
+but only static plots are rendered
+by default.
+Dynamic plots using the `hv_plots` functions
+yield much larger plot objects,
+which are inherently more flexible.
+See [Plot Functions](../plots.md) for more information.
+
 ### Changes to come
 
 - Fix `sandhill_cranes.qmd` to get its input saved in python data

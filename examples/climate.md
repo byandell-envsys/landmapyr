@@ -34,9 +34,9 @@ import matplotlib.pyplot as plt # Overlay raster and vector data
 import xarray as xr
 
 from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plot import plot_gdf_state # plot gdf with state overlay
-from landmapy.plot import plot_gdf_da # plot GDF over DA
-from landmapy.plot import plot_das # plot DAs in rows
+from landmapy.plots import plot_gdf_state # plot gdf with state overlay
+from landmapy.plots import plot_gdf_da # plot GDF over DA
+from landmapy.plots import plot_das # plot DAs in rows
 from landmapy.process import da_combine
 from landmapy.polaris import merge_soil # merge soil data from GDF
 from landmapy.srtm import srtm_download, srtm_slope # process SRTM data

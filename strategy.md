@@ -308,7 +308,7 @@ These evolved as I started to use the new function
 in multiple settings in the same project.
 I realized that another function, `plot_gdf_da()` is now redundant.
 You can see these in
-[plot.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/plot.py).
+[plots.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/plots.py).
 
 I could eliminate `plot_da()` and `plot_gdf_da()` and use `plot_das()` instead.
 However, I would need to go back to earlier projects where I used

@@ -133,7 +133,7 @@ pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
 # Import needed libraries.
 import geopandas as gpd # read geojson file into gdf
 from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plot import plot_gdf_state # plot gdf with state overlay
+from landmapy.plots import plot_gdf_state # plot gdf with state overlay
 
 data_dir = create_data_dir('habitat')
 # Read all grasslands GeoJSON into `grassland_gdf`.

@@ -10,6 +10,7 @@ plot_matrix: Plot of model matrix
 plot_train_test: Plot test fit
 plot_delta_gdf: Plot Delta GDF
 plot_cluster: Plot of RGB and Clusters
+plot_occurrence: Plot map of occurrences
 """ 
 def plot_index(index_da, place, index='NDVI'):
     """
@@ -331,3 +332,99 @@ def plot_cluster(rgb_sat, model_df):
     plt.show()
 
 # plot_cluster(reflectance_da)
+
+def plot_occurrence(occurrence_gdf, unit='month'):
+    """
+    Plot map of occurrences.
+
+    Args:
+        occurrence_gdf (gdf): monthly occurrences of species
+        unit (str, optional): 'month' or 'year'
+    """
+    import matplotlib.pyplot as plt
+    import contextily as ctx
+    import calendar
+    import math
+    import pandas as pd
+
+    # Get the unique units
+    if unit in occurrence_gdf.index.names:
+        units = occurrence_gdf.index.get_level_values(unit).unique()
+        units = sorted([u for u in units if not pd.isna(u)])
+    elif unit in occurrence_gdf.columns:
+        units = occurrence_gdf[unit].unique()
+        units = sorted([u for u in units if not pd.isna(u)])
+    else:
+        # Fallback to plot everything if unit not found
+        units = [None]
+        
+    n_units = len(units)
+    if n_units == 0:
+        return
+        
+    ncols = min(4, n_units)
+    nrows = math.ceil(n_units / ncols)
+    
+    fig, axes = plt.subplots(nrows, ncols, figsize=(ncols * 5, nrows * 5), sharex=True, sharey=True)
+    if n_units == 1:
+        axes = [axes]
+    elif nrows > 1 or ncols > 1:
+        axes = axes.flatten()
+
+    xmin, ymin, xmax, ymax = occurrence_gdf.total_bounds
+    
+    # Pre-calculate vmin and vmax for colorbar consistency
+    if 'norm_occurrences' in occurrence_gdf.columns:
+        vmin = occurrence_gdf['norm_occurrences'].min()
+        vmax = occurrence_gdf['norm_occurrences'].max()
+    else:
+        vmin, vmax = None, None
+
+    for i, u in enumerate(units):
+        ax = axes[i]
+        
+        if u is not None:
+            if unit in occurrence_gdf.index.names:
+                subset = occurrence_gdf.xs(u, level=unit)
+            else:
+                subset = occurrence_gdf[occurrence_gdf[unit] == u]
+        else:
+            subset = occurrence_gdf
+
+        # For month, use calendar name
+        if unit == 'month' and u is not None:
+            title = calendar.month_name[int(u)]
+        elif u is not None:
+            title = f"{unit.capitalize()}: {u}"
+        else:
+            title = "Occurrences"
+            
+        ax.set_title(title)
+        
+        if 'norm_occurrences' in subset.columns:
+            subset.plot(column='norm_occurrences', ax=ax, cmap='viridis', 
+                        vmin=vmin, vmax=vmax, edgecolor="none", legend=False)
+        else:
+            subset.plot(ax=ax, color='blue', edgecolor="none", legend=False)
+                    
+        # Add basemap
+        try:
+            ctx.add_basemap(ax, source=ctx.providers.CartoDB.Positron, crs=occurrence_gdf.crs.to_string())
+        except Exception:
+            pass # Fallback if contextily fails
+            
+        # Set limits
+        ax.set_xlim([xmin, xmax])
+        ax.set_ylim([ymin, ymax])
+        
+        # Turn off axis labels/ticks for cleaner map
+        ax.set_axis_off()
+
+    # Hide unused axes
+    for j in range(i + 1, len(axes)):
+        axes[j].axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+# plot_occurrence(occurrence_gdf)

@@ -73,7 +73,7 @@ module to visualize.
 ``` {.python .cell-code}
 import geopandas as gpd # read geojson file into gdf
 from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plot import plot_gdf_state # plot gdf with state overlay
+from landmapy.plots import plot_gdf_state # plot gdf with state overlay
 ```
 :::
 
@@ -141,7 +141,7 @@ Get and show `mean` of `sand` at depth `100-200m` with functions
 ::: {.cell execution_count="5"}
 ``` {.python .cell-code}
 from landmapy.polaris import merge_soil # merge soil data from GDF
-from landmapy.plot import plot_gdf_da # plot GDF over DA
+from landmapy.plots import plot_gdf_da # plot GDF over DA
 ```
 :::
 

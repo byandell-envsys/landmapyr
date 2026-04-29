@@ -42,7 +42,7 @@ data_dir
 ```{python}
 import landmapy
 from landmapy.redline import redline_gdf
-from landmapy.plot import plot_gdf_state
+from landmapy.plots import plot_gdf_state
 ```
 
 ```{python}
@@ -132,7 +132,7 @@ city_das['green'].rio.write_crs("EPSG:4326").plot(cmap='Greens', robust=True)
 NDVI compares the amount of NIR reflectance to the amount of Red reflectance, thus accounting for many of the species differences and isolating the health of the plant.
 
 ```{python}
-from landmapy.plot import plot_index, plot_gdf_da
+from landmapy.plots import plot_index, plot_gdf_da
 ```
 
 ```{python}

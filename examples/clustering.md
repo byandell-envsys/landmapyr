@@ -99,7 +99,7 @@ coding.
 ::: {.cell execution_count="3"}
 ``` {.python .cell-code}
 from landmapy.reflect import read_delta_gdf
-from landmapy.plot import plot_delta_gdf
+from landmapy.plots import plot_delta_gdf
 ```
 :::
 
@@ -347,7 +347,7 @@ method to convert type and `.where(rgb!=np.nan)` method to drop NAs
 ::: {.cell execution_count="14"}
 ``` {.python .cell-code}
 from landmapy.reflect import reflectance_rgb
-from landmapy.plot import plot_cluster
+from landmapy.plots import plot_cluster
 
 rgb_sat = reflectance_rgb(reflectance_da)
 ```

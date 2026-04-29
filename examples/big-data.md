@@ -217,7 +217,7 @@ download. Selecting the state and county is one way to do this.
 ::: {.cell execution_count="7"}
 ``` {.python .cell-code}
 from landmapy.cdcplaces import download_cdc_disease, join_tract_cdc
-from landmapy.plot import plot_gdfs_map
+from landmapy.plots import plot_gdfs_map
 from landmapy.naip import naip_path, download_naip_scenes, ndvi_naip_df
 ```
 :::
@@ -449,7 +449,7 @@ Create a plot that contains:
 ``` {.python .cell-code}
 from landmapy.naip import merge_ndvi_cdc
 from landmapy.explore import var_trans, train_test
-from landmapy.plot import plot_gdfs_map, plot_matrix, plot_train_test
+from landmapy.plots import plot_gdfs_map, plot_matrix, plot_train_test
 ```
 :::
 
