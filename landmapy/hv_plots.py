@@ -10,7 +10,7 @@ hvplot_delta_gdf: HV Plot Delta GDF
 hvplot_cluster: HV Plot of RGB and Clusters
 hvplot_occurrence: Holoviews map of monthly occurrences
 """
-import hvplot.pandas
+import hvplot.pandas  # noqa: F401
 
 def hvplot_tract_gdf(place_tract_gdf):
     """
@@ -45,7 +45,6 @@ def hvplot_matrix(model_df):
     Returns:
         matrix_hv (hvplot): plot
     """
-    import hvplot.pandas
     import hvplot.xarray
 
     # Plot scatter matrix to identify variables that need transformation
