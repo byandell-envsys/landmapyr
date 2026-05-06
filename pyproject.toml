@@ -9,6 +9,12 @@ dependencies = [
     "cartopy", "geopandas", "hvplot", "matplotlib",
     "numpy", "pandas", "regionmask", "rioxarray"
 ]
+description = "Land Mapping Python Package"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    { name = "Brian Yandell", email = "brian.yandell@wisc.edu" }
+]
 
 [project.optional-dependencies]
 dev = [
@@ -19,3 +25,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 include = ["landmapy*"]
+
+[project.urls]
+Homepage = "https://github.com/byandell-envsys/landmapy"
+Issues = "https://github.com/byandell-envsys/landmapy/issues"
