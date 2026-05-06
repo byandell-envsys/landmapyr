@@ -153,6 +153,13 @@ Changes made:
 - **Environment Dependency Fixes**: Resolved an upstream `ImportError` from `xrspatial.zonal_stats` by enforcing a `numpy<2.1` requirement to remain compatible with `numba`. Fixed a missing `hvplot.pandas` import in the package modules.
 - **Dynamic Package Installation**: Updated the `pip install` commands across all example notebooks to dynamically install/upgrade from GitHub via `%pip install -q -e ..`, ensuring notebooks always use the latest commit.
 
+### 7. Plotting Function Migrations
+
+- Migrated visualization functions from HoloViews to `matplotlib` to ensure consistent, robust static plotting support across notebooks.
+- Added `plot_occurrence` to `landmapy.plots` for plotting monthly or yearly occurrences of species using `contextily` and `matplotlib`, replacing `hvplot_occurrence`.
+- Added `plot_index_grade` and `plot_index_pred` to `landmapy.plots` to plot zonal index means, redlining grades, and prediction errors using `matplotlib`, replacing the `hvplot` equivalents.
+- Updated `examples/madison.qmd` to utilize the new `plot_index_grade` and `plot_index_pred` functions.
+
 ## Validation Results
 
 All tools now run cleanly across the codebase:

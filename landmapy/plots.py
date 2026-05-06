@@ -11,6 +11,8 @@ plot_train_test: Plot test fit
 plot_delta_gdf: Plot Delta GDF
 plot_cluster: Plot of RGB and Clusters
 plot_occurrence: Plot map of occurrences
+plot_index_grade: Plot for index and grade
+plot_index_pred: Plot the model results
 """ 
 def plot_index(index_da, place, index='NDVI'):
     """
@@ -428,3 +430,85 @@ def plot_occurrence(occurrence_gdf, unit='month'):
     plt.show()
 
 # plot_occurrence(occurrence_gdf)
+
+def plot_index_grade(redlining_index_gdf, place, index='NDVI'):
+    """
+    Plot for index and grade.
+            
+    Args:
+        redlining_index_gdf (gdf): gdf with zonal stats
+        place (str): Name of selected place
+        index (str, optional): index name
+    """
+    import matplotlib.pyplot as plt
+    import contextily as ctx
+
+    fig, axes = plt.subplots(2, 1, figsize=(8, 12))
+
+    # Index plot
+    redlining_index_gdf.plot(
+        column='mean', ax=axes[0], legend=True, cmap='Greens',
+        legend_kwds={'label': f'Mean {index}', 'orientation': 'horizontal'}
+    )
+    axes[0].set_title(f'{place} Mean {index}')
+    try:
+        ctx.add_basemap(axes[0], source=ctx.providers.CartoDB.Positron, crs=redlining_index_gdf.crs.to_string())
+    except Exception:
+        pass
+    axes[0].set_axis_off()
+
+    # Grade plot
+    redlining_index_gdf.plot(
+        column='grade', ax=axes[1], legend=True, cmap='coolwarm',
+        legend_kwds={'title': 'Redlining Grades'} # 'orientation': 'horizontal' might error for categorical legend
+    )
+    axes[1].set_title(f'{place} Redlining Grades')
+    try:
+        ctx.add_basemap(axes[1], source=ctx.providers.CartoDB.Positron, crs=redlining_index_gdf.crs.to_string())
+    except Exception:
+        pass
+    axes[1].set_axis_off()
+
+    plt.tight_layout()
+    plt.show()
+
+# plot_index_grade(redlining_index_gdf, place)
+
+def plot_index_pred(redlining_index_gdf, tree_classifier, place):
+    """
+    Plot the model results.
+            
+    Args:
+        redlining_index_gdf (gdf): gdf with zonal stats
+        tree_classifier (decision_tree): Decision tree for classifier
+        place (str): Name of selected place
+    """
+    import matplotlib.pyplot as plt
+    import contextily as ctx
+    
+    # Predict grades for each region
+    redlining_index_gdf['predictions'] = (
+        tree_classifier.predict(redlining_index_gdf[['mean']]))
+
+    # Subtract actual grades from predicted grades
+    redlining_index_gdf['error'] = (
+        redlining_index_gdf['predictions'] - redlining_index_gdf['grade_codes'])
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    
+    # Plot the calculated prediction errors as a choropleth
+    redlining_index_gdf.plot(
+        column='error', ax=ax, legend=True, cmap='coolwarm',
+        legend_kwds={'label': 'Predicted Grades Error', 'orientation': 'horizontal'}
+    )
+    ax.set_title(f'{place} Calculated Prediction Errors')
+    
+    try:
+        ctx.add_basemap(ax, source=ctx.providers.CartoDB.Positron, crs=redlining_index_gdf.crs.to_string())
+    except Exception:
+        pass
+    ax.set_axis_off()
+
+    plt.show()
+
+# plot_index_pred(redlining_index_gdf, tree_classifier, place)

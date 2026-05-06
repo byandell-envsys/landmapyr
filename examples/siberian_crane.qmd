@@ -226,7 +226,6 @@ occurrence_hvplot.save('siberian-crane-years.html', embed=True)
 
 ```{python}
 #| eval: false
-#| label: fig-occurrence-map-years
 occurrence_hvplot
 ```
 

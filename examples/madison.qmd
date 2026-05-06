@@ -149,7 +149,7 @@ plot_index(city_ndvi_da, city)
 Overlay redlining grades on NDVI map.
 
 ```{python}
-#| label: fig-ndvi-grade-plot
+#| label: fig-redlining-plot
 plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 ```
 
@@ -157,8 +157,6 @@ plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 
 ```{python}
 from landmapy.redline import redline_mask, redline_index_gdf
-import hvplot.pandas
-from landmapy.hv_plots import hvplot_index_grade
 ```
 
 ```{python}
@@ -192,8 +190,9 @@ redlining_ndvi_gdf = redline_index_gdf(redlining_gdf, ndvi_stats)
 ```
 
 ```{python}
-ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
-(ndvi_hv + grade_hv)
+#| label: fig-ndvi-grade-plot
+from landmapy.plots import plot_index_grade
+plot_index_grade(redlining_ndvi_gdf, city)
 ```
 
 ## Fitting Tree Model
@@ -202,7 +201,6 @@ Somehow I have to go from city_ndvi_da to redlining_ndvi_gdf.
 
 ```{python}
 from landmapy.explore import index_tree
-from landmapy.hv_plots import hvplot_index_pred
 
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -222,19 +220,9 @@ plt.show()
 ```
 
 ```{python}
-pred_hv = hvplot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
-pred_hv
-```
-
-```{python}
-# Plot NDVI, predicted and redlining grade in linked subplots
-madison_hv = (ndvi_hv + pred_hv + grade_hv)
-
-# Save the linked plots as a file to put on the web
-import holoviews as hv
-hv.save(madison_hv, 'madison.html')
-
-madison_hv
+#| label: fig-pred-plot
+from landmapy.plots import plot_index_pred
+plot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
 ```
 
 ## Evaluate the Model
@@ -265,3 +253,33 @@ cross_val_score(
 )
 ```
 
+## Optional HoloViews Plots
+
+Not shown by default.
+
+```{python}
+#| eval: false
+import hvplot.pandas
+from landmapy.hv_plots import hvplot_index_grade
+ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
+(ndvi_hv + grade_hv)
+```
+
+```{python}
+#| eval: false
+from landmapy.hv_plots import hvplot_index_pred
+pred_hv = hvplot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
+pred_hv
+```
+
+```{python}
+#| eval: false
+# Plot NDVI, predicted and redlining grade in linked subplots
+madison_hv = (ndvi_hv + pred_hv + grade_hv)
+
+# Save the linked plots as a file to put on the web
+import holoviews as hv
+hv.save(madison_hv, 'madison.html')
+
+madison_hv
+```
