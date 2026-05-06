@@ -17,38 +17,44 @@ To date, this package has been used in the following
 [initial](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/initial.py)
 and plot modules):
 
-- [Habitat2: Buffalo Grasslands Habitat Suitability](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/climate.md)
+- [Habitat2: Buffalo Grasslands Habitat Suitability](climate.md)
   - [climate.qmd](climate.qmd)
-  - [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
-[srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
-[thredds](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/thredds.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Clustering: Classify land cover for Mississippi Delta](https://github.com/earthlab-education/clustering-byandell)
+  - [Original project](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/climate.md)
+  - modules: [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
+    [srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
+    [thredds](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/thredds.py),
+    [explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
+- [Clustering: Classify land cover for Mississippi Delta](clustering.md)
   - [clustering.qmd](clustering.qmd)
-  - [reflect](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflect.py)
-- [Big-Data: Urban Greenspace and Asthma Prevalence](https://github.com/earthlab-education/big-data-byandell/blob/main/big-data.md)
+  - [Original project](https://github.com/earthlab-education/clustering-byandell)
+  - modules: [reflect](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflect.py)
+- [Big-Data: Urban Greenspace and Asthma Prevalence](big-data.md)
   - [big-data.qmd](big-data.qmd)
-  - [naip](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/naip.py),
-[explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Habitat: Buffalo Grasslands Habitat Suitability](https://github.com/byandell-envsys/habitatSuitability/blob/main/buffalo.md)
+  - [Original project](https://github.com/earthlab-education/big-data-byandell/blob/main/big-data.md)
+  - modules: [naip](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/naip.py),
+    [explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
+- [Habitat: Buffalo Grasslands Habitat Suitability](buffalo.md)
   - [buffalo.qmd](buffalo.qmd)
-  - [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
-[srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
+  - [Original project](https://github.com/byandell-envsys/habitatSuitability/blob/main/buffalo.md)
+  - modules: [polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py),
+    [srtm](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/srtm.py),
 [thredds](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/thredds.py),
 [explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Redlining: Predicting NDVI for Madison](https://github.com/earthlab-education/fundamentals-04-redlining-byandell/blob/main/notebooks/madison.ipynb)
+- [Redlining: Predicting NDVI for Madison](madison.md)
   - [madison.qmd](madison.qmd)
-  - [redline](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/redline.py),
+  - [Original project](https://github.com/earthlab-education/fundamentals-04-redlining-byandell/blob/main/notebooks/madison.ipynb)
+  - modules: [redline](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/redline.py),
 [process](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/process.py),
 [explore](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/explore.py)
-- [Species: Crane Migration Maps](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
-  - [sandhill_cranes.qmd](sandhill_cranes.qmd)
-  - [siberian_cranes.qmd](siberian_cranes.qmd)
-  - [gbif](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
+- [Species: Crane Migration Maps]
+  - [Sandhill Cranes](sandhill_cranes.md)
+  - [Siberian Cranes](siberian_cranes.md)
+  - [Original project](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
+  - modules: [gbif](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
 
 ## Genesis of `landmapy` Package
 
-This `landmapy`python package was begun in nov-dec 2024
+This `landmapy` python package was begun in nov-dec 2024
 when I took the
 [Earth Data Analytics (EDA)](https://github.com/byandell-envsys/EarthDataAnalytics)
 course as I found
@@ -61,7 +67,7 @@ I learned by doing and looking at other tools,
 developing my own
 [Coding Strategy](strategy.md).
 The Quarto files (`*.qmd`) are rendered as markdown (`*.md`) files
-with the shell command
+with the shell command (run within this directory):
 
 ```bash
 quarto render [filename].qmd -t markdown
@@ -70,6 +76,13 @@ quarto render [filename].qmd -t markdown
 with the output files going into the directory
 `[filename]_files/figure-markdown/`
 as `.png` files.
+Post-rendering with
+
+```bash
+python3 ../landmapy/move_images.py [filename].qmd
+```
+
+moves the images to `images/[filename]/`.
 
 ## Technical Notes
 
