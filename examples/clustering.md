@@ -131,7 +131,7 @@ plot_delta_gdf(delta_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](clustering_files/figure-markdown/fig-delta-output-1.png)
+![](images/clustering/fig-delta-output-1.png)
 :::
 ::::
 
@@ -363,7 +363,7 @@ plot_cluster(rgb_sat, model_df)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](clustering_files/figure-markdown/fig-cluster-output-1.png){#fig-cluster}
+![](images/clustering/fig-cluster-output-1.png){#fig-cluster}
 :::
 ::::
 

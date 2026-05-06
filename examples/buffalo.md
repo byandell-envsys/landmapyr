@@ -110,7 +110,7 @@ plot_gdf_state(buffalo_gdf, aiannh=True)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-grasslands-output-1.png){#fig-grasslands}
+![](images/buffalo/fig-grasslands-output-1.png){#fig-grasslands}
 :::
 ::::
 
@@ -173,7 +173,7 @@ plot_gdf_da(buffalo_gdf, buffalo_da, cmap='viridis')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-soil-output-1.png){#fig-soil}
+![](images/buffalo/fig-soil-output-1.png){#fig-soil}
 :::
 ::::
 
@@ -230,7 +230,7 @@ plot_gdf_da(buffalo_gdf, maca_2027_year_da)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-maca-output-1.png){#fig-maca}
+![](images/buffalo/fig-maca-output-1.png){#fig-maca}
 :::
 ::::
 
@@ -290,7 +290,7 @@ plot_gdf_da(buffalo_gdf, srtm_da, cmap='terrain')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-srtm-output-1.png){#fig-srtm}
+![](images/buffalo/fig-srtm-output-1.png){#fig-srtm}
 :::
 ::::
 
@@ -311,7 +311,7 @@ plot_gdf_da(buffalo_gdf, slope_da, cmap='terrain')
 :::
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-slope-output-2.png){#fig-slope}
+![](images/buffalo/fig-slope-output-2.png){#fig-slope}
 :::
 :::::
 
@@ -329,7 +329,7 @@ plt.show()
 ```
 
 ::: {.cell-output .cell-output-display}
-![](buffalo_files/figure-markdown/fig-slopeclip-output-1.png){#fig-slopeclip}
+![](images/buffalo/fig-slopeclip-output-1.png){#fig-slopeclip}
 :::
 ::::
 

@@ -296,7 +296,7 @@ ecoregions_gdf.plot(edgecolor='black', color='skyblue')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](sandhill_crane_files/figure-markdown/fig-ecoregions-output-1.png){#fig-ecoregions}
+![](images/sandhill_crane/fig-ecoregions-output-1.png){#fig-ecoregions}
 :::
 ::::
 
@@ -416,7 +416,7 @@ occurrence_df.reset_index().plot.scatter(
 ```
 
 ::: {.cell-output .cell-output-display}
-![](sandhill_crane_files/figure-markdown/fig-occurrence-by-month-output-1.png){#fig-occurrence-by-month}
+![](images/sandhill_crane/fig-occurrence-by-month-output-1.png){#fig-occurrence-by-month}
 :::
 ::::
 
@@ -543,7 +543,7 @@ plot_occurrence(occurrence_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](sandhill_crane_files/figure-markdown/fig-occurrence-map-months-output-1.png){#fig-occurrence-map-months}
+![](images/sandhill_crane/fig-occurrence-map-months-output-1.png){#fig-occurrence-map-months}
 :::
 ::::
 

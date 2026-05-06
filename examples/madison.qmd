@@ -3,7 +3,6 @@ title: Using Earth Access to Build and image
 jupyter: python3
 ---
 
-
 The goal is to use Earth Access to 
 
 - load the rasters that cover Madison

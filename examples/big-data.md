@@ -287,7 +287,7 @@ plot_gdfs_map(tract_cdc_gdf, column='asthma')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](big-data_files/figure-markdown/fig-healthmap-output-1.png)
+![](images/big-data/fig-healthmap-output-1.png)
 :::
 ::::
 
@@ -464,7 +464,7 @@ plot_gdfs_map(ndvi_cdc_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](big-data_files/figure-markdown/fig-gdfsmap-output-1.png)
+![](images/big-data/fig-gdfsmap-output-1.png)
 :::
 ::::
 
@@ -543,7 +543,7 @@ plot_matrix(logndvi_cdc_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](big-data_files/figure-markdown/fig-plotmatrix-output-1.png)
+![](images/big-data/fig-plotmatrix-output-1.png)
 :::
 ::::
 
@@ -573,7 +573,7 @@ plot_train_test(logndvi_cdc_test)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](big-data_files/figure-markdown/fig-traintest-output-1.png)
+![](images/big-data/fig-traintest-output-1.png)
 :::
 ::::
 
@@ -602,7 +602,7 @@ plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=[
 ```
 
 ::: {.cell-output .cell-output-display}
-![](big-data_files/figure-markdown/fig-resid-output-1.png){#fig-resid}
+![](images/big-data/fig-resid-output-1.png){#fig-resid}
 :::
 ::::
 

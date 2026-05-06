@@ -321,7 +321,7 @@ plot_gdf_state(buffalo_gdf, aiannh=True)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-grasslands-output-1.png){#fig-grasslands}
+![](images/climate/fig-grasslands-output-1.png){#fig-grasslands}
 :::
 ::::
 
@@ -453,7 +453,7 @@ plot_gdf_da(buffalo_gdf, buffalo_da, cmap='viridis')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-soil-output-1.png){#fig-soil}
+![](images/climate/fig-soil-output-1.png){#fig-soil}
 :::
 ::::
 
@@ -526,7 +526,7 @@ plot_gdf_da(buffalo_gdf, srtm_da, cmap='terrain')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-srtm-output-1.png){#fig-srtm}
+![](images/climate/fig-srtm-output-1.png){#fig-srtm}
 :::
 ::::
 
@@ -536,7 +536,7 @@ plot_gdf_da(buffalo_gdf, slope_da, cmap='terrain')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-slope-output-1.png){#fig-slope}
+![](images/climate/fig-slope-output-1.png){#fig-slope}
 :::
 ::::
 
@@ -552,7 +552,7 @@ plt.show()
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-slopeclip-output-1.png){#fig-slopeclip}
+![](images/climate/fig-slopeclip-output-1.png){#fig-slopeclip}
 :::
 ::::
 
@@ -649,7 +649,7 @@ del maca_rcp_2025_da
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-maca-output-1.png){#fig-maca}
+![](images/climate/fig-maca-output-1.png){#fig-maca}
 :::
 ::::
 
@@ -660,12 +660,12 @@ plot_das(maca_da[0][[59,50,40,30]], gdf = buffalo_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-maca85-output-1.png){#fig-maca85-1
+![](images/climate/fig-maca85-output-1.png){#fig-maca85-1
 ref-parent="fig-maca85"}
 :::
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-maca85-output-2.png){#fig-maca85-2
+![](images/climate/fig-maca85-output-2.png){#fig-maca85-2
 ref-parent="fig-maca85"}
 :::
 :::::
@@ -677,11 +677,11 @@ plot_das(maca_da[1][[59,50,40,30]], gdf = buffalo_gdf)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-maca45-output-1.png){ref-parent="fig-maca45"}
+![](images/climate/fig-maca45-output-1.png){ref-parent="fig-maca45"}
 :::
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-maca45-output-2.png){#fig-maca45-2
+![](images/climate/fig-maca45-output-2.png){#fig-maca45-2
 ref-parent="fig-maca45"}
 :::
 :::::
@@ -703,7 +703,7 @@ plot_das(maca_now_da, onebar=False)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-dasnow-output-1.png){#fig-dasnow}
+![](images/climate/fig-dasnow-output-1.png){#fig-dasnow}
 :::
 ::::
 
@@ -713,7 +713,7 @@ plot_das(maca_fut_da, onebar=False)
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-dasfut-output-1.png){#fig-dasfut}
+![](images/climate/fig-dasfut-output-1.png){#fig-dasfut}
 :::
 ::::
 
@@ -809,7 +809,7 @@ sand_da.plot()
 ```
 
 ::: {.cell-output .cell-output-display}
-![](climate_files/figure-markdown/fig-slopesandclip-output-1.png){#fig-slopesandclip}
+![](images/climate/fig-slopesandclip-output-1.png){#fig-slopesandclip}
 :::
 ::::
 

@@ -231,7 +231,7 @@ ecoregions_gdf.plot(edgecolor='black', color='skyblue')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](siberian_crane_files/figure-markdown/fig-ecoregions-output-1.png){#fig-ecoregions}
+![](images/siberian_crane/fig-ecoregions-output-1.png){#fig-ecoregions}
 :::
 ::::
 
@@ -395,7 +395,7 @@ occurrence_year_df.reset_index().plot.scatter(
 ```
 
 ::: {.cell-output .cell-output-display}
-![](siberian_crane_files/figure-markdown/fig-occurrences-by-year-output-1.png){#fig-occurrences-by-year}
+![](images/siberian_crane/fig-occurrences-by-year-output-1.png){#fig-occurrences-by-year}
 :::
 ::::
 
@@ -496,7 +496,7 @@ plot_occurrence(occurrence_gdf, 'year')
 ```
 
 ::: {.cell-output .cell-output-display}
-![](siberian_crane_files/figure-markdown/fig-occurrence-map-years-output-1.png){#fig-occurrence-map-years}
+![](images/siberian_crane/fig-occurrence-map-years-output-1.png){#fig-occurrence-map-years}
 :::
 ::::
 
