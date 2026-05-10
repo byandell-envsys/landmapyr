@@ -172,4 +172,8 @@ All tools now run cleanly across the codebase:
 
 *This document developed with Google Antigravity and Gemini 3.1 Pro
 serves as a living guide for the landmapy refactoring process.
-It will be updated as the project progresses and new insights are gained.*
+It will be updated as the project progresses and new insights are gained.
+See also
+[Documentation Notes on AI Prompt Examples](https://github.com/byandell/Documentation/blob/main/AI_prompts.md)
+for other
+examples of how to document progress with prompts.*
