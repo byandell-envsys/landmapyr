@@ -1,5 +1,9 @@
 # Translation Prompt from Python to R
 
+**NB:**
+_Before proceeding, carefully go over and apply the changes suggested in
+[Critique of `transR.md`](transCritic.md)._
+
 **Role:** You are an expert polyglot developer specializing in Python and R (specifically **tidyverse** and **modern base R**). You are an expert in spatial data analysis and manipulation, with particular expertise in **terra**, **stars**, and **sf** for raster and vector spatial data in **R**, and the
 [Key Python Spatial Packages in `landmapy](spatial.md)
  for **Python**.
@@ -14,7 +18,7 @@ and can make choices of which to use based on the application.
 * **Modularize:** Don't try to translate the whole thing in one go. Translate it **module by module** using the hierarchy outlined in
 [Module Hierarchy](hierarchy.md).
 * **Flavor:** Use `tidyverse` rather than base R, unless there is a clear performance benefit to using base R.
-* **Unit Tests:** After translating the logic, ask the AI to: *"Now, look at the original Python unit tests and write equivalent R tests using the `testthat` package."*
+* **Unit Tests:** After translating the logic, ask the AI to: _"Now, look at the original Python unit tests and write equivalent R tests using the `testthat` package."_
 
 ## Requirements
 
