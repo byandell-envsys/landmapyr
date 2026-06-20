@@ -8,7 +8,7 @@ version = "0.4"
 dependencies = [
     "cartopy", "geopandas", "hvplot", "matplotlib",
     "numpy", "pandas", "regionmask", "rioxarray",
-    "dataretrieval", "earthaccess", "xrspatial", "scikit-learn",
+    "dataretrieval", "earthaccess", "xarray-spatial", "scikit-learn",
     "scipy", "pystac-client", "tqdm", "xarray", "shapely",
     "contextily", "seaborn", "geoviews", "holoviews", "pygbif"
 ]
