@@ -1,5 +1,15 @@
 project:
-  type: default
+  type: website
+  output-dir: .
+exclude:
+  - "*.py"
+  - "*.R"
+  - "*.qmd"
+  - "docs/site_libs/*"
+  - "landmapyr/*"
+  - "notes/*"
+  - "tests/*"
+  - "scripts/*"
 
 execute:
   eval: true
