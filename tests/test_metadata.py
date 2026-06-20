@@ -1,7 +1,9 @@
+import os
 import dataretrieval.nwis as nwis
 import pytest
 
 
+@pytest.mark.skipif(os.environ.get("GITHUB_ACTIONS") == "true", reason="Skipping live API calls in CI")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_metadata():
     site_id = "06446000"
