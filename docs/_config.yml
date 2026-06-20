@@ -1,0 +1,16 @@
+plugins:
+  - jekyll-relative-links
+  - jekyll-remote-theme
+relative_links:
+  enabled: true
+  collections: true
+remote_theme: just-the-docs/just-the-docs
+exclude:
+  - "**/*.qmd"
+  - "site_libs/*"
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default

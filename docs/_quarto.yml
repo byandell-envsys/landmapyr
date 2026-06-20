@@ -1,4 +1,5 @@
 project:
-  type: default
+  type: website
+  output-dir: .
 post-render:
   - env > env.txt
