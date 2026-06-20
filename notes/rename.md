@@ -19,8 +19,8 @@ We have successfully renamed the Python package, directory, and repository refer
 ### 3. Updated Python Package Code
 
 - Updated package docstring in `[newrepo]/__init__.py`.
-- Renamed internal absolute imports of `[oldrepo]/<module>` to `[newrepo].<module>` inside package modules
-- Updated [scratch.py](../scratch.py) imports and test patterns.
+- Renamed internal absolute imports of `[oldrepo]/<module>` to `[newrepo].<module>` inside package modules `[newrepo]/*.py`.
+- Updated `*.py` imports and test patterns.
 - Updated validation in `../tests/verify_qmd_logic.py`.
 
 ### 4. Jupyter Notebook Updates
