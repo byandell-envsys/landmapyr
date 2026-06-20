@@ -8,10 +8,12 @@ ndvi_naip_one: Get stats for one NAIP tract (internal)
 check_element_in_csv: Check value of element in CSV file (internal)
 merge_ndvi_cdc: Merge NDVI and CDC data
 """
-def naip_path(data_dir, place = 'chicago'):
+
+
+def naip_path(data_dir, place="chicago"):
     """
     Create NAIP tracts path.
-    
+
     Args:
         data_dir (str): data directory
         place (str): name of place
@@ -19,17 +21,19 @@ def naip_path(data_dir, place = 'chicago'):
         naip_index_path (str): address of NAIP tracts
     """
     import os
-    
-    naip_index_path = os.path.join(data_dir, f'{place}-naip-stats.csv')
+
+    naip_index_path = os.path.join(data_dir, f"{place}-naip-stats.csv")
 
     return naip_index_path
 
+
 # naip_index_path = naip_path(data_dir, 'chicago')
+
 
 def download_naip_scenes(naip_index_path, tract_cdc_gdf):
     """
     Download NAIP Scene URLs.
-    
+
     Args:
         naip_index_path (str): NAIP index CSV file address
         tract_cdc_gdf (gdf): gdf of combined place and disease
@@ -42,7 +46,7 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
     import pystac_client
     import time
     from tqdm.notebook import tqdm
-    
+
     # Check for existing data - do not access duplicate tracts
     downloaded_tracts = []
     if os.path.exists(naip_index_path):
@@ -57,7 +61,7 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
         tract_latlon_gdf = tract_cdc_gdf.to_crs(4326)
 
         # Download asthma data (only once)
-        print('No census tracts downloaded so far')
+        print("No census tracts downloaded so far")
         # Loop through each census tract
         scene_dfs = []
         for i, tract_values in tqdm(tract_latlon_gdf.iterrows()):
@@ -74,27 +78,37 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
                         naip_search = e84_catalog.search(
                             collections=["naip"],
                             intersects=shapely.to_geojson(tract_values.geometry),
-                            datetime="2021"
+                            datetime="2021",
                         )
-                        
+
                         # Build dataframe with tracts and tile urls
-                        scene_dfs.append(pd.DataFrame(dict(
-                            tract=tract,
-                            date=[pd.to_datetime(scene.datetime).date() 
-                                for scene in naip_search.items()],
-                            rgbir_href=[scene.assets['image'].href for scene in naip_search.items()],
-                        )))
-                        
+                        scene_dfs.append(
+                            pd.DataFrame(
+                                dict(
+                                    tract=tract,
+                                    date=[
+                                        pd.to_datetime(scene.datetime).date()
+                                        for scene in naip_search.items()
+                                    ],
+                                    rgbir_href=[
+                                        scene.assets["image"].href
+                                        for scene in naip_search.items()
+                                    ],
+                                )
+                            )
+                        )
+
                         break
                     # Try again in case of an APIError
                     except pystac_client.exceptions.APIError:
                         print(
-                            f'Could not connect with STAC server. '
-                            f'Retrying tract {tract}...')
+                            f"Could not connect with STAC server. "
+                            f"Retrying tract {tract}..."
+                        )
                         time.sleep(2)
                         i += 1
                         continue
-            
+
         # Concatenate the url dataframes
         if scene_dfs:
             naip_scenes_df = pd.concat(scene_dfs).reset_index(drop=True)
@@ -103,8 +117,10 @@ def download_naip_scenes(naip_index_path, tract_cdc_gdf):
 
     return naip_scenes_df
 
+
 # naip_index_path = naip_path(data_dir, 'chicago')
 # naip_scenes_df = download_naip_scenes(naip_index_path, tract_cdc_gdf)
+
 
 def ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf):
     """
@@ -128,26 +144,23 @@ def ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf):
     tile_das = []
     for _, href_s in tract_date_gdf.iterrows():
         # Open vsi connection to data
-        tile_da = rxr.open_rasterio(
-            href_s.rgbir_href, masked=True).squeeze()
-        
+        tile_da = rxr.open_rasterio(href_s.rgbir_href, masked=True).squeeze()
+
         # Clip data
         boundary = (
-            tract_cdc_gdf
-            .set_index('tract2010')
+            tract_cdc_gdf.set_index("tract2010")
             .loc[[tract]]
             .to_crs(tile_da.rio.crs)
             .geometry
         )
         crop_da = tile_da.rio.clip_box(
-            *boundary.envelope.total_bounds,
-            auto_expand=True)
+            *boundary.envelope.total_bounds, auto_expand=True
+        )
         clip_da = crop_da.rio.clip(boundary, all_touched=True)
-            
+
         # Compute NDVI
-        ndvi_da = (
-            (clip_da.sel(band=4) - clip_da.sel(band=1)) 
-            / (clip_da.sel(band=4) + clip_da.sel(band=1))
+        ndvi_da = (clip_da.sel(band=4) - clip_da.sel(band=1)) / (
+            clip_da.sel(band=4) + clip_da.sel(band=1)
         )
 
         # Accumulate result
@@ -157,7 +170,7 @@ def ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf):
     scene_da = rxrmerge.merge_arrays(tile_das)
 
     # Mask vegetation
-    veg_mask = (scene_da>.3)
+    veg_mask = scene_da > 0.3
 
     # Calculate statistics and save data to file
     total_pixels = scene_da.notnull().sum()
@@ -166,22 +179,21 @@ def ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf):
     # Calculate mean patch size
     labeled_patches, num_patches = label(veg_mask)
     # Count patch pixels, ignoring background at patch 0
-    patch_sizes = np.bincount(labeled_patches.ravel())[1:] 
+    patch_sizes = np.bincount(labeled_patches.ravel())[1:]
     mean_patch_size = patch_sizes.mean()
 
     # Calculate edge density
-    kernel = np.array([
-        [1, 1, 1], 
-        [1, -8, 1], 
-        [1, 1, 1]])
-    edges = convolve(veg_mask, kernel, mode='constant')
+    kernel = np.array([[1, 1, 1], [1, -8, 1], [1, 1, 1]])
+    edges = convolve(veg_mask, kernel, mode="constant")
     edge_density = np.sum(edges != 0) / veg_mask.size
-    
+
     return total_pixels, veg_pixels, mean_patch_size, edge_density
 
+
 # total_pixels, veg_pixels, mean_patch_size, edge_density = ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf)
-    
-def ndvi_naip_df(naip_index_path, tract_cdc_gdf, naip_scenes_df = None):
+
+
+def ndvi_naip_df(naip_index_path, tract_cdc_gdf, naip_scenes_df=None):
     """
     Compute NDVI index for all NAIP tracts.
 
@@ -195,35 +207,41 @@ def ndvi_naip_df(naip_index_path, tract_cdc_gdf, naip_scenes_df = None):
     import os
     import pandas as pd
     from tqdm.notebook import tqdm
-    
-    # Skip this step if no `scenes_df` data provided. 
+
+    # Skip this step if no `scenes_df` data provided.
     if naip_scenes_df is not None:
         # Loop through the census tracts with URLs
-        for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby('tract')):
+        for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby("tract")):
             # Check each tract to see if it is in `naip_index_path` CSV yet.
-            # This may be overkill as each time it checks them all. 
-            if not check_element_in_csv(naip_index_path, 'tract', tract):
-                total_pixels, veg_pixels, mean_patch_size, edge_density = ndvi_naip_one(tract_cdc_gdf, tract, tract_date_gdf)
+            # This may be overkill as each time it checks them all.
+            if not check_element_in_csv(naip_index_path, "tract", tract):
+                total_pixels, veg_pixels, mean_patch_size, edge_density = ndvi_naip_one(
+                    tract_cdc_gdf, tract, tract_date_gdf
+                )
                 # Add a row to the statistics file for this tract
-                pd.DataFrame(dict(
-                    tract=[tract],
-                    total_pixels=[int(total_pixels)],
-                    frac_veg=[float(veg_pixels/total_pixels)],
-                    mean_patch_size=[mean_patch_size],
-                    edge_density=[edge_density]
-                )).to_csv(
-                    naip_index_path, 
-                    mode='a', 
-                    index=False, 
-                    header=(not os.path.exists(naip_index_path))
+                pd.DataFrame(
+                    dict(
+                        tract=[tract],
+                        total_pixels=[int(total_pixels)],
+                        frac_veg=[float(veg_pixels / total_pixels)],
+                        mean_patch_size=[mean_patch_size],
+                        edge_density=[edge_density],
+                    )
+                ).to_csv(
+                    naip_index_path,
+                    mode="a",
+                    index=False,
+                    header=(not os.path.exists(naip_index_path)),
                 )
 
     # Re-load results from file **error seems to be here**
     ndvi_index_df = pd.read_csv(naip_index_path)
-    
+
     return ndvi_index_df
 
+
 # ndvi_index_df = ndvi_naip_df(naip_index_path, tract_cdc_gdf, naip_scenes_df)
+
 
 def check_element_in_csv(filename, column_name, target_value):
     """
@@ -240,17 +258,18 @@ def check_element_in_csv(filename, column_name, target_value):
     import csv
 
     try:
-        with open(filename, 'r') as csvfile:
+        with open(filename, "r") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 if row[column_name] == str(target_value):
                     return True
         return False
     except FileNotFoundError:
-         return False
-    
+        return False
+
 
 # is_found = check_element_in_csv(naip_index_path, 'target', 123456789):
+
 
 def merge_ndvi_cdc(tract_cdc_gdf, ndvi_index_df):
     """
@@ -262,12 +281,10 @@ def merge_ndvi_cdc(tract_cdc_gdf, ndvi_index_df):
     Returns:
         ndvi_cdc_gdf (gdf): merged data as gdf
     """
-    ndvi_cdc_gdf = (
-        tract_cdc_gdf
-        .merge(
-            ndvi_index_df,
-            left_on='tract2010', right_on='tract', how='inner')
+    ndvi_cdc_gdf = tract_cdc_gdf.merge(
+        ndvi_index_df, left_on="tract2010", right_on="tract", how="inner"
     )
     return ndvi_cdc_gdf
+
 
 # ndvi_cdc_gdf = merge_ndvi_cdc(tract_cdc_gdf, ndvi_index_df)

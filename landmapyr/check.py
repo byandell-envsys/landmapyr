@@ -4,6 +4,8 @@ get_last_row_csv: Check Last Row of CSV File
 check_element_in_csv: Check value of element in CSV file
 check_naip_tracts: Check if NAIP tracts stored
 """
+
+
 def header_csv(file_path):
     """
     Header of CSV file.
@@ -19,31 +21,36 @@ def header_csv(file_path):
     header = df.columns.tolist()
     return header
 
+
 # header = header_csv(file_path)
+
 
 def get_last_row_csv(file_path):
     """
     Check Last Row of CSV File.
-    
+
     Args:
         file_path (str): file path
     Returns:
         last_row (str): last row
     """
     import csv
+
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             reader = csv.reader(file)
             # Handle empty CSV
             try:
-              *_, last_row = reader
-              return last_row
+                *_, last_row = reader
+                return last_row
             except ValueError:
-              return None
+                return None
     except FileNotFoundError:
         return "File not found."
 
+
 # last_row = get_last_row_csv(file_path)
+
 
 def check_element_in_csv(filename, column_name, target_value):
     """
@@ -60,20 +67,21 @@ def check_element_in_csv(filename, column_name, target_value):
     import csv
 
     try:
-        with open(filename, 'r') as csvfile:
+        with open(filename, "r") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 if row[column_name] == str(target_value):
                     return True
         return False
     except FileNotFoundError:
-         return False
-    
+        return False
+
 
 # filename = 'my_data.csv'
 # column_name = 'age'
 # target_value = 30
 # is_found = check_element_in_csv(filename, column_name, target_value):
+
 
 def check_naip_tracts(naip_index_path, naip_scenes_df):
     """
@@ -86,8 +94,8 @@ def check_naip_tracts(naip_index_path, naip_scenes_df):
         ndvi_stats_df (df): NDVI stats DataFrame
     """
     from tqdm.notebook import tqdm
-    
+
     if naip_scenes_df is not None:
         # Loop through the census tracts with URLs
-        for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby('tract')):
-            print(tract, check_element_in_csv(naip_index_path, 'tract', tract))
+        for tract, tract_date_gdf in tqdm(naip_scenes_df.groupby("tract")):
+            print(tract, check_element_in_csv(naip_index_path, "tract", tract))

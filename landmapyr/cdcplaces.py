@@ -4,59 +4,68 @@ download_census_tract: Download the census tracts
 download_cdc_disease: Download CDC Disease data
 join_tract_cdc: Join Census Tract and CDC Disease Data
 """
-def shp_tract_path(data_dir, place = 'chicago-tract'):
+
+
+def shp_tract_path(data_dir, place="chicago-tract"):
     """
     Set tract path.
-    
+
     Args:
         data_dir (str): data directory
         place (str): name for place directory
-    
+
     Returns:
         tract_path (str): shapefile address
     """
     import os
+
     tract_dir = os.path.join(data_dir, place)
     os.makedirs(tract_dir, exist_ok=True)
-    tract_path = os.path.join(tract_dir, f'{place}.shp')
+    tract_path = os.path.join(tract_dir, f"{place}.shp")
 
     return tract_path
 
+
 # tract_path = shp_tract_path(place = 'chicago-tract')
-    
-def download_census_tract(tract_path,
-                          placename = 'Chicago'):
+
+
+def download_census_tract(tract_path, placename="Chicago"):
     """
     Download the census tracts (only once)
-    
+
     Args:
         tract_path (str): address of tract
-        
+
     Returns:
         place_tract_gdf (GeoDataFrame): gdf for place
     """
     import os
     import geopandas as gpd
+
     if not os.path.exists(tract_path):
-        tract_url = ('https://data.cdc.gov/download/x7zy-2xmx/application%2Fzip')
+        tract_url = "https://data.cdc.gov/download/x7zy-2xmx/application%2Fzip"
         tract_gdf = gpd.read_file(tract_url)
         place_tract_gdf = tract_gdf[tract_gdf.PlaceName == placename]
         place_tract_gdf.to_file(tract_path, index=False)
 
     # Load in the census tract data
     place_tract_gdf = gpd.read_file(tract_path)
-    
+
     return place_tract_gdf
-    
+
+
 # place_tract_gdf = download_census_tract('chicago-tract', 'Chicago')
 
-def download_cdc_disease(data_dir,
-                         disease = 'asthma',
-                         year = '2022',
-                         state = 'IL',
-                         county = 'Cook',
-                         measureid = 'CASTHMA',
-                         limit = 1500):
+
+def download_cdc_disease(
+    data_dir,
+    disease="asthma",
+    year="2022",
+    state="IL",
+    county="Cook",
+    measureid="CASTHMA",
+    limit=1500,
+):
     """
     Download CDC Disease data
 
@@ -74,9 +83,9 @@ def download_cdc_disease(data_dir,
     """
     import os
     import pandas as pd
-    
+
     # Set up a path for the asthma data
-    cdc_path = os.path.join(data_dir, f'{disease}.csv')
+    cdc_path = os.path.join(data_dir, f"{disease}.csv")
 
     # Download asthma data (only once)
     if not os.path.exists(cdc_path):
@@ -88,19 +97,25 @@ def download_cdc_disease(data_dir,
             f"&measureid={measureid}"
             f"&$limit={limit}"
         )
-        cdc_df = (
-            pd.read_csv(cdc_url)
-            .rename(columns={
-                'data_value': 'asthma',
-                'low_confidence_limit': 'asthma_ci_low',
-                'high_confidence_limit': 'asthma_ci_high',
-                'locationname': 'tract'})
-            [[
-                'year', 'tract', 
-                'asthma', 'asthma_ci_low', 'asthma_ci_high', 'data_value_unit',
-                'totalpopulation', 'totalpop18plus'
-            ]]
-        )
+        cdc_df = pd.read_csv(cdc_url).rename(
+            columns={
+                "data_value": "asthma",
+                "low_confidence_limit": "asthma_ci_low",
+                "high_confidence_limit": "asthma_ci_high",
+                "locationname": "tract",
+            }
+        )[
+            [
+                "year",
+                "tract",
+                "asthma",
+                "asthma_ci_low",
+                "asthma_ci_high",
+                "data_value_unit",
+                "totalpopulation",
+                "totalpop18plus",
+            ]
+        ]
         cdc_df.to_csv(cdc_path, index=False)
 
     # Load in asthma data
@@ -108,7 +123,9 @@ def download_cdc_disease(data_dir,
 
     return cdc_df
 
+
 # cdc_df = download_cdc_disease(data_dir, disease = 'asthma')
+
 
 def join_tract_cdc(place_tract_gdf, cdc_df):
     """
@@ -117,18 +134,18 @@ def join_tract_cdc(place_tract_gdf, cdc_df):
     Args:
         place_tract_gdf (gdf): place image
         cdc_df (df): disease data frame
-    
+
     Returns:
         tract_cdc_gdf (gdf): combined gdf
     """
     # Change tract identifier datatype for merging
-    place_tract_gdf.tract2010 = place_tract_gdf.tract2010.astype('int64')
+    place_tract_gdf.tract2010 = place_tract_gdf.tract2010.astype("int64")
 
     # Merge census data with geometry
-    tract_cdc_gdf = (
-        place_tract_gdf
-        .merge(cdc_df, left_on='tract2010', right_on='tract', how='inner')
+    tract_cdc_gdf = place_tract_gdf.merge(
+        cdc_df, left_on="tract2010", right_on="tract", how="inner"
     )
     return tract_cdc_gdf
+
 
 # tract_cdc_gdf = join_tract_cdc(place_tract_gdf, cdc_df)

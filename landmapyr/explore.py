@@ -6,10 +6,12 @@ ramp_logic: Fuzzy ramp logic
 var_trans: Variable Selection and Transformation
 train_test: Model fit using train and test sets
 """
+
+
 def index_tree(redlining_index_gdf):
     """
     Convert categories to numbers.
-            
+
     Args:
         redlining_index_gdf (gdf): gdf with zonal stats
     Returns:
@@ -17,19 +19,20 @@ def index_tree(redlining_index_gdf):
     """
     from sklearn.tree import DecisionTreeClassifier
 
-    redlining_index_gdf['grade_codes'] = (
-        redlining_index_gdf.grade.cat.codes)
+    redlining_index_gdf["grade_codes"] = redlining_index_gdf.grade.cat.codes
 
     # Fit model
     tree_classifier = DecisionTreeClassifier(max_depth=2).fit(
-        redlining_index_gdf[['mean']],
-        redlining_index_gdf.grade_codes)
-    
+        redlining_index_gdf[["mean"]], redlining_index_gdf.grade_codes
+    )
+
     return tree_classifier
+
 
 # tree_classifier = index_tree(redlining_index_gdf)
 
-def ramp_logic(data, up = (), down = ()):
+
+def ramp_logic(data, up=(), down=()):
     """
     Fuzzy ramp logic.
 
@@ -43,14 +46,14 @@ def ramp_logic(data, up = (), down = ()):
 
     # Apply fuzzy logic: data > ramps[0] but it could be < ramps[1] with a ramp
     def ramp(data, fuzzy_data, up, sign=1.0):
-        if(isinstance(up, float) | isinstance(up, int)):
+        if isinstance(up, float) | isinstance(up, int):
             up = (up,)
-        if(len(up)):
+        if len(up):
             fuzzy_data = fuzzy_data * (sign * data >= sign * max(up))
-            if(len(up) > 1):
+            if len(up) > 1:
                 up = sorted(up[:2])
                 diff = up[1] - up[0]
-                if(diff > 0):
+                if diff > 0:
                     ramp_mask = (data > up[0]) & (data <= up[1])
                     fuzzy_data = fuzzy_data + sign * ramp_mask * (data - up[0]) / diff
         return fuzzy_data
@@ -64,8 +67,10 @@ def ramp_logic(data, up = (), down = ()):
 
     return fuzzy_data
 
+
 # data = x = xr.DataArray([float(i) for i in  range(21)])
 # ramp_logic(data, (5.0, 10.0), 15)
+
 
 def var_trans(ndvi_cdc_gdf):
     """
@@ -77,22 +82,21 @@ def var_trans(ndvi_cdc_gdf):
         model_df (df): model DataFrame
     """
     import numpy as np
-    
-    # Variable selection and transformation
-    model_df = (
-        ndvi_cdc_gdf
-        .copy()
-        [['frac_veg', 'asthma', 'mean_patch_size', 'edge_density', 'geometry']]
-        .dropna()
-    )
 
-    model_df['log_asthma'] = np.log(model_df.asthma)
-    
+    # Variable selection and transformation
+    model_df = ndvi_cdc_gdf.copy()[
+        ["frac_veg", "asthma", "mean_patch_size", "edge_density", "geometry"]
+    ].dropna()
+
+    model_df["log_asthma"] = np.log(model_df.asthma)
+
     return model_df
+
 
 # model_df = var_trans(ndvi_cdc_gdf)
 
-def train_test(model_df, resp='asthma', trans='log', test_size=0.33, random_state=42):
+
+def train_test(model_df, resp="asthma", trans="log", test_size=0.33, random_state=42):
     """
     Model fit using train and test sets.
 
@@ -113,26 +117,29 @@ def train_test(model_df, resp='asthma', trans='log', test_size=0.33, random_stat
 
     # Select predictor and outcome variables
 
-    X = model_df[['edge_density', 'mean_patch_size']]
-    y = model_df[[f'{trans}_{resp}']]
+    X = model_df[["edge_density", "mean_patch_size"]]
+    y = model_df[[f"{trans}_{resp}"]]
 
     # Split into training and testing datasets
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state)
+        X, y, test_size=test_size, random_state=random_state
+    )
 
     # Fit a linear regression
     reg = LinearRegression()
     reg.fit(X_train, y_train)
 
     # Predict asthma values for the test dataset
-    y_test[f'pred_{resp}'] = np.exp(reg.predict(X_test))
-    y_test[resp] = np.exp(y_test[f'{trans}_{resp}'])
-    
-    # Predict index values for all data to get `resid`
-    model_df['pred'] = np.exp(reg.predict(model_df[['edge_density', 'mean_patch_size']]))
-    model_df['resid'] = model_df['pred'] - model_df[f'{trans}_{resp}']
+    y_test[f"pred_{resp}"] = np.exp(reg.predict(X_test))
+    y_test[resp] = np.exp(y_test[f"{trans}_{resp}"])
 
-    
+    # Predict index values for all data to get `resid`
+    model_df["pred"] = np.exp(
+        reg.predict(model_df[["edge_density", "mean_patch_size"]])
+    )
+    model_df["resid"] = model_df["pred"] - model_df[f"{trans}_{resp}"]
+
     return y_test, reg, model_df
+
 
 # y_test, reg, model_df = trait_test(model_df)

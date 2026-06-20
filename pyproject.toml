@@ -29,3 +29,10 @@ include = ["landmapyr*"]
 [project.urls]
 Homepage = "https://github.com/byandell-envsys/landmapyr"
 Issues = "https://github.com/byandell-envsys/landmapyr/issues"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.ruff]
+# You can uncomment the line below if you want Ruff to ignore Jupyter notebooks completely
+# extend-exclude = ["*.ipynb"]

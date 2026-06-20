@@ -33,7 +33,7 @@ jobs:
         ruff format --check .
     - name: Type check with Mypy
       run: |
-        mypy landmapy/
+        mypy landmapyr/
     - name: Test with Pytest
       run: |
         pytest tests/

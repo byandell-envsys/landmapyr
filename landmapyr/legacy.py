@@ -13,30 +13,37 @@ import warnings
 import functools
 from typing import Callable, Any
 
-def create_deprecated_alias(old_name: str, new_func: Callable[..., Any]) -> Callable[..., Any]:
+
+def create_deprecated_alias(
+    old_name: str, new_func: Callable[..., Any]
+) -> Callable[..., Any]:
     """
     Creates a deprecated alias for a refactored function.
-    
+
     Args:
         old_name (str): The legacy name of the function.
         new_func (Callable): The new function to be called.
-        
+
     Returns:
         Callable: A wrapped function that emits a DeprecationWarning and calls new_func.
     """
+
     @functools.wraps(new_func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         warnings.warn(
             f"Call to deprecated function '{old_name}'. "
             f"Please use '{new_func.__module__}.{new_func.__name__}' instead.",
             category=DeprecationWarning,
-            stacklevel=2
+            stacklevel=2,
         )
         return new_func(*args, **kwargs)
-    
+
     wrapper.__name__ = old_name
-    wrapper.__doc__ = f"Deprecated alias for :func:`{new_func.__module__}.{new_func.__name__}`."
+    wrapper.__doc__ = (
+        f"Deprecated alias for :func:`{new_func.__module__}.{new_func.__name__}`."
+    )
     return wrapper
+
 
 # ==============================================================================
 # Legacy Aliases Definition
