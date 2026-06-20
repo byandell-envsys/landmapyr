@@ -46,17 +46,17 @@ conda list pygbif
 
 ::: {.cell execution_count="3"}
 ``` {.python .cell-code}
-from landmapy.initial import create_data_dir, robust_code
+from landmapyr.initial import create_data_dir, robust_code
 ```
 :::
 
 ::: {.cell execution_count="4"}
 ``` {.python .cell-code}
-from landmapy.gbif import gbif_credentials, gbif_species_key
-from landmapy.gbif import download_gbif, load_gbif, gbif_monthly
-from landmapy.gbif import ecoregions, join_ecoregions_monthly
-from landmapy.gbif import count_by_ecoregions
-from landmapy.gbif import simplify_ecoregions_gdf, join_occurrence
+from landmapyr.gbif import gbif_credentials, gbif_species_key
+from landmapyr.gbif import download_gbif, load_gbif, gbif_monthly
+from landmapyr.gbif import ecoregions, join_ecoregions_monthly
+from landmapyr.gbif import count_by_ecoregions
+from landmapyr.gbif import simplify_ecoregions_gdf, join_occurrence
 ```
 :::
 
@@ -66,7 +66,7 @@ that you will need. Add imports for packages that will help you:
 -   Work with reproducible file paths
 -   Work with tabular data
 
-For now, run `gbif.py`. Soon, incorporate it into `landmapy` package.
+For now, run `gbif.py`. Soon, incorporate it into `landmapyr` package.
 
 :::: {.cell highlight="true" execution_count="5"}
 ``` {.python .cell-code}
@@ -538,7 +538,7 @@ occurrence_gdf
 
 :::: {.cell execution_count="23"}
 ``` {.python .cell-code}
-from landmapy.plots import plot_occurrence
+from landmapyr.plots import plot_occurrence
 plot_occurrence(occurrence_gdf)
 ```
 
@@ -551,7 +551,7 @@ plot_occurrence(occurrence_gdf)
 
 ::::::::::::: {.cell execution_count="24"}
 ``` {.python .cell-code}
-from landmapy.hv_plots import hvplot_occurrence
+from landmapyr.hv_plots import hvplot_occurrence
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf)
 # Save the plot
 occurrence_hvplot.save('sandhill-crane-migration.html', embed=True)

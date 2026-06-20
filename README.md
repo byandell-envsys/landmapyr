@@ -1,6 +1,6 @@
-# landmapy: Land Mapping Python Package
+# landmapyr: Land Mapping Python Package
 
-- [landmapy: Land Mapping Python Package](#landmapy-land-mapping-python-package)
+- [landmapyr: Land Mapping Python Package](#landmapyr-land-mapping-python-package)
   - [Introduction](#introduction)
     - [Install and Import](#install-and-import)
     - [Collaboration](#collaboration)
@@ -20,7 +20,7 @@ Additional links:
 
 ## Introduction
 
-The `landmapy` package was built as a complement to the 2024-25
+The `landmapyr` package was built as a complement to the 2024-25
 [Earth Data Analytics](https://github.com/byandell-envsys/EarthDataAnalytics)
 course taught through the
 [Earth Lab](https://earthlab.colorado.edu/).
@@ -56,23 +56,23 @@ From within python, you can install this package directly
 from GitHub:
 
 ```python
-pip install git+https://github.com/byandell-envsys/landmapy.git
+pip install git+https://github.com/byandell-envsys/landmapyr.git
 ```
 
-Then you would use `import landmapy`,
-or more likely `from landmapy.<module> import <function>`
+Then you would use `import landmapyr`,
+or more likely `from landmapyr.<module> import <function>`
 to import desired functions.
 
 I for now use my local machine cloned copy of the package in
-`~/Documents/GitHub/landmapy` and the python command
+`~/Documents/GitHub/landmapyr` and the python command
 
 ```python
-pip install ~/Documents/GitHub/landmapy
+pip install ~/Documents/GitHub/landmapyr
 ```
 
 ### Development and Testing
 
-The `landmapy` package enforces modern Python development standards.
+The `landmapyr` package enforces modern Python development standards.
 To install the package for development (including `pytest`, `ruff`, and `mypy`):
 
 ```python
@@ -84,14 +84,14 @@ We use GitHub Actions for Continuous Integration (CI) to automatically run linte
 ```python
 ruff check .      # Linting
 ruff format .     # Formatting
-mypy landmapy/    # Type checking
+mypy landmapyr/    # Type checking
 pytest tests/     # Unit tests
 ```
 
 ### Legacy Compatibility
 
 This package was developed alongside the [EarthDataAnalytics](https://github.com/byandell-envsys/EarthDataAnalytics) course.
-To ensure that legacy workspaces and notebooks do not break when functions are refactored, the `landmapy.legacy` module provides a `create_deprecated_alias` decorator.
+To ensure that legacy workspaces and notebooks do not break when functions are refactored, the `landmapyr.legacy` module provides a `create_deprecated_alias` decorator.
 
 If a function name is updated, an alias is provided that will still work but will emit a `DeprecationWarning` pointing users to the new function. This guarantees backward compatibility without needing manual CSV lookups.
 
@@ -118,7 +118,7 @@ commenting this line out briefly to enable commiting the png
 files (followed by uncommenting `*_files/`) is a handy way
 to incorporate figures into the `project.md` once committed and pushed to GitHub.
 See in addition further
-[References](https://github.com/byandell-envsys/landmapy/blob/main/references.md).
+[References](https://github.com/byandell-envsys/landmapyr/blob/main/references.md).
 
 ### Example use with Habitat Project
 
@@ -127,13 +127,13 @@ In a sense, this package enables me to off-load pages of code, replacing them by
 First I visited [USFS Geospatial Data Discovery: National Grassland Units (Feature Layer)](https://data-usfs.hub.arcgis.com/datasets/usfs::national-grassland-units-feature-layer/explore) and manually downloaded the GeoJSON file from DataSet into directory `~/earth-analytics/data/habitat`. Then I did the following steps, shown below in code:
 
 ```bash
-# Install `landmapy` package.
-pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
+# Install `landmapyr` package.
+pip install --quiet git+https://github.com/byandell-envsys/landmapyr.git
 
 # Import needed libraries.
 import geopandas as gpd # read geojson file into gdf
-from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plots import plot_gdf_state # plot gdf with state overlay
+from landmapyr.initial import create_data_dir # create (or retrieve) data directory
+from landmapyr.plots import plot_gdf_state # plot gdf with state overlay
 
 data_dir = create_data_dir('habitat')
 # Read all grasslands GeoJSON into `grassland_gdf`.
@@ -271,7 +271,7 @@ Process module has various mechanics that might belong elsewhere but seem broad 
 Cached module is a
 [decorator](https://www.geeksforgeeks.org/decorators-in-python/)
 used in
-[reflect.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflect.py)
+[reflect.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflect.py)
 to simplify caching of time-expensive objects
 (see
 [EDA Reference Python Coding: Decorators](https://github.com/byandell-envsys/EarthDataAnalytics/blob/main/references.md#decorators)

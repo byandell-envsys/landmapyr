@@ -46,12 +46,12 @@ conda list pygbif
 
 ::: {.cell execution_count="3"}
 ``` {.python .cell-code}
-from landmapy.initial import create_data_dir, robust_code
-from landmapy.gbif import gbif_credentials, gbif_species_key
-from landmapy.gbif import download_gbif, load_gbif, gbif_monthly
-from landmapy.gbif import ecoregions, join_ecoregions_monthly
-from landmapy.gbif import count_by_ecoregions
-from landmapy.gbif import simplify_ecoregions_gdf, join_occurrence
+from landmapyr.initial import create_data_dir, robust_code
+from landmapyr.gbif import gbif_credentials, gbif_species_key
+from landmapyr.gbif import download_gbif, load_gbif, gbif_monthly
+from landmapyr.gbif import ecoregions, join_ecoregions_monthly
+from landmapyr.gbif import count_by_ecoregions
+from landmapyr.gbif import simplify_ecoregions_gdf, join_occurrence
 ```
 :::
 
@@ -491,7 +491,7 @@ occurrence_gdf
 
 :::: {.cell execution_count="19"}
 ``` {.python .cell-code}
-from landmapy.plots import plot_occurrence
+from landmapyr.plots import plot_occurrence
 plot_occurrence(occurrence_gdf, 'year')
 ```
 
@@ -504,7 +504,7 @@ plot_occurrence(occurrence_gdf, 'year')
 
 :::::::::: {.cell execution_count="20"}
 ``` {.python .cell-code}
-from landmapy.hv_plots import hvplot_occurrence
+from landmapyr.hv_plots import hvplot_occurrence
 occurrence_hvplot = hvplot_occurrence(occurrence_gdf, 'year')
 # Save the plot
 occurrence_hvplot.save('siberian-crane-years.html', embed=True)

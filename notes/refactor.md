@@ -1,4 +1,4 @@
-# Refactor landmapy package
+# Refactor landmapyr package
 
 - [Motivation](#motivation)
 - [Goals](#goals)
@@ -19,7 +19,7 @@
 
 ## Motivation
 
-The landmapy package is beginning to be used in an increasing number of EDA projects. To date, it has been developed in a somewhat ad-hoc manner, with code added module by module. As such, it could benefit from a systematic review and refactor to make it more robust, maintainable, and user-friendly.
+The landmapyr package is beginning to be used in an increasing number of EDA projects. To date, it has been developed in a somewhat ad-hoc manner, with code added module by module. As such, it could benefit from a systematic review and refactor to make it more robust, maintainable, and user-friendly.
 
 ## Goals
 
@@ -114,13 +114,13 @@ The immediate next step is to conduct a thorough code review to identify specifi
 
 ## Refactoring Walkthrough
 
-The `landmapy` package has been successfully refactored to align with the goals outlined in `notes/refactor.md`. This included setting up standard Python development tools, writing tests, cleaning up the codebase, and creating a framework for backward compatibility with legacy course notebooks.
+The `landmapyr` package has been successfully refactored to align with the goals outlined in `notes/refactor.md`. This included setting up standard Python development tools, writing tests, cleaning up the codebase, and creating a framework for backward compatibility with legacy course notebooks.
 Changes made:
 
 ### 1. Tooling and CI/CD Setup
 
 - Added `pytest`, `ruff`, and `mypy` as optional `dev` dependencies in `pyproject.toml`.
-- Configured `setuptools` to correctly discover the `landmapy` package and ignore non-package directories (like `notes`).
+- Configured `setuptools` to correctly discover the `landmapyr` package and ignore non-package directories (like `notes`).
 - Created a GitHub Actions workflow (`.github/workflows/ci.yml`) to automatically lint, type-check, and test the package on pushes and pull requests against the `main` branch.
 
 ### 2. Code Linting and Bug Fixes
@@ -137,7 +137,7 @@ Changes made:
 
 ### 4. Legacy Compatibility Layer
 
-- Created `landmapy/legacy.py`, providing the `create_deprecated_alias()` decorator.
+- Created `landmapyr/legacy.py`, providing the `create_deprecated_alias()` decorator.
 - This layer fulfills the requirement to keep legacy `EarthDataAnalytics` scripts working without using an explicit (and insufficient) CSV lookup.
 - Going forward, if any function needs to be renamed, developers can use this decorator to expose the old name in the module. Legacy scripts will continue to work normally while developers are given a clear `DeprecationWarning` advising them to switch to the new name.
 
@@ -149,15 +149,15 @@ Changes made:
 ### 6. Examples Refactoring and Environment Fixes
 
 - **Notebook Conversion**: Converted `examples/madison.ipynb` to `examples/madison.qmd`.
-- **Deprecated Functions Resolved**: Updated all `.qmd` notebooks to use modern, refactored package structures (e.g., replaced `plot_redline` with `plot_gdf_state` and updated module references from `landmapy.hvplot` to `landmapy.hv_plots`).
+- **Deprecated Functions Resolved**: Updated all `.qmd` notebooks to use modern, refactored package structures (e.g., replaced `plot_redline` with `plot_gdf_state` and updated module references from `landmapyr.hvplot` to `landmapyr.hv_plots`).
 - **Environment Dependency Fixes**: Resolved an upstream `ImportError` from `xrspatial.zonal_stats` by enforcing a `numpy<2.1` requirement to remain compatible with `numba`. Fixed a missing `hvplot.pandas` import in the package modules.
 - **Dynamic Package Installation**: Updated the `pip install` commands across all example notebooks to dynamically install/upgrade from GitHub via `%pip install -q -e ..`, ensuring notebooks always use the latest commit.
 
 ### 7. Plotting Function Migrations
 
 - Migrated visualization functions from HoloViews to `matplotlib` to ensure consistent, robust static plotting support across notebooks.
-- Added `plot_occurrence` to `landmapy.plots` for plotting monthly or yearly occurrences of species using `contextily` and `matplotlib`, replacing `hvplot_occurrence`.
-- Added `plot_index_grade` and `plot_index_pred` to `landmapy.plots` to plot zonal index means, redlining grades, and prediction errors using `matplotlib`, replacing the `hvplot` equivalents.
+- Added `plot_occurrence` to `landmapyr.plots` for plotting monthly or yearly occurrences of species using `contextily` and `matplotlib`, replacing `hvplot_occurrence`.
+- Added `plot_index_grade` and `plot_index_pred` to `landmapyr.plots` to plot zonal index means, redlining grades, and prediction errors using `matplotlib`, replacing the `hvplot` equivalents.
 - Updated `examples/madison.qmd` to utilize the new `plot_index_grade` and `plot_index_pred` functions.
 
 ## Validation Results
@@ -166,12 +166,12 @@ All tools now run cleanly across the codebase:
 
 - `pytest tests/`: **2 passed**
 - `ruff check .`: **All checks passed**
-- `mypy landmapy/`: Type checking is initialized and running against the modules.
+- `mypy landmapyr/`: Type checking is initialized and running against the modules.
 
 ---
 
 *This document developed with Google Antigravity and Gemini 3.1 Pro
-serves as a living guide for the landmapy refactoring process.
+serves as a living guide for the landmapyr refactoring process.
 It will be updated as the project progresses and new insights are gained.
 See also
 [Documentation Notes on AI Prompt Examples](https://github.com/byandell/Documentation/blob/main/AI_prompts.md)

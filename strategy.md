@@ -161,20 +161,20 @@ with larger and/or multiple projects.
 Since I plan to use this function in multiple projects,
 I will separate it from any particular project by putting it in its own place.
 For my purposes, I have projects in folder `~/Documents/GitHub/`,
-so I will put the function in a folder `~/Documents/GitHub/landmapy/`.
+so I will put the function in a folder `~/Documents/GitHub/landmapyr/`.
 For technical reasons (below), I put the function in a subfolder,
-also called `landmapy`.
+also called `landmapyr`.
 Further, I expect to have several initializing functions,
 so I placed `create_data_director()` in a file
-[initial.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/initial.py).
+[initial.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/initial.py).
 
 On my local machine, I have the code for function `create_data_directory()`
 in module (file)
-`~/Documents/GitHub/landmapy/landmapy/initial.py`.
+`~/Documents/GitHub/landmapyr/landmapyr/initial.py`.
 I `%run` the function in this file
 
 ```python
-%run ~/Documents/GitHub/landmapy/landmapy/initial.py
+%run ~/Documents/GitHub/landmapyr/landmapyr/initial.py
 ```
 
 and use it as before,
@@ -188,13 +188,13 @@ data_dir = create_data_dir('habitat')
 Now I have a separate place for code functions used repeatedly,
 possibly across multiple projects.
 Over time, I create more functions and store them in files in this same place,
-`~/Documents/GitHub/landmapy/landmapy/`.
+`~/Documents/GitHub/landmapyr/landmapyr/`.
 While I can `%run` each file as needed as shown above,
 it is more efficient to create a package,
 which is a directory containing multiple modules.
 
 I chose to call my repo
-[landmapy](https://github.com/byandell-envsys/landmapy)
+[landmapyr](https://github.com/byandell-envsys/landmapyr)
 because it has python functions for land cover mapping.
 (I earlier created a repo called
 [landmapr](https://github.com/byandell-envsys/landmapr)
@@ -209,8 +209,8 @@ to creating a package that can be installed and imported into any project.
 We start with the following directory structure:
 
 ```
-landmapy/
-    landmapy/
+landmapyr/
+    landmapyr/
         __init__.py
         initial.py
 ```
@@ -220,11 +220,11 @@ which can be empty,
 required by python to identify this directory is a package.
 
 ```
-landmapy/
+landmapyr/
     LICENSE         # code license (typically open source)
     README.md       # overview of the package
     pyproject.toml  # or setup.py (there seem to be two ways to do this)
-    landmapy/       # package directory (this is the name the package will be imported as)
+    landmapyr/       # package directory (this is the name the package will be imported as)
         __init__.py # tells python this is a package
         initial.py  # module containing functions
 ```
@@ -234,16 +234,16 @@ I can now import functions from the package as needed after I install the packag
 
 ```python
 #| eval: False
-pip install ~/Documents/GitHub/landmapy
+pip install ~/Documents/GitHub/landmapyr
 ```
 
-The import is slightly different as we access the `initial` module from the `landmapy` package
+The import is slightly different as we access the `initial` module from the `landmapyr` package
 and import the function `create_data_dir` from that module.
 (The comment line `#| eval: False` is a directive to the markdown interpreter
 to not evaluate the following code block.)
 
 ```python
-from landmapy.initial import create_data_dir
+from landmapyr.initial import create_data_dir
 data_dir = create_data_dir('habitat')
 ```
 
@@ -308,7 +308,7 @@ These evolved as I started to use the new function
 in multiple settings in the same project.
 I realized that another function, `plot_gdf_da()` is now redundant.
 You can see these in
-[plots.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/plots.py).
+[plots.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/plots.py).
 
 I could eliminate `plot_da()` and `plot_gdf_da()` and use `plot_das()` instead.
 However, I would need to go back to earlier projects where I used
@@ -328,7 +328,7 @@ def plot_da(index_da, place, index='NDVI'):
 GitHub can be klunky, and at times painful.
 However, it provides a place to store functions and modules,
 and to organize those into a package.
-This `landmapy` package started as a collection of functions,
+This `landmapyr` package started as a collection of functions,
 then modules, then a package, then a package with documentation.
 The history of that is embedded in the GitHub repo
 if anyone cares to look.
@@ -337,7 +337,7 @@ As I re-imagine a function, or reorg functions in modules,
 I can just commit those changes to GitHub knowing that the
 earlier versions are still extant, albeit hidden from view.
 Further, I can use versioning in the
-[pyproject.toml](https://github.com/byandell-envsys/landmapy/blob/main/pyproject.toml)
+[pyproject.toml](https://github.com/byandell-envsys/landmapyr/blob/main/pyproject.toml)
 file to mark major changes in package reorganization.
 
 ## Reorganize a Package
@@ -379,7 +379,7 @@ the all-powerful function.
 Building a package adds more machinery,
 but it enables me to import a variety of functions
 that I maintain on GitHub in a single location, the package
-[landmapy](https://github.com/byandell-envsys/landmapy).
+[landmapyr](https://github.com/byandell-envsys/landmapyr).
 This package is a repo, just like repos for other projects.
 
 From GitHub, I (and anyone else) can install the package with 
@@ -387,7 +387,7 @@ From GitHub, I (and anyone else) can install the package with
 
 ```python
 #| eval: False
-pip install git+https://github.com/byandell-envsys/landmapy.git
+pip install git+https://github.com/byandell-envsys/landmapyr.git
 ```
 
 (Again, comment line `#| eval: False` suppresses markdown evaluation.)
@@ -395,7 +395,7 @@ As before, I can import the function as follows:
 
 
 ```python
-from landmapy.initial import create_data_dir
+from landmapyr.initial import create_data_dir
 data_dir = create_data_dir('habitat')
 ```
 
@@ -413,7 +413,7 @@ This
 page is another form of documentation.
 In addition, each project that uses the package can have
 its own (compact) documentation referring to the
-[landmapy](https://github.com/byandell-envsys/landmapy)
+[landmapyr](https://github.com/byandell-envsys/landmapyr)
 and explaining how and why package tools are employed.
 
 ### Document Functions in Modules in a Package
@@ -422,7 +422,7 @@ Of course, I can add more functions to the package,
 but I am mindful that as the package grows,
 the need for coherent documentation expands.
 I add one-line function calls in
-[landmapy/\_\_init\_\_.py](landmapy/__init__.py)
+[landmapyr/\_\_init\_\_.py](landmapyr/__init__.py)
 and adapt the 
 [README.md](README.md)
 to describe how to access and use the package,
@@ -433,10 +433,10 @@ My documentation process has evolved to the following approach:
 
 - Add a docstring to each function in a module `*.py`
 - Add one-line function descriptions in the top docstring of the module `*.py`
-- Add one-line function calls in the `landmapy/__init__.py` file
+- Add one-line function calls in the `landmapyr/__init__.py` file
 - Add one-line module and function information in the `README.md` file
 
-The `landmapy` package is now large enough that I find it helpful to organize
+The `landmapyr` package is now large enough that I find it helpful to organize
 [Package Modules and Functions](README.md#package-modules-and-functions)
 in the
 [README.md](README.md)

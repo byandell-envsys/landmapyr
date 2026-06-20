@@ -56,7 +56,7 @@ and manually download GeoJSON file from DataSet into directory
 `~/earth-analytics/data/habitat` (see `create_data_dir()` below). A
 GeoDataFrame `buffalo_gdf` is created and stored for later retrieval to
 save time. The `plot_redline()` function is from
-[landmapy.redline](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/redline.py)
+[landmapyr.redline](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/redline.py)
 module to visualize.
 
 :::: {.cell execution_count="1"}
@@ -72,8 +72,8 @@ module to visualize.
 ::: {.cell execution_count="2"}
 ``` {.python .cell-code}
 import geopandas as gpd # read geojson file into gdf
-from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plots import plot_gdf_state # plot gdf with state overlay
+from landmapyr.initial import create_data_dir # create (or retrieve) data directory
+from landmapyr.plots import plot_gdf_state # plot gdf with state overlay
 ```
 :::
 
@@ -128,7 +128,7 @@ Grassland is at (centroid) 43.4375° N, 103.0505° W, while Oglala
 National Grassland is at 42.9404° N, 103.5900° W. Below we use the
 `.total_bounds` extension on `buffalo_gdf` with the `merge_soil()`
 function in the
-[landmapy.polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py)
+[landmapyr.polaris](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/polaris.py)
 module to automate finding bounds.
 
 ### Sand Soil Measure
@@ -140,8 +140,8 @@ Get and show `mean` of `sand` at depth `100-200m` with functions
 
 ::: {.cell execution_count="5"}
 ``` {.python .cell-code}
-from landmapy.polaris import merge_soil # merge soil data from GDF
-from landmapy.plots import plot_gdf_da # plot GDF over DA
+from landmapyr.polaris import merge_soil # merge soil data from GDF
+from landmapyr.plots import plot_gdf_da # plot GDF over DA
 ```
 :::
 
@@ -184,7 +184,7 @@ scenarios `rcp45` and `rcp85` for years `2026-2030`.
 
 ::: {.cell execution_count="8"}
 ``` {.python .cell-code}
-from landmapy.thredds import process_maca, maca_year
+from landmapyr.thredds import process_maca, maca_year
 ```
 :::
 
@@ -243,7 +243,7 @@ has some subtleties.
 ::: {.cell execution_count="11"}
 ``` {.python .cell-code}
 import earthaccess
-from landmapy.srtm import srtm_download, srtm_slope
+from landmapyr.srtm import srtm_download, srtm_slope
 ```
 :::
 
@@ -365,7 +365,7 @@ Using
 to store and retrieve intermediate calculations. Markdown rendered with
 `quarto render buffalo.qmd -t markdown`. Code chunks are specific to
 this project (using name `buffalo`) but use generic functions from the
-[landmapy](https://github.com/byandell-envsys/landmapy) module.
+[landmapyr](https://github.com/byandell-envsys/landmapyr) module.
 
 -   [Project Specs](#project-specs)
 -   [Pseudocode](#pseudocode)
@@ -396,7 +396,7 @@ The project compares
 The pseudocode below relies on routines I developed with guidance from
 course instructors and fellow students, organized with modules and their
 functions in the package
-[landmapy](https://github.com/byandell-envsys/landmapy) as
+[landmapyr](https://github.com/byandell-envsys/landmapyr) as
 [DRY](https://www.getdbt.com/blog/guide-to-dry) code. Workflows cited
 above have more detail on use and initial plots.
 

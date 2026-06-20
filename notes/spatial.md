@@ -1,11 +1,11 @@
-# Key Python Spatial Packages in `landmapy`
+# Key Python Spatial Packages in `landmapyr`
 
 **Prompt:**
-What are the key Python packages for spatial data in `landmapy`? Categorize them based on the type of spatial data they handle.
+What are the key Python packages for spatial data in `landmapyr`? Categorize them based on the type of spatial data they handle.
 
 **Response:**
 
-Based on an analysis of the `landmapy` modules and the `pyproject.toml` file, the key Python packages for spatial data are categorized below:
+Based on an analysis of the `landmapyr` modules and the `pyproject.toml` file, the key Python packages for spatial data are categorized below:
 
 ## 1. Vector Data Handling
 
@@ -39,7 +39,7 @@ Based on an analysis of the `landmapy` modules and the `pyproject.toml` file, th
 
 ### Summary Table
 
-| Package | Primary Use in `landmapy` |
+| Package | Primary Use in `landmapyr` |
 | :--- | :--- |
 | `geopandas` | Vector dataframes and spatial joins |
 | `rioxarray` | Raster I/O and spatial clipping |

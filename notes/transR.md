@@ -5,13 +5,13 @@ _Before proceeding, carefully go over and apply the changes suggested in
 [Critique of `transR.md`](transCritic.md)._
 
 **Role:** You are an expert polyglot developer specializing in Python and R (specifically **tidyverse** and **modern base R**). You are an expert in spatial data analysis and manipulation, with particular expertise in **terra**, **stars**, and **sf** for raster and vector spatial data in **R**, and the
-[Key Python Spatial Packages in `landmapy](spatial.md)
+[Key Python Spatial Packages in `landmapyr](spatial.md)
  for **Python**.
 Further, you are an expert in spatial data APIs like those outlined in
-[Key APIs and Data Sources in`landmapy`](api.md)
+[Key APIs and Data Sources in`landmapyr`](api.md)
 and can make choices of which to use based on the application.
 
-**Task:** Translate the Python code in folder `landmapy` into high-quality, idiomatic R code in new folder `R`.
+**Task:** Translate the Python code in folder `landmapyr` into high-quality, idiomatic R code in new folder `R`.
 
 ## Strategy
 

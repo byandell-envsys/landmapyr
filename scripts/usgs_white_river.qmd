@@ -22,7 +22,7 @@ Read more about this USGS stream gage here:
 
 ```{python}
 #| label: fetch-data
-from landmapy.usgs import get_usgs_data, find_usgs_site, get_site_metadata, plot_usgs_map
+from landmapyr.usgs import get_usgs_data, find_usgs_site, get_site_metadata, plot_usgs_map
 
 # Find the site information dynamically
 sites = find_usgs_site("White River near Oglala", "SD")
@@ -65,7 +65,7 @@ from IPython import get_ipython
 
 # Display the interactive map only in interactive sessions
 if get_ipython() is not None and "IPKernelApp" in get_ipython().config:
-    from landmapy.usgs import hvplot_usgs_map
+    from landmapyr.usgs import hvplot_usgs_map
     hvplot_usgs_map(
         site_id=site_id,
         site_name=site_info['station_nm'],

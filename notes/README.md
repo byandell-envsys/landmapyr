@@ -209,7 +209,7 @@ Resources:
 - https://github.com/earthlab-education/species-distribution-coding-challenge-byandell/blob/main/notebooks/siberian-crane-species-download.ipynb 
 - earthlab-education and look at repos
 - [Fall 2024 Species](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
-  - [gbif.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
+  - [gbif.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/gbif.py)
   - [sandhill_crane.qmd](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell/blob/main/sandhill_crane.qmd)
   - [siberian_crane.qmd](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell/blob/main/siberian_crane.qmd)
 

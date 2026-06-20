@@ -1,11 +1,11 @@
-# Key APIs and Data Sources in `landmapy`
+# Key APIs and Data Sources in `landmapyr`
 
 **Prompt:**
-What are the key APIs that `landmapy` uses to fetch environmental, biodiversity, and public health data? List them out and for each one, list which module(s) call that API.
+What are the key APIs that `landmapyr` uses to fetch environmental, biodiversity, and public health data? List them out and for each one, list which module(s) call that API.
 
 **Response:**
 
-The `landmapy` package integrates with several major spatial data APIs and repositories to fetch environmental, biodiversity, and public health data.
+The `landmapyr` package integrates with several major spatial data APIs and repositories to fetch environmental, biodiversity, and public health data.
 
 ### 1. Remote Sensing & Satellite Imagery
 

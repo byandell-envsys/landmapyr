@@ -21,7 +21,7 @@ Libraries
 
 ::: {.cell execution_count="2"}
 ``` {.python .cell-code}
-pip install --quiet git+https://github.com/byandell-envsys/landmapy.git
+pip install --quiet git+https://github.com/byandell-envsys/landmapyr.git
 ```
 :::
 
@@ -45,8 +45,8 @@ import xarray as xr
 My version:
 
 ``` python
-from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plots import plot_gdf_state # plot gdf with state overlay
+from landmapyr.initial import create_data_dir # create (or retrieve) data directory
+from landmapyr.plots import plot_gdf_state # plot gdf with state overlay
 
 %store -r buffalo_gdf
 try:
@@ -95,7 +95,7 @@ oglala_gdf
 
 ::: {.cell execution_count="7"}
 ``` {.python .cell-code}
-from landmapy.polaris import merge_soil
+from landmapyr.polaris import merge_soil
 
 ph_da = merge_soil(oglala_gdf, "ph", "mean", "60_100", 0.1)
 ph_da.plot()
@@ -104,7 +104,7 @@ ph_da.plot()
 
 ::: {.cell execution_count="8"}
 ``` {.python .cell-code}
-from landmapy.thredds import process_maca
+from landmapyr.thredds import process_maca
 
 maca_df = process_maca({'oglala': oglala_gdf}, ['pr'], ['rcp45'], (2011, 2040))
 ```

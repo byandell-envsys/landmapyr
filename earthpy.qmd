@@ -3,7 +3,7 @@ pip install --quiet earthpy
 ```
 
 ```{python}
-pip install --quiet ~/Documents/GitHub/landmapy
+pip install --quiet ~/Documents/GitHub/landmapyr
 ```
 
 ```{python}

@@ -10,10 +10,10 @@ Left to do:
 - Harmonize all datasets and build fuzzy logic.
   - `reproject` code in place.
   - see
-[notes on skfuzzy](https://github.com/byandell-envsys/landmapy/blob/main/notes.qmd#fuzzy-logic-model-27-feb-2025)
+[notes on skfuzzy](https://github.com/byandell-envsys/landmapyr/blob/main/notes.qmd#fuzzy-logic-model-27-feb-2025)
 - Spruce up graphics, possibly using
   - slider widget (see code below in [Climate model data](#climate-model-data) section)
-  - matplotlib with multiple subplots (see [6 Mar notes](https://github.com/byandell-envsys/landmapy/blob/main/notes.qmd#notes-6-mar-2025))
+  - matplotlib with multiple subplots (see [6 Mar notes](https://github.com/byandell-envsys/landmapyr/blob/main/notes.qmd#notes-6-mar-2025))
 
 Python code setup:
 
@@ -28,15 +28,15 @@ import geopandas as gpd # read geojson file into gdf
 import matplotlib.pyplot as plt # Overlay raster and vector data
 import xarray as xr
 
-from landmapy.initial import create_data_dir # create (or retrieve) data directory
-from landmapy.plots import plot_gdf_state # plot gdf with state overlay
-from landmapy.plots import plot_gdf_da # plot GDF over DA
-from landmapy.plots import plot_das # plot DAs in rows
-from landmapy.process import da_combine
-from landmapy.polaris import merge_soil # merge soil data from GDF
-from landmapy.srtm import srtm_download, srtm_slope # process SRTM data
-from landmapy.thredds import process_maca, maca_year # process MACA THREDDS
-from landmapy.explore import ramp_logic # ramp for fuzzy logic
+from landmapyr.initial import create_data_dir # create (or retrieve) data directory
+from landmapyr.plots import plot_gdf_state # plot gdf with state overlay
+from landmapyr.plots import plot_gdf_da # plot GDF over DA
+from landmapyr.plots import plot_das # plot DAs in rows
+from landmapyr.process import da_combine
+from landmapyr.polaris import merge_soil # merge soil data from GDF
+from landmapyr.srtm import srtm_download, srtm_slope # process SRTM data
+from landmapyr.thredds import process_maca, maca_year # process MACA THREDDS
+from landmapyr.explore import ramp_logic # ramp for fuzzy logic
 ```
 
 ## INTRODUCTION
@@ -83,7 +83,7 @@ As a rule of thumb, aim for 2-5 line code chuck for major structure steps.
 (rendered Markdown)
   - [buffalo.qmd](https://github.com/byandell-envsys/habitatSuitability/blob/main/buffalo.qmd)
 (Quarto source)
-  - [landmapy](https://github.com/byandell-envsys/landmapy)
+  - [landmapyr](https://github.com/byandell-envsys/landmapyr)
 (Python package)
 
 ## STEP 1: STUDY OVERVIEW
@@ -194,9 +194,9 @@ For more on using GBIF with Python, see
 - [GBIF Class Notes](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/notes.md#gbif-review-25-feb-2025)
   - [notes.qmd](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/notes.qmd)
   - [notes_gbif.qmd](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/notes_gbif.qmd)
-- [gbif.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/gbif.py)
+- [gbif.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/gbif.py)
 module in
-[landmapy](https://github.com/byandell-envsys/landmapy)
+[landmapyr](https://github.com/byandell-envsys/landmapyr)
 package
   - [siberian_crane.qmd](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell/blob/main/siberian_crane.qmd) (use of `gbif.py` module)
 
@@ -384,7 +384,7 @@ Buffalo Gap National Grassland is at (centroid) 43.4375° N, 103.0505° W,
 while Oglala National Grassland is at 42.9404° N, 103.5900° W.
 Below we use the `.total_bounds` extension on `buffalo_gdf`
 with the `merge_soil()` function in the
-[landmapy.polaris](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/polaris.py)
+[landmapyr.polaris](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/polaris.py)
 module to automate finding bounds.
 
 #### Sand Soil Measure
@@ -658,7 +658,7 @@ Rough plan:
 
 - Fuzzy Logic on images
   - migrate from my `ramp_logic()` to skfuzzy (see
-[notes_fuzzy.qmd](https://github.com/byandell-envsys/landmapy/blob/main/notes.qmd#fuzzy-logic-model-27-feb-2025))
+[notes_fuzzy.qmd](https://github.com/byandell-envsys/landmapyr/blob/main/notes.qmd#fuzzy-logic-model-27-feb-2025))
   - build images and do algebra on them
 - Relationships of values
   - reorg sand, slope and precip (maca) over time das into dataframe

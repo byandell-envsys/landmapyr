@@ -56,9 +56,9 @@ data_dir
 
 ::: {.cell execution_count="4"}
 ``` {.python .cell-code}
-import landmapy
-from landmapy.redline import redline_gdf
-from landmapy.plots import plot_gdf_state
+import landmapyr
+from landmapyr.redline import redline_gdf
+from landmapyr.plots import plot_gdf_state
 ```
 :::
 
@@ -125,7 +125,7 @@ else:
 
 ::: {.cell execution_count="8"}
 ``` {.python .cell-code}
-from landmapy.process import process_image, process_metadata, process_cloud_mask, process_bands
+from landmapyr.process import process_image, process_metadata, process_cloud_mask, process_bands
 ```
 :::
 
@@ -211,7 +211,7 @@ isolating the health of the plant.
 
 ::: {.cell execution_count="12"}
 ``` {.python .cell-code}
-from landmapy.plots import plot_index, plot_gdf_da
+from landmapyr.plots import plot_index, plot_gdf_da
 ```
 :::
 
@@ -249,7 +249,7 @@ plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 
 ::: {.cell execution_count="16"}
 ``` {.python .cell-code}
-from landmapy.redline import redline_mask, redline_index_gdf
+from landmapyr.redline import redline_mask, redline_index_gdf
 ```
 :::
 
@@ -333,7 +333,7 @@ redlining_ndvi_gdf = redline_index_gdf(redlining_gdf, ndvi_stats)
 
 :::: {.cell execution_count="21"}
 ``` {.python .cell-code}
-from landmapy.plots import plot_index_grade
+from landmapyr.plots import plot_index_grade
 plot_index_grade(redlining_ndvi_gdf, city)
 ```
 
@@ -348,7 +348,7 @@ Somehow I have to go from city_ndvi_da to redlining_ndvi_gdf.
 
 ::: {.cell execution_count="22"}
 ``` {.python .cell-code}
-from landmapy.explore import index_tree
+from landmapyr.explore import index_tree
 
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -377,7 +377,7 @@ plt.show()
 
 :::: {.cell execution_count="25"}
 ``` {.python .cell-code}
-from landmapy.plots import plot_index_pred
+from landmapyr.plots import plot_index_pred
 plot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
 ```
 
@@ -435,7 +435,7 @@ Not shown by default.
 ::: {.cell execution_count="29"}
 ``` {.python .cell-code}
 import hvplot.pandas
-from landmapy.hv_plots import hvplot_index_grade
+from landmapyr.hv_plots import hvplot_index_grade
 ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
 (ndvi_hv + grade_hv)
 ```
@@ -443,7 +443,7 @@ ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
 
 ::: {.cell execution_count="30"}
 ``` {.python .cell-code}
-from landmapy.hv_plots import hvplot_index_pred
+from landmapyr.hv_plots import hvplot_index_pred
 pred_hv = hvplot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
 pred_hv
 ```

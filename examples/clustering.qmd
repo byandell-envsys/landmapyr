@@ -27,7 +27,7 @@ NSIDC](https://github.com/nsidc/earthaccess):
 ## STEP 1: SET UP
 
 The code for a caching **decorator** is in
-[landmapy/cached.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/cached.py),
+[landmapyr/cached.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/cached.py),
 which you can use in your code.
 This decorator will **pickle** the results of running a `do_something()` function,
 and only run the code if the results do not already exist.
@@ -35,9 +35,9 @@ To override the caching, for example temporarily after
 making changes to your code, set `override=True`.
 Note that to use the caching decorator, you must write your own function to perform each task.
 See examples in
-[landmapy/delta.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/delta.py)
+[landmapyr/delta.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/delta.py)
 and
-[landmapy/reflectance.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflectance.py).
+[landmapyr/reflectance.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflectance.py).
 
 ```{python}
 #| eval: false
@@ -45,7 +45,7 @@ and
 ```
 
 ```{python}
-from landmapy.initial import robust_code
+from landmapyr.initial import robust_code
 
 robust_code()
 ```
@@ -93,15 +93,15 @@ zoom in to desired region and look for code like `HUC 12-070900020604` (for Lake
 - Generate a site map of the watershed
 
 Try to use the **caching decorator**.
-This is now fixed in landmapy.
+This is now fixed in landmapyr.
 However, the 
 `compute_reflectance_da` and `merge_and_composite_arrays`
 decorated functions still have static decorators.
 This will take similar coding.
 
 ```{python}
-from landmapy.reflect import read_delta_gdf
-from landmapy.plots import plot_delta_gdf
+from landmapyr.reflect import read_delta_gdf
+from landmapyr.plots import plot_delta_gdf
 ```
 
 Following is kept here for the moment and will be removed next week.
@@ -134,7 +134,7 @@ Alternative HV plot:
 
 ```{python}
 #| eval: false
-from landmapy.hv_plots import hvplot_delta_gdf
+from landmapyr.hv_plots import hvplot_delta_gdf
 hvplot_delta_gdf(delta_gdf)
 ```
 
@@ -195,8 +195,8 @@ that `mask_bits` contains the quality bits you want to consider:
 Note that you will need to remove the rows for unused bands)
 
 ```{python}
-from landmapy.reflect import compute_reflectance_da, merge_and_composite_arrays
-from landmapy.earthaccess import search_earthaccess
+from landmapyr.reflect import compute_reflectance_da, merge_and_composite_arrays
+from landmapyr.earthaccess import search_earthaccess
 ```
 
 There is no need to use Store Magic, as we are already caching with pickle
@@ -264,7 +264,7 @@ Cluster your data by spectral signature using the k-means algorithm.
 find what works best.
 
 ```{python}
-from landmapy.reflect import reflectance_kmeans, reflectance_range
+from landmapyr.reflect import reflectance_kmeans, reflectance_range
 ```
 
 ```{python}
@@ -295,8 +295,8 @@ Use `.astype()` method to convert type and
 `.where(rgb!=np.nan)` method to drop NAs
 
 ```{python}
-from landmapy.reflect import reflectance_rgb
-from landmapy.plots import plot_cluster
+from landmapyr.reflect import reflectance_rgb
+from landmapyr.plots import plot_cluster
 
 rgb_sat = reflectance_rgb(reflectance_da)
 ```
@@ -310,7 +310,7 @@ Above is not perfect. Alternative HV plot:
 
 ```{python}
 #| eval: false
-from landmapy.hv_plots import hvplot_cluster
+from landmapyr.hv_plots import hvplot_cluster
 hvplot_cluster(rgb_sat, model_df)
 ```
 

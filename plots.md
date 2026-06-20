@@ -114,7 +114,7 @@ simpler `qmd` and `md` pages. For instance
 
 ```
 #| label: fig-resid
-from landmapy.plots import plot_gdfs_map
+from landmapyr.plots import plot_gdfs_map
 plot_gdfs_map(logndvi_cdc_gdf, column=['asthma','resid','edge_density'], color=['Blues','RdBu','Greens'])
 ```
 
@@ -127,7 +127,7 @@ making it too big to render on GitHub. Here is that code:
 
 ```
 import holoviews as hv
-from landmapy.gvplot import gvplot_ndvi_index, gvplot_resid
+from landmapyr.gvplot import gvplot_ndvi_index, gvplot_resid
 
 model_fit = gvplot_ndvi_index(ndvi_cdc_gdf)
 resid = gvplot_resid(logndvi_cdc_gdf, reg, yvar='asthma')

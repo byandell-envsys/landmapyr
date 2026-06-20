@@ -104,7 +104,7 @@ Import necessary packages
 
 ::: {.cell execution_count="3"}
 ``` {.python .cell-code}
-from landmapy.initial import robust_code, create_data_dir
+from landmapyr.initial import robust_code, create_data_dir
 ```
 :::
 
@@ -147,7 +147,7 @@ version containing only Chicago.
 
 ::: {.cell execution_count="5"}
 ``` {.python .cell-code}
-from landmapy.cdcplaces import shp_tract_path, download_census_tract
+from landmapyr.cdcplaces import shp_tract_path, download_census_tract
 ```
 :::
 
@@ -164,7 +164,7 @@ Code to save HV plot:
 ::: {.cell execution_count="7"}
 ``` {.python .cell-code}
 import hvplot.pandas
-from landmapy.hv_plots import hvplot_tract_gdf
+from landmapyr.hv_plots import hvplot_tract_gdf
 
 chi_tract_hv = hvplot_tract_gdf(chi_tract_gdf)
 hvplot.save(chi_tract_hv, "chi_tract.html")
@@ -220,9 +220,9 @@ download. Selecting the state and county is one way to do this.
 
 ::: {.cell execution_count="8"}
 ``` {.python .cell-code}
-from landmapy.cdcplaces import download_cdc_disease, join_tract_cdc
-from landmapy.plots import plot_gdfs_map
-from landmapy.naip import naip_path, download_naip_scenes, ndvi_naip_df
+from landmapyr.cdcplaces import download_cdc_disease, join_tract_cdc
+from landmapyr.plots import plot_gdfs_map
+from landmapyr.naip import naip_path, download_naip_scenes, ndvi_naip_df
 ```
 :::
 
@@ -451,9 +451,9 @@ Create a plot that contains:
 
 ::: {.cell execution_count="13"}
 ``` {.python .cell-code}
-from landmapy.naip import merge_ndvi_cdc
-from landmapy.explore import var_trans, train_test
-from landmapy.plots import plot_gdfs_map, plot_matrix, plot_train_test
+from landmapyr.naip import merge_ndvi_cdc
+from landmapyr.explore import var_trans, train_test
+from landmapyr.plots import plot_gdfs_map, plot_matrix, plot_train_test
 ```
 :::
 
@@ -611,7 +611,7 @@ GeoViews code not shown:
 ::: {.cell execution_count="18"}
 ``` {.python .cell-code}
 import holoviews as hv
-from landmapy.gvplot import gvplot_ndvi_index, gvplot_resid
+from landmapyr.gvplot import gvplot_ndvi_index, gvplot_resid
 
 model_fit = gvplot_ndvi_index(ndvi_cdc_gdf)
 resid = gvplot_resid(logndvi_cdc_gdf, reg, yvar='asthma')

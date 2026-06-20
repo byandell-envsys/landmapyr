@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.getcwd())
-from landmapy.usgs import find_usgs_site, get_site_metadata
+from landmapyr.usgs import find_usgs_site, get_site_metadata
 
 def verify():
     print("Searching for: White River near Oglala in SD")

@@ -41,5 +41,5 @@ The unit test instruction (Line 17) says *"ask the AI to: 'Now, look at the...'"
 
 **6. Minor Markdown Typos**
 
-* Line 4: Missing a closing backtick in `` [Key Python Spatial Packages in `landmapy](spatial.md) ``.
-* Line 7: Missing a space before the backtick in `` [Key APIs and Data Sources in`landmapy`](api.md) ``.
+* Line 4: Missing a closing backtick in `` [Key Python Spatial Packages in `landmapyr](spatial.md) ``.
+* Line 7: Missing a space before the backtick in `` [Key APIs and Data Sources in`landmapyr`](api.md) ``.

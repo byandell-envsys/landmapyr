@@ -47,14 +47,14 @@ If you prefer not to add `savefig` to every single Python cell in your notebook,
 Because you are likely rendering single files, the easiest way to use this approach is to chain the script directly in your terminal command:
 
 ```bash
-quarto render madison.qmd -t markdown && python3 -m landmapy.move_images madison
+quarto render madison.qmd -t markdown && python3 -m landmapyr.move_images madison
 ```
 
 After having created the markdown version,
 you can move the images with
 
 ```bash
-python3 ../landmapy/move_images.py madison
+python3 ../landmapyr/move_images.py madison
 ```
 
 Alternatively, if you *are* rendering a full project (using `quarto render`), you can add the hook to your `_quarto.yml` project file:
@@ -63,11 +63,11 @@ Alternatively, if you *are* rendering a full project (using `quarto render`), yo
 project:
   type: default
 post-render:
-  - python3 -c "from landmapy.move_images import move_images; move_images('madison')"
+  - python3 -c "from landmapyr.move_images import move_images; move_images('madison')"
 ```
 
-This leverages the `landmapy.move_images` module, which encapsulates the following logic to handle file operations and markdown link updates.
+This leverages the `landmapyr.move_images` module, which encapsulates the following logic to handle file operations and markdown link updates.
 
-By keeping this script within the `landmapy` package, you avoid duplicating utility scripts across different analysis folders.
+By keeping this script within the `landmapyr` package, you avoid duplicating utility scripts across different analysis folders.
 
 This acts behind the scenes so your `.qmd` files stay clean, while automatically routing the `.png` files directly to your custom path.

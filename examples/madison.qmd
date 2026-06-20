@@ -39,9 +39,9 @@ data_dir
 ## Site Map
 
 ```{python}
-import landmapy
-from landmapy.redline import redline_gdf
-from landmapy.plots import plot_gdf_state
+import landmapyr
+from landmapyr.redline import redline_gdf
+from landmapyr.plots import plot_gdf_state
 ```
 
 ```{python}
@@ -91,7 +91,7 @@ else:
 ## Process EarthAccess Images
 
 ```{python}
-from landmapy.process import process_image, process_metadata, process_cloud_mask, process_bands
+from landmapyr.process import process_image, process_metadata, process_cloud_mask, process_bands
 ```
 
 ```{python}
@@ -131,7 +131,7 @@ city_das['green'].rio.write_crs("EPSG:4326").plot(cmap='Greens', robust=True)
 NDVI compares the amount of NIR reflectance to the amount of Red reflectance, thus accounting for many of the species differences and isolating the health of the plant.
 
 ```{python}
-from landmapy.plots import plot_index, plot_gdf_da
+from landmapyr.plots import plot_index, plot_gdf_da
 ```
 
 ```{python}
@@ -155,7 +155,7 @@ plot_gdf_da(city_redlining_gdf, city_ndvi_da)
 ## Zonal Statistics
 
 ```{python}
-from landmapy.redline import redline_mask, redline_index_gdf
+from landmapyr.redline import redline_mask, redline_index_gdf
 ```
 
 ```{python}
@@ -190,7 +190,7 @@ redlining_ndvi_gdf = redline_index_gdf(redlining_gdf, ndvi_stats)
 
 ```{python}
 #| label: fig-ndvi-grade-plot
-from landmapy.plots import plot_index_grade
+from landmapyr.plots import plot_index_grade
 plot_index_grade(redlining_ndvi_gdf, city)
 ```
 
@@ -199,7 +199,7 @@ plot_index_grade(redlining_ndvi_gdf, city)
 Somehow I have to go from city_ndvi_da to redlining_ndvi_gdf.
 
 ```{python}
-from landmapy.explore import index_tree
+from landmapyr.explore import index_tree
 
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -220,7 +220,7 @@ plt.show()
 
 ```{python}
 #| label: fig-pred-plot
-from landmapy.plots import plot_index_pred
+from landmapyr.plots import plot_index_pred
 plot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
 ```
 
@@ -259,14 +259,14 @@ Not shown by default.
 ```{python}
 #| eval: false
 import hvplot.pandas
-from landmapy.hv_plots import hvplot_index_grade
+from landmapyr.hv_plots import hvplot_index_grade
 ndvi_hv, grade_hv = hvplot_index_grade(redlining_ndvi_gdf, city)
 (ndvi_hv + grade_hv)
 ```
 
 ```{python}
 #| eval: false
-from landmapy.hv_plots import hvplot_index_pred
+from landmapyr.hv_plots import hvplot_index_pred
 pred_hv = hvplot_index_pred(redlining_ndvi_gdf, tree_classifier, city)
 pred_hv
 ```

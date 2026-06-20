@@ -24,16 +24,16 @@ NSIDC](https://github.com/nsidc/earthaccess):
 ## STEP 1: SET UP
 
 The code for a caching **decorator** is in
-[landmapy/cached.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/cached.py),
+[landmapyr/cached.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/cached.py),
 which you can use in your code. This decorator will **pickle** the
 results of running a `do_something()` function, and only run the code if
 the results do not already exist. To override the caching, for example
 temporarily after making changes to your code, set `override=True`. Note
 that to use the caching decorator, you must write your own function to
 perform each task. See examples in
-[landmapy/delta.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/delta.py)
+[landmapyr/delta.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/delta.py)
 and
-[landmapy/reflectance.py](https://github.com/byandell-envsys/landmapy/blob/main/landmapy/reflectance.py).
+[landmapyr/reflectance.py](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflectance.py).
 
 ::: {.cell execution_count="1"}
 ``` {.python .cell-code}
@@ -43,7 +43,7 @@ and
 
 ::: {.cell execution_count="2"}
 ``` {.python .cell-code}
-from landmapy.initial import robust_code
+from landmapyr.initial import robust_code
 
 robust_code()
 ```
@@ -91,15 +91,15 @@ look for code like `HUC 12-070900020604` (for Lake Mendota).
     Lery and Grand Lake)
 -   Generate a site map of the watershed
 
-Try to use the **caching decorator**. This is now fixed in landmapy.
+Try to use the **caching decorator**. This is now fixed in landmapyr.
 However, the `compute_reflectance_da` and `merge_and_composite_arrays`
 decorated functions still have static decorators. This will take similar
 coding.
 
 ::: {.cell execution_count="3"}
 ``` {.python .cell-code}
-from landmapy.reflect import read_delta_gdf
-from landmapy.plots import plot_delta_gdf
+from landmapyr.reflect import read_delta_gdf
+from landmapyr.plots import plot_delta_gdf
 ```
 :::
 
@@ -139,7 +139,7 @@ Alternative HV plot:
 
 ::: {.cell execution_count="7"}
 ``` {.python .cell-code}
-from landmapy.hv_plots import hvplot_delta_gdf
+from landmapyr.hv_plots import hvplot_delta_gdf
 hvplot_delta_gdf(delta_gdf)
 ```
 :::
@@ -202,8 +202,8 @@ and cropping.
 
 ::: {.cell execution_count="8"}
 ``` {.python .cell-code}
-from landmapy.reflect import compute_reflectance_da, merge_and_composite_arrays
-from landmapy.earthaccess import search_earthaccess
+from landmapyr.reflect import compute_reflectance_da, merge_and_composite_arrays
+from landmapyr.earthaccess import search_earthaccess
 ```
 :::
 
@@ -284,7 +284,7 @@ Cluster your data by spectral signature using the k-means algorithm.
 
 ::: {.cell execution_count="12"}
 ``` {.python .cell-code}
-from landmapy.reflect import reflectance_kmeans, reflectance_range
+from landmapyr.reflect import reflectance_kmeans, reflectance_range
 ```
 :::
 
@@ -350,8 +350,8 @@ method to convert type and `.where(rgb!=np.nan)` method to drop NAs
 
 ::: {.cell execution_count="15"}
 ``` {.python .cell-code}
-from landmapy.reflect import reflectance_rgb
-from landmapy.plots import plot_cluster
+from landmapyr.reflect import reflectance_rgb
+from landmapyr.plots import plot_cluster
 
 rgb_sat = reflectance_rgb(reflectance_da)
 ```
@@ -371,7 +371,7 @@ Above is not perfect. Alternative HV plot:
 
 ::: {.cell execution_count="17"}
 ``` {.python .cell-code}
-from landmapy.hv_plots import hvplot_cluster
+from landmapyr.hv_plots import hvplot_cluster
 hvplot_cluster(rgb_sat, model_df)
 ```
 :::

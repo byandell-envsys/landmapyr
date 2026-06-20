@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "landmapy"
+name = "landmapyr"
 version = "0.4"
 dependencies = [
     "cartopy", "geopandas", "hvplot", "matplotlib",
@@ -24,8 +24,8 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["landmapy*"]
+include = ["landmapyr*"]
 
 [project.urls]
-Homepage = "https://github.com/byandell-envsys/landmapy"
-Issues = "https://github.com/byandell-envsys/landmapy/issues"
+Homepage = "https://github.com/byandell-envsys/landmapyr"
+Issues = "https://github.com/byandell-envsys/landmapyr/issues"

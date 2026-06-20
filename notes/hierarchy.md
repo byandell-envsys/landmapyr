@@ -1,13 +1,13 @@
 # Module Hierarchy
 
 **Prompt:**
-Map out the hierarchy of modules in `landmapy`. That is, which depend only on outside packages, and which depend on other modules in `landmapy`. This will be helpful to strategize translation to R later.
+Map out the hierarchy of modules in `landmapyr`. That is, which depend only on outside packages, and which depend on other modules in `landmapyr`. This will be helpful to strategize translation to R later.
 
 **Response:**
 
-The `landmapy` package has a remarkably flat and modular architecture. Most modules are "leaf" modules that depend only on external spatial libraries, making them easier to translate to R individually.
+The `landmapyr` package has a remarkably flat and modular architecture. Most modules are "leaf" modules that depend only on external spatial libraries, making them easier to translate to R individually.
 
-### `landmapy` Module Hierarchy
+### `landmapyr` Module Hierarchy
 
 #### Level 1: Foundation Modules (No Internal Dependencies)
 
