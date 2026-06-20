@@ -7,7 +7,10 @@ name = "landmapyr"
 version = "0.4"
 dependencies = [
     "cartopy", "geopandas", "hvplot", "matplotlib",
-    "numpy", "pandas", "regionmask", "rioxarray"
+    "numpy", "pandas", "regionmask", "rioxarray",
+    "dataretrieval", "earthaccess", "xrspatial", "scikit-learn",
+    "scipy", "pystac-client", "tqdm", "xarray", "shapely",
+    "contextily", "seaborn", "geoviews", "holoviews", "pygbif"
 ]
 description = "Land Mapping Python Package"
 readme = "README.md"
