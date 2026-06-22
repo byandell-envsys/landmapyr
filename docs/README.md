@@ -1,5 +1,9 @@
 # Examples Using Landmapyr
 
+This package was originally called `landmapy`
+but was changed to accommodate the inclusion
+of both `Python` and `R` packages.
+
 - [Example EDA Projects Using `landmapyr`](#example-eda-projects-using-landmapyr)
 - [Genesis of `landmapyr` Package](#genesis-of-landmapyr-package)
 - [Technical Notes](#technical-notes)
