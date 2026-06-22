@@ -51,8 +51,8 @@ and plot modules):
 [process](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/process.py),
 [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
 - [Species: Crane Migration Maps]
-  - [Sandhill Cranes](sandhill_cranes.html)
-  - [Siberian Cranes](siberian_cranes.html)
+  - [Sandhill Crane](sandhill_crane.html)
+  - [Siberian Crane](siberian_crane.html)
   - [Original project](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
   - modules: [gbif](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/gbif.py)
 

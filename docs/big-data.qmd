@@ -4,8 +4,8 @@ jupyter: python3
 format:
   html:
     code-fold: true
-    keep-md: false
     embed-resources: true
+    keep-md: false
 ---
 
 ```{python}
