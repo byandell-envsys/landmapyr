@@ -50,7 +50,7 @@ and plot modules):
   - modules: [redline](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/redline.py),
 [process](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/process.py),
 [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
-- [Species: Crane Migration Maps]
+- Species Migration Maps
   - [Sandhill Crane](sandhill_crane.html)
   - [Siberian Crane](siberian_crane.html)
   - [Original project](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
