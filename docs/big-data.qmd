@@ -18,7 +18,7 @@ print(sys.version)
 
 ## Get Started with Big Data Pipelines
 
-Vegetation has the potential to provide many ecosystem services in urban
+Vegetation can provide many ecosystem services in urban
 areas, such as cleaner air and water and flood mitigation.
 However, the
 results are mixed on relationships between a simple measurement of
