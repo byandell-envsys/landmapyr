@@ -17,38 +17,38 @@ To date, this package has been used in the following
 [initial](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/initial.py)
 and plot modules):
 
-- [Habitat2: Buffalo Grasslands Habitat Suitability](climate.md)
+- [Habitat2: Buffalo Grasslands Habitat Suitability](climate.html)
   - [climate.qmd](climate.qmd)
   - [Original project](https://github.com/earthlab-education/habitat-suitability-byandell/blob/main/climate.md)
   - modules: [polaris](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/polaris.py),
     [srtm](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/srtm.py),
     [thredds](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/thredds.py),
     [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
-- [Clustering: Classify land cover for Mississippi Delta](clustering.md)
+- [Clustering: Classify land cover for Mississippi Delta](clustering.html)
   - [clustering.qmd](clustering.qmd)
   - [Original project](https://github.com/earthlab-education/clustering-byandell)
   - modules: [reflect](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflect.py)
-- [Big-Data: Urban Greenspace and Asthma Prevalence](big-data.md)
+- [Big-Data: Urban Greenspace and Asthma Prevalence](big-data.html)
   - [big-data.qmd](big-data.qmd)
   - [Original project](https://github.com/earthlab-education/big-data-byandell/blob/main/big-data.md)
   - modules: [naip](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/naip.py),
     [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
-- [Habitat: Buffalo Grasslands Habitat Suitability](buffalo.md)
+- [Habitat: Buffalo Grasslands Habitat Suitability](buffalo.html)
   - [buffalo.qmd](buffalo.qmd)
   - [Original project](https://github.com/byandell-envsys/habitatSuitability/blob/main/buffalo.md)
   - modules: [polaris](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/polaris.py),
     [srtm](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/srtm.py),
 [thredds](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/thredds.py),
 [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
-- [Redlining: Predicting NDVI for Madison](madison.md)
+- [Redlining: Predicting NDVI for Madison](madison.html)
   - [madison.qmd](madison.qmd)
   - [Original project](https://github.com/earthlab-education/fundamentals-04-redlining-byandell/blob/main/notebooks/madison.ipynb)
   - modules: [redline](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/redline.py),
 [process](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/process.py),
 [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
 - [Species: Crane Migration Maps]
-  - [Sandhill Cranes](sandhill_cranes.md)
-  - [Siberian Cranes](siberian_cranes.md)
+  - [Sandhill Cranes](sandhill_cranes.html)
+  - [Siberian Cranes](siberian_cranes.html)
   - [Original project](https://github.com/earthlab-education/species-distribution-coding-challenge-byandell)
   - modules: [gbif](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/gbif.py)
 

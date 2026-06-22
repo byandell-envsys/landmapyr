@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Clustering Land Cover</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a21a96fda2a35a6034e035564d362780.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Clustering Land Cover</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="land-cover-classification-at-the-mississppi-delta" class="level1">
+<h1>Land cover classification at the Mississppi Delta</h1>
+<p>In this notebook, you will use a k-means <strong>unsupervised</strong> clustering algorithm to group pixels by similar spectral signatures. <strong>k-means</strong> is an <strong>exploratory</strong> method for finding patterns in data. Because it is unsupervised, you do not need any training data for the model. You also cannot measure how well it “performs” because the clusters will not correspond to any particular land cover class. However, we expect at least some of the clusters to be identifiable as different types of land cover.</p>
+<p>You will use the <a href="https://lpdaac.usgs.gov/documents/1698/HLS_User_Guide_V2.pdf">harmonized Sentinal/Landsat multispectral dataset</a>. You can access the data with an <a href="https://www.earthdata.nasa.gov/learn/get-started">Earthdata account</a> and the <a href="https://github.com/nsidc/earthaccess"><code>earthaccess</code> library from NSIDC</a>:</p>
+<section id="step-1-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-set-up">STEP 1: SET UP</h2>
+<p>The code for a caching <strong>decorator</strong> is in <a href="https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/cached.py">landmapyr/cached.py</a>, which you can use in your code. This decorator will <strong>pickle</strong> the results of running a <code>do_something()</code> function, and only run the code if the results do not already exist. To override the caching, for example temporarily after making changes to your code, set <code>override=True</code>. Note that to use the caching decorator, you must write your own function to perform each task. See examples in <a href="https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/delta.py">landmapyr/delta.py</a> and <a href="https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflectance.py">landmapyr/reflectance.py</a>.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>q <span class="op">-</span>e ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.initial <span class="im">import</span> robust_code</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>robust_code()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Watch out for override=True or False with `<span class="citation" data-cites="cached">@cached</span>().</strong></p>
+</section>
+<section id="step-2-study-site" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-study-site">STEP 2: STUDY SITE</h2>
+<p>For this analysis, you will use a watershed from the <a href="https://www.usgs.gov/national-hydrography/access-national-hydrography-products">Water Boundary Dataset</a>, HU12 watersheds (<code>W</code>BDHU12.shp<code>). This involves drilling down under the **Watershed Boundary Dataset (WBD)** section of the page through the AWS site linked via [Download the WBD by 2-digit Hydrologic Unit (HU2)](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/HU2/), to the</code>Shape<code>directory and the specific entry in the folder, coded as</code>f”WBD_{region}_HU2_Shape.zip”<code>for</code>region = ‘08<code>. We use the</code><span class="citation" data-cites="cached">@cached</span>(’wbd_08’)<code>decorator to pull out the shape file from this zip file,</code>f’WBDHU{huc_level}.shp’<code>with [Hydrologic Unit Code (HUC)](https://nas.er.usgs.gov/hucs.aspx)</code>huc_level = 12`. See also</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Hydrological_code">Wikipedia</a></li>
+<li><a href="https://www.researchgate.net/figure/Hexagonal-units-used-in-the-terrestrial-model-The-smaller-hexagons-each-marked-with-its_fig1_308173131">Hexagonal units used in the terrestrial model by George R Robinson</a></li>
+<li>Environmental Monitoring and Assessment Program (EMAP) hexagon grid (Spence and White 1992).</li>
+<li><a href="https://www.sciencebase.gov/catalog/item/5ba9378fe4b08583a5ca0937">EPA 40km Hexagons for Conterminous United States</a>
+<ul>
+<li><a href="https://www.sciencebase.gov/catalog/item/5ba9378fe4b08583a5ca0937#:~:text=161.01%20KB-,EPA_Hexagons_40km,-.shp">EPA_Hexagons_40km Shapefile</a></li>
+</ul></li>
+<li><a href="https://doi.org/10.1016/j.envsoft.2021.105210">Bousquin J. Discrete Global Grid Systems as scalable geospatial frameworks for characterizing coastal environments. Environ Model Softw. 2021 Dec 1;146:1-14. doi: 10.1016/j.envsoft.2021.105210. PMID: 35355513; PMCID: PMC8958999.</a></li>
+<li><a href="https://doi.org/10.1111/2041-210X.14320">Using camera traps and N-mixture models to estimate population abundance: Model selection really matters</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dggridR/vignettes/dggridR.html">dggridR</a></li>
+</ul>
+<p>One way to get the HUC Code is to go to the <a href="https://apps.nationalmap.gov/downloader/">TNM Download (v2.0)</a> under <strong>Data</strong> on left, check <strong>Watershed Boundary Dataset (WBD)</strong>, and click <code>Show</code> next to that text. A dense overlay will appear; zoom in to desired region and look for code like <code>HUC 12-070900020604</code> (for Lake Mendota).</p>
+<ul>
+<li>Download the Water Boundary Dataset for region ‘08’ (Mississippi)</li>
+<li>Select watershed <code>080902030506</code> (Plaquemines Parish, bordering Lake Lery and Grand Lake)</li>
+<li>Generate a site map of the watershed</li>
+</ul>
+<p>Try to use the <strong>caching decorator</strong>. This is now fixed in landmapyr. However, the <code>compute_reflectance_da</code> and <code>merge_and_composite_arrays</code> decorated functions still have static decorators. This will take similar coding.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.reflect <span class="im">import</span> read_delta_gdf</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.plots <span class="im">import</span> plot_delta_gdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Following is kept here for the moment and will be removed next week.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run read_delta.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isle Royale: '041800000101'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Lake Mendota: '070900020604'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lake Monona: '070900020702'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mississippi Delta: '080902030506'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>delta_gdf <span class="op">=</span> read2_delta_gdf(huc_region<span class="op">=</span><span class="st">'08'</span>, watershed<span class="op">=</span><span class="st">'080902030506'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                   dissolve<span class="op">=</span><span class="va">False</span>, func_key<span class="op">=</span><span class="st">'wbd_08'</span>, override<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plot_delta_gdf(delta_gdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>delta_gdf <span class="op">=</span> read_delta_gdf(huc_region<span class="op">=</span><span class="st">'08'</span>, watershed<span class="op">=</span><span class="st">'080902030506'</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   dissolve<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plot_delta_gdf(delta_gdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/clustering/fig-delta-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Alternative HV plot:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.hv_plots <span class="im">import</span> hvplot_delta_gdf</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hvplot_delta_gdf(delta_gdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We chose this watershed because it covers parts of New Orleans and is near the Mississippi Delta. Deltas are boundary areas between the land and the ocean, and as a result tend to contain a rich variety of different land cover and land use types.</p>
+<p>Write a 2-3 sentence <strong>site description</strong> (with citations) of this area that helps to put your analysis in context.</p>
+<p><strong>YOUR SITE DESCRIPTION HERE</strong></p>
+</section>
+<section id="step-3-multispectral-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-multispectral-data">STEP 3: MULTISPECTRAL DATA</h2>
+<p>Build a GeoDataFrame, which will allow you to plot the downloaded granules to make sure they line up with your shapefile. You could also use a DataFrame, dictionary, or a custom object to store this information.</p>
+<ul>
+<li><a href="https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr/umm">Unified Metadata Model (UMM)</a></li>
+<li>For each search result:
+<ul>
+<li>Get the following information (HINT: look at the [‘umm’] values for each search result):
+<ul>
+<li>granule id (UR)</li>
+<li>datetime</li>
+<li>geometry (HINT: check out the <a href="https://shapely.readthedocs.io/en/2.0.6/reference/shapely.Polygon.html">shapely.geometry.Polygon</a> class to convert points to a Polygon)</li>
+</ul></li>
+<li>Open the granule files. Open one granule at a time with <code>earthaccess.open([result]</code>.</li>
+<li>For each file (band), get the following information:
+<ul>
+<li>file handler returned from <code>earthaccess.open()</code></li>
+<li>tile id</li>
+<li>band number</li>
+</ul></li>
+</ul></li>
+<li>Compile all the information you collected into a GeoDataFrame.</li>
+</ul>
+<section id="open-crop-and-mask-data" class="level3">
+<h3 class="anchored" data-anchor-id="open-crop-and-mask-data">Open, crop, and mask data</h3>
+<p>This will be the most resource-intensive step. Cache results using the <code>cached</code> decorator. I also recommend testing this step with one or two dates before running the full computation. Consider a function for opening a single masked raster, applying the appropriate scale parameter and cropping.</p>
+<ul>
+<li>For each granule:
+<ul>
+<li>Open the Fmask band, crop, and compute a quality mask for the granule. You can use the following code as a starting point, making sure that <code>mask_bits</code> contains the quality bits you want to consider:</li>
+</ul></li>
+<li>For each band that starts with ‘B’:
+<ul>
+<li>Open the band, crop, and apply the scale factor</li>
+<li>Name the DataArray after the band using the <code>.name</code> attribute</li>
+<li>Apply the cloud mask using the <code>.where()</code> method</li>
+<li>Store the DataArray in your data structure (e.g.&nbsp;adding a <code>GeoDataFrame</code> column with the <code>DataArray</code> in it. Note that you will need to remove the rows for unused bands)</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.reflect <span class="im">import</span> compute_reflectance_da, merge_and_composite_arrays</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.earthaccess <span class="im">import</span> search_earthaccess</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There is no need to use Store Magic, as we are already caching with pickle via the <code>@cached</code> decorator that is embedded in the code. That is, if <code>reflectance_da_df</code> and <code>reflectance_da</code> have already been computed, they will be retrieved from pickle <code>jars</code> where they were cached. These can be overridden with the <code>override=True</code> argument to <code>compute_reflectance_da()</code> and <code>merge_and_composite_arrays()</code> functions, respectively.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> search_earthaccess(delta_gdf, (<span class="st">"2023-05"</span>, <span class="st">"2023-09"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reflectance_da_df <span class="op">=</span> compute_reflectance_da(results, delta_gdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merge-and-composite-data" class="level3">
+<h3 class="anchored" data-anchor-id="merge-and-composite-data">Merge and Composite Data</h3>
+<p>You will notice for this watershed that:</p>
+<ol type="1">
+<li>The raster data for each date are spread across 4 granules</li>
+<li>Any given image is incomplete because of clouds</li>
+</ol>
+<ul>
+<li>For each band:
+<ul>
+<li>For each date:
+<ul>
+<li>Merge all 4 granules</li>
+<li>Mask any negative values created by interpolating from the nodata value of <code>-9999</code> (<code>rioxarray</code> should account for this, but does not appear to when merging. If you leave these values in they will create problems down the line.)</li>
+</ul></li>
+<li>Concatenate the merged DataArrays along a new date dimension</li>
+<li>Take the mean in the date dimension to create a composite image that fills cloud gaps</li>
+<li>Add the band as a dimension, and give the DataArray a name</li>
+</ul></li>
+<li>Concatenate along the band dimension</li>
+</ul>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reflectance_da <span class="op">=</span> merge_and_composite_arrays(reflectance_da_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>reflectance_da.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(10, 556, 624)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-k-means" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-k-means">STEP 4: K-MEANS</h2>
+<p>Looking at this with KS section The <code>reflectance_da</code> has <code>Band</code> (10 levels), <code>x,y</code>. See HLS user guide (look under module) Table 6. Bands 10,11 are thermal and in different units. Reflectance are scaled 0-1.</p>
+<ul>
+<li>account for different scales</li>
+<li>or drop these bands (preferred here)</li>
+</ul>
+<p>Steps:</p>
+<ul>
+<li>remove bands 10,11</li>
+<li>take care of NAs</li>
+<li>reshape</li>
+</ul>
+<p>Cluster your data by spectral signature using the k-means algorithm.</p>
+<ul>
+<li>Convert your DataArray into a <strong>tidy</strong> DataFrame of reflectance values (hint: check out the <code>.to_dataframe()</code> and <code>.unstack()</code> methods)</li>
+<li>Filter out all rows with no data (all 0s or any N/A values)</li>
+<li>Fit a k-means model. You can experiment with the number of groups to find what works best.</li>
+</ul>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.reflect <span class="im">import</span> reflectance_kmeans, reflectance_range</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model_df <span class="op">=</span> reflectance_kmeans(reflectance_da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check ranges.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>reflectance_range(model_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>band</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td style="text-align: left;">0.0005</td>
+<td style="text-align: left;">0.35600</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: left;">0.0040</td>
+<td style="text-align: left;">0.38640</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td style="text-align: left;">0.0177</td>
+<td style="text-align: left;">0.46760</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td style="text-align: left;">0.0134</td>
+<td style="text-align: left;">0.49400</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td style="text-align: left;">0.0016</td>
+<td style="text-align: left;">0.57895</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td style="text-align: left;">0.0018</td>
+<td style="text-align: left;">0.49960</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td style="text-align: left;">0.0017</td>
+<td style="text-align: left;">0.35720</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td style="text-align: left;">0.0003</td>
+<td style="text-align: left;">0.00335</td>
+</tr>
+<tr class="even">
+<td>clusters</td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">5.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-plot" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-plot">STEP 5: PLOT</h2>
+<p>Create a plot that shows the k-means clusters next to an RGB image of the area. You may need to brighten your RGB image by multiplying it by 10. The code for reshaping and plotting the clusters is provided for you below, but you will have to create the RGB plot yourself!</p>
+<p>So, what is <code>.sortby(['x', 'y'])</code> doing for us? Try the code without it and find out.</p>
+<p>Notes on RGB plot. Uses <code>.sel()</code> method to select bands (see HLS user guide for band numbers). Use <code>.rgb()</code> method to plot. But numbers are 0-1 and need to be 8-bit integers; rescale to 0-255. Use <code>.astype()</code> method to convert type and <code>.where(rgb!=np.nan)</code> method to drop NAs</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.reflect <span class="im">import</span> reflectance_rgb</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.plots <span class="im">import</span> plot_cluster</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>rgb_sat <span class="op">=</span> reflectance_rgb(reflectance_da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_cluster(rgb_sat, model_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-cluster" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cluster-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/clustering/fig-cluster-output-1.png" id="fig-cluster" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cluster-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Above is not perfect. Alternative HV plot:</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> landmapyr.hv_plots <span class="im">import</span> hvplot_cluster</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>hvplot_cluster(rgb_sat, model_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Interpret your plot.</p>
+<p><strong>YOUR PLOT HEADLINE AND DESCRIPTION HERE</strong></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

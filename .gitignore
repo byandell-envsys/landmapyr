@@ -163,5 +163,8 @@ cython_debug/
 
 .DS_Store
 *_files/
-*.html
+#*.html
 /.quarto/
+docs/site_libs/*
+search.json
+docs/index.html
