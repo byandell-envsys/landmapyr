@@ -1,16 +1,17 @@
 # `landmapyr`: Land Mapping Package
 
-- [landmapyr: Land Mapping Python Package](#landmapyr-land-mapping-python-package)
-  - [Introduction](#introduction)
-    - [Install and Import](#install-and-import)
-    - [Collaboration](#collaboration)
-  - [Examples](#examples)
-    - [Example use with Habitat Project](#example-use-with-habitat-project)
-  - [Goals](#goals)
-    - [Goal of EDA project](#goal-of-eda-project)
-    - [Broader goal](#broader-goal)
-    - [Technical goal](#technical-goal)
-  - [Package Modules and Functions](#package-modules-and-functions)
+*[byandell-envsys.github.io/landmapyr](https://byandell-envsys.github.io/landmapyr)*
+
+- [Introduction](#introduction)
+  - [Install and Import](#install-and-import)
+  - [Collaboration](#collaboration)
+- [Examples](#examples)
+  - [Example use with Habitat Project](#example-use-with-habitat-project)
+- [Goals](#goals)
+  - [Goal of EDA project](#goal-of-eda-project)
+  - [Broader goal](#broader-goal)
+  - [Technical goal](#technical-goal)
+- [Package Modules and Functions](#package-modules-and-functions)
 
 Additional links:
 
