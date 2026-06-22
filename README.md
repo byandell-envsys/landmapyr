@@ -1,4 +1,4 @@
-# landmapyr: Land Mapping Python Package
+# `landmapyr`: Land Mapping Package
 
 - [landmapyr: Land Mapping Python Package](#landmapyr-land-mapping-python-package)
   - [Introduction](#introduction)

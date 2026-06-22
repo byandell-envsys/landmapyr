@@ -1,4 +1,4 @@
-# Examples Using Landmapyr
+# `landmapyr`: Land Mapping Package
 
 This package was originally called `landmapy`
 but was changed to accommodate the inclusion
