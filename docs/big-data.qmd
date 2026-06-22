@@ -1,9 +1,11 @@
 ---
 title: "Big Data: Urban Landscape"
+jupyter: python3
 format:
   html:
     code-fold: true
     keep-md: false
+    embed-resources: true
 ---
 
 ```{python}

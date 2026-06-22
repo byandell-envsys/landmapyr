@@ -1,8 +1,11 @@
 ---
 title: "Clustering Land Cover"
+jupyter: python3
 format:
   html:
     code-fold: true
+    embed-resources: true
+    keep-md: false
 ---
 
 # Land cover classification at the Mississppi Delta

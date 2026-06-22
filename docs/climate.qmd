@@ -1,6 +1,11 @@
 ---
 title: Habitat suitability under climate change
 jupyter: python3
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    keep-md: false
 ---
 
 Left to do:

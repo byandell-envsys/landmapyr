@@ -1,6 +1,11 @@
 ---
 title: Using Earth Access to Build and image
 jupyter: python3
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    keep-md: false
 ---
 
 The goal is to use Earth Access to 
