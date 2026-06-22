@@ -32,8 +32,8 @@ and plot modules):
   - [clustering.qmd](clustering.qmd)
   - [Original project](https://github.com/earthlab-education/clustering-byandell)
   - modules: [reflect](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/reflect.py)
-- [Big-Data: Urban Greenspace and Asthma Prevalence](big-data.html)
-  - [big-data.qmd](big-data.qmd)
+- [Big_Data: Urban Greenspace and Asthma Prevalence](big_data.html)
+  - [big_data.qmd](big_data.qmd)
   - [Original project](https://github.com/earthlab-education/big-data-byandell/blob/main/big-data.md)
   - modules: [naip](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/naip.py),
     [explore](https://github.com/byandell-envsys/landmapyr/blob/main/landmapyr/explore.py)
