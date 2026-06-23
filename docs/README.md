@@ -9,7 +9,6 @@ of both `Python` and `R` packages.
 - [Technical Notes](#technical-notes)
   - [Python Kernel Selection](#python-kernel-selection)
   - [Python Data Storage](#python-data-storage)
-  - [Changes to come](#changes-to-come)
 
 *[GitHub](https://github.com/byandell-envsys/landmapyr)*
 
@@ -105,13 +104,13 @@ If you have this kernel installed,
 it is important to ensure that Quarto uses it.
 You can set the python kernel by first using a Jupyter notebook.
 Alternatively, set the default python kernel for Quarto.
-See [Set Default Python Kernel for Quarto](https://github.com/byandell/blob/main/kernel.md)
+See [Set Default Python Kernel for Quarto](https://byandell.github.io/Documentation/kernel.html)
 for more information.
 
 ### Python Data Storage
 
 These examples use ephermeral and permanent remote data storage.
-See [Documentation on Data Storage](https://github.com/byandell/Documentation/blob/main/python_references.md#data)
+See [Documentation on Data Storage](https://byandell.github.io/Documentation/python/#data)
 for more information.
 Some projects use read/write to files, in particular the folder
 `~/earth-analytics/data`
@@ -129,10 +128,3 @@ Dynamic plots using the `hv_plots` functions
 yield much larger plot objects,
 which are inherently more flexible.
 See [Plot Functions](../plots.md) for more information.
-
-### Changes to come
-
-- Fix `sandhill_cranes.qmd` to get its input saved in python data
-- see [render.md](../notes/render.md) for post-rendering that moves images to one folder
-`examples/images/[filename]`
-- Upload `examples/images/` to the web site
